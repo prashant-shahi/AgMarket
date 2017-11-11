@@ -9,10 +9,10 @@
 <html>
 <head>
 	<title>Customer Home Page</title>
-	<link rel="stylesheet" type="text/css" href="./style.css?lol">
+	<link rel="stylesheet" type="text/css" href="./style.css">
 	<style type="text/css">
 		body {
-			background-image: url('cust.jpg');
+			background-image: url('ffm.jpg');
 			background-size: cover;
 		}
 	</style>

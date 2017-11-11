@@ -16,6 +16,7 @@
 				echo '<script>alert("Update Failed");</script>';
 			}
 			header('location:index1.php');
+			die();
 ?>
 <?php else :
 	echo '<script>alert("Error Occured, Go Back and Try again..</h4><br/>");</script>';
