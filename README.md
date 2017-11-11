@@ -35,7 +35,7 @@
 
 ## Database Structure :
 
-   	![Screenshot of Database Structure](https://github.com/CoolBoi567/Farmer-Market-Simple-Implementation-Php-Example/master/database_structure.png "Screenshot of Database Structure")
+![](./database_structure.png?raw=true)
 
 
 ## Run :
@@ -50,11 +50,11 @@
 
 ### Screenshot :
 
- Screenshot of Vendor :
- ![Screenshot of Vendor Page](https://github.com/CoolBoi567/Farmer-Market-Simple-Implementation-Php-Example/master/vendor.png "Screenshot of Vendor Page")
+  ![](./vendor.png)
+  Screenshot of Vendor
   
-  Screenshot of Customer :
- ![Screenshot of Customer Page](https://github.com/CoolBoi567/Farmer-Market-Simple-Implementation-Php-Example/master/customer.png "Screenshot of Customer Page")
+![](./customer.png)
+  Screenshot of Customer
 
 
 Made with ❤️ from Karnali, Nepal
