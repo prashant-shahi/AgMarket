@@ -1,5 +1,12 @@
 # Farmer-Market-Simple-Implementation-Php-Example
 
+[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](https://github.com/booleanhunter/tasKomplete/blob/master/LICENSE)
+
+This project is simple PHP implementation of solution for problem that Farmers and Customers face.
+It lets customers and vendors get into contact as per the need.
+Vendors can add the crop items into their stock and also modify and delete those as per the availability.
+Customers can look for their desired crop items and contact directly to the farmers.
+
 ## Built using :
 
 	Apache2 : Web Server
