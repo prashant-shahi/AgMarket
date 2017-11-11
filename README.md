@@ -7,6 +7,8 @@ It lets customers and vendors get into contact as per the need.
 Vendors can add the crop items into their stock and also modify and delete those as per the availability.
 Customers can look for their desired crop items and contact directly to the farmers.
 
+Live Demo : http://www.farmermarket.ml/
+
 ## Built using :
 
 	Apache2 : Web Server
