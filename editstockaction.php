@@ -7,14 +7,7 @@
 			$kgavail = mysqli_real_escape_string($db, $_POST['kgavail']);
 			$costpk = mysqli_real_escape_string($db, $_POST['costpk']);
 
-			if(mysqli_query($db, "UPDATE stocks SET place='$place', cropname='$cropname', kgavail='$kgavail',costpk='$costpk' WHERE stock_id='$stock_id'"))
-			{
-				echo '<script>alert("Update Success");</script>';
-			}
-			else
-			{
-				echo '<script>alert("Update Failed");</script>';
-			}
+			mysqli_query($db, "UPDATE stocks SET place='$place', cropname='$cropname', kgavail='$kgavail',costpk='$costpk' WHERE stock_id='$stock_id'");
 			header('location:index1.php');
 			die();
 ?>
