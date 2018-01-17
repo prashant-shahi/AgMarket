@@ -1,6 +1,6 @@
 # Farmer-Market-Simple-Implementation-Php-Example
 
-[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](https://github.com/booleanhunter/tasKomplete/blob/master/LICENSE)
+[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](https://github.com/CoolBoi567/Farmer-Market-eCommerce-PHP/blob/master/LICENSE)
 
 This project is simple PHP implementation of solution for problem that Farmers and Customers face.
 It lets customers and vendors get into contact as per the need.
