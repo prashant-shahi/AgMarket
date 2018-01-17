@@ -3,9 +3,10 @@
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](https://github.com/CoolBoi567/Farmer-Market-eCommerce-PHP/blob/master/LICENSE)
 
 This PHP project is simple solution for big problem that Farmers and Customers face.
-Vendors post the available crop with its details and later alter the details on change.
-Customers can view availability of crops with its details.
-It eliminates involvement of any middle person and benefits both farmers and customers.
+* Vendors post the available crop with its details and later alter the details as required.
+* Customers can view availability of crops with its details.
+* Eliminates involvement of any middle person.
+* Benefits both farmers and customers.
 
 Live Demo : http://www.farmermarket.ml/
 
