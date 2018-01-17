@@ -1,11 +1,11 @@
-# Farmer-Market-Simple-Implementation-Php-Example
+# Farmer-Market-eCommerce-PHP
 
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](https://github.com/CoolBoi567/Farmer-Market-eCommerce-PHP/blob/master/LICENSE)
 
-This project is simple PHP implementation of solution for problem that Farmers and Customers face.
-It lets customers and vendors get into contact as per the need.
-Vendors can add the crop items into their stock and also modify and delete those as per the availability.
-Customers can look for their desired crop items and contact directly to the farmers.
+This PHP project is simple solution for big problem that Farmers and Customers face.
+Vendors post the available crop with its details and later alter the details on change.
+Customers can view availability of crops with its details.
+It eliminates involvement of any middle person and benefits both farmers and customers.
 
 Live Demo : http://www.farmermarket.ml/
 
