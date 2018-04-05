@@ -9,7 +9,8 @@ $errors = array();
 $_SESSION['success'] = "";
 
 // connect to database
-$db = mysqli_connect('localhost', 'root', '', 'project');
+require('database.php');
+
 if(!$db)
 	array_push($errors, "Database Error".mysqli_connect_error());
 
