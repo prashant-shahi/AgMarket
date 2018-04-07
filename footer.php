@@ -47,9 +47,29 @@
 	</div>
 </footer>
 
-
 <!--===============================================================================================-->
 <script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="vendor/alert/jAlert-v3.min.js"></script>
+	<script>
+		function agalert(title,content,theme,image){
+			//e.preventDefault();
+			// theme = "red";
+			$.jAlert({
+				'title': title,
+				'content': content,
+				'theme': theme,
+				'closeOnClick': true,
+				'backgroundColor': 'black',
+			});
+		}
+		function agzoom(image,iw) {
+			$.jAlert({
+				'fullscreen': true,
+				'image': "http://ak9.picdn.net/shutterstock/videos/5066699/thumb/1.jpg"
+			});
+		}
+	</script>
 <!--===============================================================================================-->
 <script type="text/javascript" src="vendor/animsition/js/animsition.min.js"></script>
 <!--===============================================================================================-->
@@ -74,10 +94,10 @@
 <script type="text/javascript" src="vendor/sweetalert/sweetalert.min.js"></script>
 <!--===============================================================================================-->
 <script src="js/main.js"></script>
-
+<!--===============================================================================================-->
 <script type="text/javascript">
 	function googleTranslateElementInit() {
-	  new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'kn,te,ta,en,hi', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, gaTrack: true, gaId: 'UA-116535819-1'}, 'google_translate_element');
+		new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'kn,te,ta,en,hi,ne', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, gaTrack: true, gaId: 'UA-116535819-1'}, 'google_translate_element');
 	}
 </script>
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
@@ -93,4 +113,13 @@
 			});
 		});
 	});
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-116535819-1"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+
+	gtag('config', 'UA-116535819-1');
 </script>
