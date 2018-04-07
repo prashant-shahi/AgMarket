@@ -8,7 +8,7 @@ This PHP project is simple solution for big problem that Farmers and Customers f
 * Eliminates involvement of any middle person.
 * Benefits both farmers and customers.
 
-Live Demo : http://www.farmermarket.ml/
+Live Demo : https://www.agmarket.in
 
 ## Built using :
 

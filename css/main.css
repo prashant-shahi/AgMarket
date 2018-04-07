@@ -89,7 +89,19 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 	box-sizing: border-box;
 }
 
-/* Hide Translate Header Bar */
+/* Hide Translate Header Bar and On-Hover original text*/
+.goog-tooltip {
+    display: none !important;
+}
+.goog-tooltip:hover {
+    display: none !important;
+}
+.goog-text-highlight {
+    background-color: transparent !important;
+    border: none !important; 
+    box-shadow: none !important;
+}
+
 .goog-te-banner-frame.skiptranslate {
     display: none !important;
 }
@@ -661,7 +673,6 @@ iframe {
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-
 .logo img {
   max-height: 60px;
 }
@@ -1006,7 +1017,7 @@ li.sale-noti > a {
 }
 
 .logo-mobile img {
-  max-height: 27px;
+  max-height: 35px;
 }
 
 /*[ btn show menu ]
@@ -2412,3 +2423,15 @@ input.num-product::-webkit-inner-spin-button {
 .closebtn:hover {
     color: black;
 } 
+
+/*
+    Image Undragable
+*/
+img {
+  user-drag: none; 
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}

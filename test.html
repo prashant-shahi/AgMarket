@@ -1,0 +1,30 @@
+<html>
+<body>
+<?php
+if(isset($_POST('name'))) {
+$name = $_POST['name'];
+$email = $_POST['account'];
+$location = $_POST['location'];
+
+foreach( $name as $key => $n ) {
+  print "The name is ".$n.", email is ".$email[$key].
+        ", and location is ".$location[$key].". Thank you\n";
+}
+}
+else {
+?>
+<form method="POST" action="">
+<input type="text" name="name[]" />
+<input type="text" name="email[]" />
+
+<input type="text" name="name[]" />
+<input type="text" name="email[]" />
+
+<input type="text" name="name[]" />
+<input type="text" name="email[]" />
+</form>
+<?php
+}
+?>
+</body>
+</html>

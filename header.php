@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +33,9 @@
 	<link rel="stylesheet" type="text/css" href="vendor/lightbox2/css/lightbox.min.css">
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
-
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/alert/jAlert-v3.css" />
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/main.css?version=7">
 	<!--===============================================================================================-->
 </head>
@@ -51,7 +52,7 @@
 					<a href="#" class="topbar-social-item fa fa-instagram"></a>
 					<a href="#" class="topbar-social-item fa fa-twitter"></a>
 				</div>
-				<span class="topbar-child1">
+				<span class="topbar-child1 noselect">
 					AgTrade - A Marketing Network for Agriculture Commodities
 				</span>
 
@@ -64,9 +65,11 @@
 
 			<div class="wrap_header">
 				<!-- Logo -->
-				<a href="index.php" class="logo">
-					<img src="images/icons/logo.png" alt="IMG-LOGO">
-				</a>
+				<div class="logo">
+					<h1 class="notranslate">
+						<img src="images/icons/logo.png" alt="IMG-LOGO" />
+						<span class="text-success">Ag</span><span class="text-primary">Ma</span><span class="text-danger">rk</span><span class="text-warning">et</span></h1>
+				</div>
 				<!-- Menu -->
 				<div class="wrap_menu">
 					<nav class="menu">
@@ -137,9 +140,12 @@
 		<!-- Header Mobile -->
 		<div class="wrap_header_mobile">
 			<!-- Logo moblie -->
-			<a href="index.php" class="logo-mobile">
-				<img src="images/icons/logo.png" alt="IMG-LOGO">
-			</a>
+			<h3 class="logo-mobile header-wrapicon1">
+				<a href="index.php">
+					<img src="images/icons/logo.png" alt="IMG-LOGO">
+				</a>
+				<span class="text-success">Ag</span><span class="text-primary">Ma</span><span class="text-danger">rk</span><span class="text-warning">et</span>
+			</h3>
 			<!-- Button show menu -->
 			<div class="btn-show-menu">
 				<!-- Header Icon mobile -->
@@ -170,7 +176,7 @@
 					<li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
 						<div class="topbar-child2-mobile">
 							<span class="topbar-email">
-								fashe@example.com
+								help@agmarket.in
 							</span>
 						</div>
 					</li>
