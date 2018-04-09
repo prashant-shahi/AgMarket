@@ -35,7 +35,7 @@
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/alert/jAlert-v3.css" />
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/main.css?version=16">
+	<link rel="stylesheet" type="text/css" href="css/main.css?version=17">
 	<!--===============================================================================================-->
 </head>
 
@@ -168,6 +168,7 @@
 		<div class="wrap-side-menu" >
 			<nav class="side-menu">
 				<ul class="main-menu">
+					<!-- 
 					<li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
 						<div class="topbar-child2-mobile">
 							<span class="topbar-email">
@@ -182,6 +183,7 @@
 							<a href="https://twitter.com/AgMarket_in" class="topbar-social-item fa fa-twitter"></a>
 						</div>
 					</li>
+				-->
 					<li class="item-menu-mobile">
 						<a href="index.php">Home</a>
 					</li>
@@ -189,10 +191,10 @@
 					<li class="item-menu-mobile">
 						<a href="product.php">Shop</a>
 						<ul class="sub-menu">
-							<li><a href="cattles.php">Cattles</a></li>
 							<li><a href="crops.php">Crops</a></li>
+							<li><a href="livestock.php">Livestock</a></li>
 							<li><a href="machineries.php">Machineries</a></li>
-							<li><a href="seeds.php">Seeds</a></li>
+							<li><a href="plantseeds.php">Plants and Seeds</a></li>
 						</ul>
 						<i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
 					</li>
