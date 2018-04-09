@@ -7,6 +7,12 @@
 		$location = $_POST['location'];
 
 		foreach( $name as $key => $n ) {
+			$n2[] = $n;
+			$e2[] = $email[$key];
+			$l2[] = $location[$key];
+		}
+
+		foreach( $n2 as $key => $n) {
 			print "The name is ".$n.", email is ".$email[$key].
 			", and location is ".$location[$key].". Thank you<br/>";
 		}
@@ -19,6 +25,7 @@
 				?>
 				<label>Name: </label><input type="text" name="name[]" /><br/>
 				<label>Email: </label><input type="text" name="email[]" /><br/>
+				<label>Location: </label><input type="text" name="location[]" /><br/>
 				<br/>
 				<?php
 			}

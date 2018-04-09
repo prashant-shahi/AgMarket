@@ -1,25 +1,44 @@
 <?php
 require('database.php');
-require('header.php');
+// $res variable can be used to detect and describe error
 
 if(isset($_POST['submit']) || !empty($_POST['submit'])) {
-	$ci = $_POST['cartid'];
-	$quantity = $_POST["quantity"];
-	foreach ($quantity as $key => $q) {
-		$res = mysqli_query($db, "UPDATE cart SET quantity=$q WHERE id={$ci[$key]} and uid = 1");
-		// We can list errors using $res for future
+	$ordertype = $_POST["ordertype"];
+	$uid = $_SESSION['customer'];
+
+	$res = mysqli_query($db, "SELECT id,cid,quantity FROM cart WHERE uid = 1");
+	while($row = mysqli_fetch_assoc($res)) {
+		// $cartid[] = $row['id'];
+		$comid[] = $row['cid'];
+		$quantity[] = $row['quantity'];
+	}
+
+	foreach ($cartid as $key => $c) {
+		$res = mysqli_query($db, "INSERT into orders(uid,comid,quantity,ordertype,status) values($uid, $comid[$key], $quantity[$key]),'Pickup','Not Confirmed'");
+	}
+
+	$res = mysqli_query($db, "SELECT id,cid,quantity FROM cart WHERE uid = 1");
+	$res = mysqli_query($db, "UPDATE cart SET quantity=$q where id={$ci[$key]} and uid = 1");
+}
+
+if(isset($_GET['remove']) || !empty($_GET['remove'])) {
+	$res = mysqli_query($db, "DELETE FROM orders where id={$_GET['remove']} and uid = 1");
+	echo "Affected rows: " . mysqli_affected_rows($db);
+	if(mysqli_affected_rows($db)==1) {
+		header('location:customer-orders.php?remstatus=success');
+	}
+	else {
+		header('location:customer-orders.php?remstatus=failure');
 	}
 }
-if(isset($_GET['remove']) || !empty($_GET['remove'])) {
-	$cartid = $_GET['remove'];
-	$res = mysqli_query($db, "DELETE from cart WHERE id=$cartid and uid = 1");
-}
+
+require('header.php');
 ?>
 
 <!-- Title Page -->
 <section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(images/heading-pages-01.jpg);">
 	<h2 class="l-text2 t-center">
-		Cart
+		Orders
 	</h2>
 </section>
 
@@ -28,18 +47,11 @@ if(isset($_GET['remove']) || !empty($_GET['remove'])) {
 	<div class="container">
 		<?php
 		if(isset($_GET['status']) and !empty($_GET['status'])) {
-			$str = "added";
 			$s = $_GET['status'];
 			if($s != "success" and $s != "failure")
 				$s = "warning";
 		}
-		if(isset($_GET['remstatus']) and !empty($_GET['remstatus'])) {
-			$str = "removed";
-			$s = $_GET['remstatus'];
-			if($s != "success" and $s != "failure")
-				$s = "warning";
-		}
-		if(isset($str))
+		if(isset($s))
 		{
 			?>
 			<div class="alert <?php echo $s; ?>">
@@ -47,18 +59,18 @@ if(isset($_GET['remove']) || !empty($_GET['remove'])) {
 				<strong><?php echo ucfirst($s); ?>!</strong>
 				<?php
 				switch($s) {
-					case "success"	: echo "Cart item successfully $str !!";
+					case "success"	: echo "Order placed successfully !!";
 					break;
-					case "failure" 	: echo "Cart item failed to be $str !!";
+					case "failure" 	: echo "Failed to place order !!";
 					break;
-					default 		: echo "Baka, Cart item status not to be played with !!";
+					default 		: echo "Baka, Order status not to be played with !!";
 				}
 				?>
 			</div>
 			<?php
 		}
 		mysqli_query($db,"SET @count:=0");
-		$res = mysqli_query($db, "SELECT (@count:=@count+1) AS sn, uid, cr.id as cartid, c.name as commodity, avail, v.name as vendor, cus.lat as lat, cus.lon as lon, quantity, price,(quantity*price) as total FROM customers as cus, cart as cr,commodities as c,vendors as v WHERE uid=1 and cr.cid=c.id and c.vid=v.id and cus.id=uid") or die (mysqli_error($db));
+		$res = mysqli_query($db, "SELECT cr.id as cartid,(@count:=@count+1) AS sn, uid, c.name as commodity, avail, v.name as vendor, cus.lat as lat, cus.lon as lon, quantity, price,(quantity*price) as total FROM customers as cus, cart as cr,commodities as c,vendors as v WHERE uid=1 and cr.cid=c.id and c.vid=v.id and cus.id=uid") or die (mysqli_error($db));
 
 		if (mysqli_num_rows($res) <= 0) {
 			?>
@@ -72,7 +84,7 @@ if(isset($_GET['remove']) || !empty($_GET['remove'])) {
 					<!-- Cart item -->
 					<div class="container-table-cart pos-relative">
 						<div class="wrap-table-shopping-cart bgwhite">
-							<table class="table-shopping-cart" style="width:100%; overflow: hidden;">
+							<table class="table-shopping-cart" style="overflow: hidden;">
 								<tr class="table-head">
 									<th class="column-1 notranslate">S.N.</th>
 									<th class="column-2">Commodity Name</th>
@@ -95,18 +107,18 @@ if(isset($_GET['remove']) || !empty($_GET['remove'])) {
 										<td class="column-1"><?php echo $i; ?></td>
 										<td class="column-2"><?php // Pachi Photo Rakhne eta ?><?php echo $row["commodity"]; ?></td>
 										<td class="column-3 notranslate"><?php echo $row["vendor"]; ?></td>
-										<td class="column-4">
+										<td class="column-4 notranslate">
 											<strong class="price" id="<?php echo $j.'-price'; ?>">
 												<?php echo $row["price"]; ?>
 											</strong>
 										</td>
-										<td class="column-5">
+										<td class="column-5 notranslate">
 											<input type="text" name="cartid[]" value="<?php echo $row["cartid"]; ?>" hidden="hidden" />
 											<i class="minus fa fa-minus-square" style="font-size:36px;"></i>
 											<input type="number" name="quantity[]" class="quantity size8 m-text18 t-center num-product" min="1" max="<?php echo $row["avail"]; ?>" value="<?php echo $row["quantity"]; ?>" />
 											<i class="plus fa fa-plus-square" style="font-size:36px;"></i>
 										</td>
-										<td class="column-6">
+										<td class="column-6 notranslate">
 											<strong class="total" id="<?php echo $j.'-total'; ?>">
 												<?php
 												$total = $row["total"];
@@ -129,14 +141,14 @@ if(isset($_GET['remove']) || !empty($_GET['remove'])) {
 							</table>
 						</div>
 						<div class="row" style="margin:0 auto;">
-							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 float-left">
-								<!-- Button -->
-								<input type="submit" name="submit" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4" value="Update Cart" />
-							</div>
-							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 float-right">
-								<h4 >
-									Sub-total : ₹ <span id="totalPrice"><?php echo $gtotal; ?></span>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<h4 class="float-right">
+									Sub-total : ₹ <span class="notranslate" id="totalPrice"><?php echo $gtotal; ?></span>
 								</h4>
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<!-- Button -->
+								<input type="submit" name="submit" class="float-left flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4" value="Update Cart" />
 							</div>
 						</div>
 					</div>

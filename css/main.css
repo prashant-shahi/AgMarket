@@ -2104,7 +2104,7 @@ li.sale-noti > a {
   border-collapse: collapse;
   table-layout: fixed;
 }
-/*
+
 .table-shopping-cart .column-1 {
   width: 5%;
 }
@@ -2126,7 +2126,6 @@ li.sale-noti > a {
 .table-shopping-cart .column-7 {
   width:10%; 
 }
-*/
 
 .table-shopping-cart .table-row {
   border-top: 1px solid #e6e6e6;
@@ -2434,4 +2433,21 @@ img {
   -webkit-user-drag: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+}
+
+#map {
+  background-color: #f3f3f3;
+  text-align: center;
+  width: 100%;
+  height:300px;
+}
+
+.column-5 i:hover{
+  background-color: #f3f3f3;
+}
+
+@media (max-width: 992px) {
+  footer {
+      display: none;
+  }
 }

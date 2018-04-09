@@ -147,7 +147,9 @@
     $('.btn-romove-top-noti').on('click', function(){
         $(this).parent().remove();
     })
-
+    $('.closebtn').on('click', function(){
+        $(this).parent().remove();
+    })    
 
     /*[ Block2 button wishlist ]
     ===========================================================*/

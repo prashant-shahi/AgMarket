@@ -153,7 +153,6 @@
 										<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
 										<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
 									</a>
-
 									<div class="block2-btn-addcart w-size1 trans-0-4">
 										<!-- Button -->
 										<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
@@ -165,11 +164,10 @@
 
 							<div class="block2-txt p-t-20">
 								<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-									Herschel supply co 25l
+									Name of the commodity
 								</a>
-
 								<span class="block2-price m-text6 p-r-5">
-									$75.00
+									₹ <span >Price of Commodity</span>
 								</span>
 							</div>
 						</div>
@@ -196,13 +194,14 @@
 								</div>
 							</div>
 
+
+
 							<div class="block2-txt p-t-20">
 								<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-									Denim jacket blue
+									Name of the commodity
 								</a>
-
 								<span class="block2-price m-text6 p-r-5">
-									$92.50
+									₹ <span >Price of Commodity</span>
 								</span>
 							</div>
 						</div>
@@ -231,11 +230,10 @@
 
 							<div class="block2-txt p-t-20">
 								<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-									Coach slim easton black
+									Name of the commodity
 								</a>
-
 								<span class="block2-price m-text6 p-r-5">
-									$165.90
+									₹ <span >Price of Commodity</span>
 								</span>
 							</div>
 						</div>
@@ -264,15 +262,13 @@
 
 							<div class="block2-txt p-t-20">
 								<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-									Frayed denim shorts
+									Name of the commodity
 								</a>
-
 								<span class="block2-oldprice m-text7 p-r-5">
-									$29.50
+									₹ <span >Old Price of Commodity</span>
 								</span>
-
-								<span class="block2-newprice m-text8 p-r-5">
-									$15.90
+								<span class="block2-price m-text6 p-r-5">
+									₹ <span >New Price of Commodity</span>
 								</span>
 							</div>
 						</div>
@@ -301,11 +297,10 @@
 
 							<div class="block2-txt p-t-20">
 								<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-									Herschel supply co 25l
+									Name of the commodity
 								</a>
-
 								<span class="block2-price m-text6 p-r-5">
-									$75.00
+									₹ <span >Price of Commodity</span>
 								</span>
 							</div>
 						</div>
@@ -334,11 +329,10 @@
 
 							<div class="block2-txt p-t-20">
 								<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-									Denim jacket blue
+									Name of the commodity
 								</a>
-
 								<span class="block2-price m-text6 p-r-5">
-									$92.50
+									₹ <span >Price of Commodity</span>
 								</span>
 							</div>
 						</div>
@@ -367,11 +361,10 @@
 
 							<div class="block2-txt p-t-20">
 								<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-									Coach slim easton black
+									Name of the commodity
 								</a>
-
 								<span class="block2-price m-text6 p-r-5">
-									$165.90
+									₹ <span >Price of Commodity</span>
 								</span>
 							</div>
 						</div>
@@ -400,15 +393,13 @@
 
 							<div class="block2-txt p-t-20">
 								<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-									Frayed denim shorts
+									Name of the commodity
 								</a>
-
 								<span class="block2-oldprice m-text7 p-r-5">
-									$29.50
+									₹ <span >Old Price of Commodity</span>
 								</span>
-
-								<span class="block2-newprice m-text8 p-r-5">
-									$15.90
+								<span class="block2-price m-text6 p-r-5">
+									₹ <span >New Price of Commodity</span>
 								</span>
 							</div>
 						</div>
@@ -423,10 +414,10 @@
 		<div class="flex-w p-l-15 p-r-15">
 			<div class="flex-col-c w-size5 p-l-15 p-r-15 p-t-16 p-b-15 respon1">
 				<h4 class="m-text12 t-center">
-					Free Delivery
+					Always be at profit
 				</h4>
 				<span class="s-text11 t-center">
-					For orders more than ₹1000
+					Compare rates from different vendors
 				</span>
 			</div>
 
@@ -442,11 +433,11 @@
 
 			<div class="flex-col-c w-size5 p-l-15 p-r-15 p-t-16 p-b-15 respon1">
 				<h4 class="m-text12 t-center">
-					Store Opening
+					Place Order anytime
 				</h4>
 
 				<span class="s-text11 t-center">
-					Shop open from Monday to Sunday
+					Our site is 24/7 available for your service
 				</span>
 			</div>
 		</div>

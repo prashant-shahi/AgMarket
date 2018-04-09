@@ -9,6 +9,7 @@
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
 	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="fonts/themify/themify-icons.css">
@@ -35,7 +36,7 @@
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/alert/jAlert-v3.css" />
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/main.css?version=16">
+	<link rel="stylesheet" type="text/css" href="css/main.css?version=7">
 	<!--===============================================================================================-->
 </head>
 
@@ -47,9 +48,9 @@
 		<div class="container-menu-header">
 			<div class="topbar">
 				<div class="topbar-social">
-					<a href="https://fb.me/in.AgMarket" class="topbar-social-item fa fa-facebook"></a>
-					<a href="https://www.instagram.com/agmarket.in" class="topbar-social-item fa fa-instagram"></a>
-					<a href="https://twitter.com/AgMarket_in" class="topbar-social-item fa fa-twitter"></a>
+					<a href="#" class="topbar-social-item fa fa-facebook"></a>
+					<a href="#" class="topbar-social-item fa fa-instagram"></a>
+					<a href="#" class="topbar-social-item fa fa-twitter"></a>
 				</div>
 				<span class="topbar-child1 noselect">
 					AgTrade - A Marketing Network for Agriculture Commodities
@@ -94,6 +95,10 @@
 							<li>
 								<a href="about.php">About</a>
 							</li>
+
+							<li>
+								<a href="contact.php">Contact Us</a>
+							</li>
 						</ul>
 					</nav>
 				</div>
@@ -135,7 +140,7 @@
 		<!-- Header Mobile -->
 		<div class="wrap_header_mobile">
 			<!-- Logo moblie -->
-			<h3 class="logo-mobile header-wrapicon1 notranslate">
+			<h3 class="logo-mobile header-wrapicon1">
 				<a href="index.php">
 					<img src="images/icons/logo.png" alt="IMG-LOGO">
 				</a>
@@ -177,9 +182,9 @@
 					</li>
 					<li class="item-topbar-mobile p-l-10">
 						<div class="topbar-social-mobile">
-							<a href="https://fb.me/in.AgMarket" class="topbar-social-item fa fa-facebook"></a>
-							<a href="https://www.instagram.com/agmarket.in" class="topbar-social-item fa fa-instagram"></a>
-							<a href="https://twitter.com/AgMarket_in" class="topbar-social-item fa fa-twitter"></a>
+							<a href="#" class="topbar-social-item fa fa-facebook"></a>
+							<a href="#" class="topbar-social-item fa fa-instagram"></a>
+							<a href="#" class="topbar-social-item fa fa-twitter"></a>
 						</div>
 					</li>
 					<li class="item-menu-mobile">
@@ -201,6 +206,9 @@
 					</li>
 					<li class="item-menu-mobile">
 						<a href="about.php">About</a>
+					</li>
+					<li class="item-menu-mobile">
+						<a href="contact.php">Contact us</a>
 					</li>
 				</ul>
 			</nav>
