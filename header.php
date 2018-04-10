@@ -165,7 +165,9 @@
 			<div class="wrap-side-menu" >
 				<nav class="side-menu">
 					<ul class="main-menu">
-					<!-- 
+					
+					<!-- Uncomment below if required -->
+					<!--
 					<li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
 						<div class="topbar-child2-mobile">
 							<span class="topbar-email">
@@ -196,7 +198,8 @@
 					<i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
 				</li>
 				<li class="item-menu-mobile">
-					<a href="weather.php">Weather Utility</a>
+					<!-- <a href="weather.php">Weather Utility</a> -->
+					<a href="geo.html">Weather Utility</a>
 				</li>
 				<li class="item-menu-mobile">
 					<a href="about.php">About</a>
