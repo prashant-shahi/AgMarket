@@ -158,7 +158,7 @@ ul, li {
 /* ------------------------------------ */
 input {
 	outline: none;
-	border: none !important;
+  border:1px ridge;
 }
 
 textarea {
@@ -2449,6 +2449,5 @@ img {
 @media (max-width: 992px) {
   footer {
       display: none;
-  }
-  
+  } 
 }

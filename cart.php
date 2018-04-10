@@ -1,4 +1,7 @@
 <?php
+
+// Replace 1 with echo $_SESSION['customer']; 
+
 require('database.php');
 // $res variable can be used to detect and describe error
 
@@ -182,10 +185,6 @@ require('header.php');
 									<option>Pickup</option>
 								</select>
 							</div>
-
-							<?php
-							// Replace 1 with echo $_SESSION['customer']; 
-							// <input type="number" name="uid" value="1" hidden="hidden" /> ?>
 
 							<!--  Google Map with Marker on Customer's Location -->
 							<div class="bo10 flex-w flex-sb p-t-15 p-b-20">

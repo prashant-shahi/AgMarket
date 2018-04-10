@@ -9,6 +9,6 @@
 
 	// Check connection
 	if (!$db) {
-		die("<h3 style='color:RED; text-align:center;'>Database Connection failed: " . mysqli_connect_error() . "</h3>");
+		array_push($errors, "Database Error: ".mysqli_connect_error());
 	}
 ?>

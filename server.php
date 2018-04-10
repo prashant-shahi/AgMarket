@@ -1,18 +1,11 @@
 <?php
 
-session_start();
-
-// variable declaration
+/* variable declaration
 $username = "";
 $phonenumber = "";
 $errors = array(); 
 $_SESSION['success'] = "";
-
-// connect to database
-require('database.php');
-
-if(!$db)
-	array_push($errors, "Database Error".mysqli_connect_error());
+*/
 
 // REGISTER USER
 if (isset($_POST['reg_user'])) {
@@ -27,21 +20,21 @@ if (isset($_POST['reg_user'])) {
 	if (empty($username)) { array_push($errors, "Username is required"); }
 	if (empty($phonenumber)) { array_push($errors, "Phone Number is required"); }
 	if (empty($password_1)) { array_push($errors, "Password is required"); }
-	if(empty($place)) { array_push($errors, "Place is required"); }
+	if (empty($place)) { array_push($errors, "Place is required"); }
 
 	if ($password_1 != $password_2) {
 		array_push($errors, "The two passwords do not match");
 	}
 
 	if (mysqli_num_rows(mysqli_query($db, "SELECT * FROM users WHERE username='$username'")) >= 1) {
-		array_push($errors,"Username is available.. Choose another Username");
+		array_push($errors,"Username is not available. Choose another.");
 	}
 
 	// register user if there are no errors in the form
 	if (count($errors) == 0) {
-		$password = md5($password_1);//encrypt the password before saving in the database
+		//$password = md5($password_1);//encrypt the password before saving in the database
 		$query = "INSERT INTO users (username, phonenumber, password,place) 
-				  VALUES('$username', '$phonenumber', '$password','$place')";
+		VALUES('$username', '$phonenumber', '$password','$place')";
 		mysqli_query($db, $query) or die('A error occured: ' . mysql_error());;
 
 		$_SESSION['username'] = $username;
@@ -62,7 +55,7 @@ else if (isset($_POST['login_user'])) {
 	}
 
 	if (count($errors) == 0) {
-		$password = md5($password);
+		//$password = md5($password);
 		$results=mysqli_query($db, "SELECT * FROM users WHERE username='$username' AND password='$password'");
 
 		if(mysqli_num_rows($results)>0) {
@@ -75,12 +68,17 @@ else if (isset($_POST['login_user'])) {
 		}
 	}
 }
-
 	//logout
-			if (isset($_GET['logout'])){
-				session_destroy();
-				unset($_SESSION['username']);
-				header('location: login.php');
-			}
-		mysqli_close($db);
+if (isset($_GET['logout'])){
+	if(isset($_SESSION['customer'])) {
+		session_destroy();
+		unset($_SESSION['customer']);
+	}
+	if(isset($_SESSION['vendor'])) {
+		session_destroy();
+		unset($_SESSION['vendor']);
+	}
+	header('location: index.php');
+}
+mysqli_close($db);
 ?>

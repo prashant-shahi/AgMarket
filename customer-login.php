@@ -3,7 +3,6 @@ require("session-redirect.php");
 require('database.php');
 require('header.php');
 ?>	
-
 <form method="POST" action="">
 	<h3 class="center">Customer Login</h3>
 
@@ -16,10 +15,10 @@ require('header.php');
 		<input type="password" name="password">
 	</div>
 	<div class="input-group">
-		<button type="submit" class="btn" name="login_user">Login</button>
+		<button type="submit" class="btn" name="login_customer">Login</button>
 	</div>
 	<p>
-		Not yet a member? <a href="register.php">Sign up</a>
+		Not yet a member? <a href="customer-register.php">Sign up</a>
 	</p>
 </form>
 
