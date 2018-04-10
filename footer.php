@@ -28,9 +28,9 @@
 				</p>
 
 				<div class="flex-m p-t-30">
-					<a href="#" class="fs-18 color1 p-r-20 fa fa-facebook"></a>
-					<a href="#" class="fs-18 color1 p-r-20 fa fa-instagram"></a>
-					<a href="#" class="fs-18 color1 p-r-20 fa fa-twitter"></a>
+					<a href="https://fb.me/in.AgMarket" class="fs-18 color1 p-r-20 fa fa-facebook"></a>
+					<a href="https://www.instagram.com/agmarket.in" class="fs-18 color1 p-r-20 fa fa-instagram"></a>
+					<a href="https://twitter.com/AgMarket_in" class="fs-18 color1 p-r-20 fa fa-twitter"></a>
 				</div>
 			</div>
 		</div>

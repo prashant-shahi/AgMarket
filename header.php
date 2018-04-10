@@ -41,7 +41,7 @@
 
 <body class="animsition">
 
-<!-- Header -->
+	<!-- Header -->
 	<header class="header1">
 		<!-- Header desktop -->
 		<div class="container-menu-header">
@@ -68,106 +68,103 @@
 					<h1 class="notranslate">
 						<img src="images/icons/logo.png" alt="IMG-LOGO" />
 						<span class="text-success">Ag</span><span class="text-primary">Ma</span><span class="text-danger">rk</span><span class="text-warning">et</span></h1>
-				</div>
-				<!-- Menu -->
-				<div class="wrap_menu">
-					<nav class="menu">
-						<ul class="main_menu">
-							<li>
-								<a href="index.php">Home</a>
-							</li>
+					</div>
+					<!-- Menu -->
+					<div class="wrap_menu">
+						<nav class="menu">
+							<ul class="main_menu">
+								<li>
+									<a href="index.php">Home</a>
+								</li>
 
-							<li>
-								<a href="product.php">Shop</a>
-								<ul class="sub_menu">
-									<li><a href="cattles.php">Cattles</a></li>
-									<li><a href="crops.php">Crops</a></li>
-									<li><a href="machineries.php">Machineries</a></li>
-									<li><a href="seeds.php">Seeds</a></li>
-								</ul>
-							</li>
+								<li>
+									<a href="product.php">Shop</a>
+									<ul class="sub_menu">
+										<li><a href="livestock.php">Livestock</a></li>
+										<li><a href="crops.php">Crops</a></li>
+										<li><a href="machineries.php">Machineries</a></li>
+										<li><a href="seeds.php">Seeds</a></li>
+									</ul>
+								</li>
 
-							<li>
-								<a href="weather.php">Weather Utility</a>
-							</li>
+								<li>
+									<a href="weather.php">Weather Utility</a>
+								</li>
 
-							<li>
-								<a href="about.php">About</a>
-							</li>
-						</ul>
-					</nav>
-				</div>
+								<li>
+									<a href="about.php">About</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
 
-				<!-- Header Icon -->
-				<div class="header-icons">
-					<a href="#" class="header-wrapicon1 dis-block">
-						<img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
-					</a>
-
-					<span class="linedivide1"></span>
-
-					<div class="header-wrapicon2">
-						<img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-						<span id="cartCount" class="header-icons-noti">0</span>
-						<!-- Header cart noti -->
-						<div class="header-cart header-dropdown">
-							<div class="header-cart-buttons">
-								<div class="header-cart-wrapbtn">
-									<!-- Button -->
-									<a href="cart.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-										View Cart
-									</a>
-								</div>
-
-								<div class="header-cart-wrapbtn">
-									<!-- Button -->
-									<a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-										Check Out
-									</a>
+					<!-- Header Icon -->
+					<div class="header-icons">
+						<div class="header-wrapicon2">
+							<img src="images/icons/icon-header-01.png" class="header-icon1 js-show-header-dropdown" alt="ICON" />
+							<!-- Header cart noti -->
+							<div class="header-cart header-dropdown">
+								<div class="header-cart-buttons">
+									<div class="header-cart-wrapbtn">
+										<!-- Button -->
+										<a href="profile.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+											Profile
+										</a>
+									</div>
+									<div class="header-cart-wrapbtn">
+										<!-- Button -->
+										<a href="customer-orders.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+											View Orders
+										</a>
+									</div>
 								</div>
 							</div>
 						</div>
+						<span class="linedivide1"></span>
+						<a href="cart.php" class="header-wrapicon1 dis-block">
+							<img src="images/icons/icon-header-02.png" class="header-icon1" alt="ICON">
+							<span id="cartCount" class="header-icons-noti">0</span>
+						</a>
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<!-- Header Mobile -->
-		<div class="wrap_header_mobile">
-			<!-- Logo moblie -->
-			<h3 class="logo-mobile header-wrapicon1 notranslate">
-				<a href="index.php">
-					<img src="images/icons/logo.png" alt="IMG-LOGO">
-				</a>
-				<span class="text-success">Ag</span><span class="text-primary">Ma</span><span class="text-danger">rk</span><span class="text-warning">et</span>
-			</h3>
-			<!-- Button show menu -->
-			<div class="btn-show-menu">
-				<!-- Header Icon mobile -->
-				<div class="header-icons-mobile">
-					<div class="header-wrapicon1 dis-block">
-						<img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON" />
-					</div>
-					<span class="linedivide2"></span>
-					<div class="header-wrapicon2">
+			<!-- Header Mobile -->
+			<div class="wrap_header_mobile">
+				<!-- Logo moblie -->
+				<h3 class="logo-mobile header-wrapicon1 notranslate">
+					<a href="index.php">
+						<img src="images/icons/logo.png" alt="IMG-LOGO">
+					</a>
+					<span class="text-success">Ag</span><span class="text-primary">Ma</span><span class="text-danger">rk</span><span class="text-warning">et</span>
+				</h3>
+				<!-- Button show menu -->
+				<div class="btn-show-menu">
+					<!-- Header Icon mobile -->
+					<div class="header-icons-mobile">
+						<div class="header-wrapicon1 dis-block">
+							<img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON" />
+						</div>
+						<span class="linedivide2"></span>
+						<div class="header-wrapicon2">
 							<a href="cart.php">
 								<img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON" />
 							</a>
-						<span class="header-icons-noti">0</span>
+							<span class="header-icons-noti">0</span>
+						</div>
+					</div>
+					<div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+						<span class="hamburger-box">
+							<span class="hamburger-inner"></span>
+						</span>
 					</div>
 				</div>
-				<div class="btn-show-menu-mobile hamburger hamburger--squeeze">
-					<span class="hamburger-box">
-						<span class="hamburger-inner"></span>
-					</span>
-				</div>
 			</div>
-		</div>
 
-		<!-- Menu Mobile -->
-		<div class="wrap-side-menu" >
-			<nav class="side-menu">
-				<ul class="main-menu">
+			<!-- Menu Mobile -->
+			<div class="wrap-side-menu" >
+				<nav class="side-menu">
+					<ul class="main-menu">
 					<!-- 
 					<li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
 						<div class="topbar-child2-mobile">
@@ -184,27 +181,27 @@
 						</div>
 					</li>
 				-->
-					<li class="item-menu-mobile">
-						<a href="index.php">Home</a>
-					</li>
-					<?php //if(isset($_SESSION])) ?>
-					<li class="item-menu-mobile">
-						<a href="product.php">Shop</a>
-						<ul class="sub-menu">
-							<li><a href="crops.php">Crops</a></li>
-							<li><a href="livestock.php">Livestock</a></li>
-							<li><a href="machineries.php">Machineries</a></li>
-							<li><a href="plantseeds.php">Plants and Seeds</a></li>
-						</ul>
-						<i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
-					</li>
-					<li class="item-menu-mobile">
-						<a href="weather.php">Weather Utility</a>
-					</li>
-					<li class="item-menu-mobile">
-						<a href="about.php">About</a>
-					</li>
-				</ul>
-			</nav>
-		</div>
-	</header>
+				<li class="item-menu-mobile">
+					<a href="index.php">Home</a>
+				</li>
+				<?php //if(isset($_SESSION])) ?>
+				<li class="item-menu-mobile">
+					<a href="product.php">Shop</a>
+					<ul class="sub-menu">
+						<li><a href="crops.php">Crops</a></li>
+						<li><a href="livestock.php">Livestock</a></li>
+						<li><a href="machineries.php">Machineries</a></li>
+						<li><a href="plantseeds.php">Plants and Seeds</a></li>
+					</ul>
+					<i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
+				</li>
+				<li class="item-menu-mobile">
+					<a href="weather.php">Weather Utility</a>
+				</li>
+				<li class="item-menu-mobile">
+					<a href="about.php">About</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</header>
