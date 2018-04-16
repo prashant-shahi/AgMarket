@@ -8,6 +8,24 @@
 		</h2>
 	</section>
 
+
+						<!-- Uncomment below if required -->
+					<!--
+					<li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
+						<div class="topbar-child2-mobile">
+							<span class="topbar-email">
+								help@agmarket.in
+							</span>
+						</div>
+					</li>
+					<li class="item-topbar-mobile p-l-10">
+						<div class="topbar-social-mobile">
+							<a href="https://fb.me/in.AgMarket" class="topbar-social-item fa fa-facebook"></a>
+							<a href="https://www.instagram.com/agmarket.in" class="topbar-social-item fa fa-instagram"></a>
+							<a href="https://twitter.com/AgMarket_in" class="topbar-social-item fa fa-twitter"></a>
+						</div>
+					</li>
+				-->
 	<!-- content page -->
 	<section class="bgwhite p-t-66 p-b-38">
 		<div class="container">

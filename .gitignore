@@ -1,3 +1,7 @@
 *~
 *.sql
 test*
+google*.html
+zohoverify
+.gitignore
+

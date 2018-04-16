@@ -1,11 +1,10 @@
 <?php
-
+session_start();
 // Replace 1 with echo $_SESSION['customer']; 
-
 require('database.php');
 // $res variable can be used to detect and describe error
 
-if(isset($_POST['submit']) || !empty($_POST['submit'])) {
+if(isset($_POST['submit']) && !empty($_POST['submit'])) {
 	$ci = $_POST['cartid'];
 	$quantity = $_POST["quantity"];
 	foreach ($quantity as $key => $q) {
@@ -18,7 +17,7 @@ if(isset($_POST['submit']) || !empty($_POST['submit'])) {
 		header('location:cart.php?status=failure');
 	}
 }
-if(isset($_GET['remove']) || !empty($_GET['remove'])) {
+if(isset($_GET['remove']) && !empty($_GET['remove'])) {
 	$res = mysqli_query($db, "DELETE FROM cart where id={$_GET['remove']} and uid = 1");
 	echo "Affected rows: " . mysqli_affected_rows($db);
 	if(mysqli_affected_rows($db)==1) {
@@ -28,8 +27,11 @@ if(isset($_GET['remove']) || !empty($_GET['remove'])) {
 		header('location:cart.php?remstatus=failure');
 	}
 }
-
-require('header.php');
+/**/
+//require('server.php');
+require_once('session-redirect.php');
+require_once('header.php'); 
+require_once('errors.php'); 
 ?>
 
 <!-- Title Page -->
@@ -39,49 +41,54 @@ require('header.php');
 	</h2>
 </section>
 
-<!-- Cart -->
-<section class="cart bgwhite p-t-70 p-b-100">
-	<div class="container">
-		<?php
-		if(isset($_GET['status']) and !empty($_GET['status'])) {
-			$str = "updated";
-			$s = $_GET['status'];
-			if($s != "success" and $s != "failure")
-				$s = "warning";
-		}
-		if(isset($_GET['remstatus']) and !empty($_GET['remstatus'])) {
-			$str = "removed";
-			$s = $_GET['remstatus'];
-			if($s != "success" and $s != "failure")
-				$s = "warning";
-		}
-		if(isset($str))
-		{
-			?>
-			<div class="alert <?php echo $s; ?>">
-				<span class="closebtn">&times;</span> 
-				<strong><?php echo ucfirst($s); ?>!</strong>
-				<?php
-				switch($s) {
-					case "success"	: echo "Cart item successfully $str !!";
-					break;
-					case "failure" 	: echo "Cart item failed to be $str !!";
-					break;
-					default 		: echo "Baka, Cart item status not to be played with !!";
-				}
-				?>
-			</div>
-			<?php
-		}
-		mysqli_query($db,"SET @count:=0");
-		$res = mysqli_query($db, "SELECT cr.id as cartid,(@count:=@count+1) AS sn, uid, c.name as commodity, avail, v.name as vendor, cus.lat as lat, cus.lon as lon, quantity, price,(quantity*price) as total FROM customers as cus, cart as cr,commodities as c,vendors as v WHERE uid=1 and cr.cid=c.id and c.vid=v.id and cus.id=uid") or die (mysqli_error($db));
+<?php
+mysqli_query($db,"SET @count:=0");
+$res = mysqli_query($db, "SELECT cr.id as cartid,(@count:=@count+1) AS sn, uid, c.name as commodity, avail, v.name as vendor, cus.lat as lat, cus.lon as lon, quantity, price,(quantity*price) as total FROM customers as cus, cart as cr,commodities as c,vendors as v WHERE uid=".$_SESSION['id']." and cr.cid=c.id and c.vid=v.id and cus.id=uid");
 
-		if (mysqli_num_rows($res) <= 0) {
-			?>
-			<h2 class="center">Sack is empty ! <br/><a href="index.php" alt="AgMarket Home Page" style="text-decoration: none;">Browse and Add commodities in the sack !!</a></h2>
+if (mysqli_num_rows($res) <= 0) {
+	?>
+	<section class="cart bgwhite text-center p-t-70 p-b-70">
+		<div class="container">
+			<h2 class="center">Cart is empty ! <br/><a href="customer-index.php" alt="AgMarket Home Page" style="text-decoration: underline;">Browse and Add commodities in the sack !!</a></h2>
+		</div>
+	</section>
+	<?php
+}
+else {
+	?>
+	<!-- Cart -->
+	<section class="cart bgwhite p-t-70">
+		<div class="container">
 			<?php
-		}
-		else {
+			if(isset($_GET['status']) and !empty($_GET['status'])) {
+				$str = "updated";
+				$s = $_GET['status'];
+				if($s != "success" and $s != "failure")
+					$s = "warning";
+			}
+			if(isset($_GET['remstatus']) and !empty($_GET['remstatus'])) {
+				$str = "removed";
+				$s = $_GET['remstatus'];
+				if($s != "success" and $s != "failure")
+					$s = "warning";
+			}
+			if(isset($str)) {
+				?>
+				<div class="alert <?php echo $s; ?>">
+					<span class="closebtn">&times;</span> 
+					<strong><?php echo ucfirst($s); ?>!</strong>
+					<?php
+					switch($s) {
+						case "success"	: echo "Cart item successfully $str !!";
+						break;
+						case "failure" 	: echo "Cart item failed to be $str !!";
+						break;
+						default 		: echo "Baka, Cart item status not to be played with !!";
+					}
+					?>
+				</div>
+				<?php
+			}
 			?>
 			<div class="row">
 				<form method="POST" action="" class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
@@ -215,11 +222,12 @@ require('header.php');
 						</div>
 					</form>
 				</div>
-			</div>		
+			</div>
 		</div>
 	</section>
-
-	<?php require('footer.php'); ?>
+	<?php }
+	require('footer.php');
+	?>
 	<!-- Container Selection -->
 	<div id="dropDownSelect1"></div>
 	<div id="dropDownSelect2"></div>
@@ -311,8 +319,5 @@ $('#totalPrice').html(total.toString());
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmt9muKRq8oFoSiZQw-B0hcG-aBrvUNPo&callback=initMap"
 async defer></script>
-<?php
-}
-?>
 </body>
 </html>

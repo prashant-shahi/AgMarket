@@ -2451,3 +2451,61 @@ img {
       display: none;
   } 
 }
+avail {
+  background-color: rgba(255,255,255, 0.5);
+}
+
+.uploader {
+  display:table;
+  position:relative;
+  overflow:hidden;
+  width:300px;
+  height:300px;
+  background:#f3f3f3;
+  border:2px dashed #e8e8e8;
+}
+.innerUploader {
+  display:table-cell;
+  position:relative;
+  outline:2px dashed red;
+  outline-offset: -3px;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  vertical-align:middle;
+  text-align:center;
+}
+#filePhoto{
+    position:absolute;
+    width:290px;
+    height:290px;
+    top:-5px;
+    left:0;
+    z-index:2;
+    opacity:0;
+    cursor:pointer;
+}
+.uploader img{
+    position:absolute;
+    height:300px;
+    width:300;
+    top:-1px;
+    left:-1px;
+    z-index:1;
+    border:none;
+    min-width:100%;
+    min-height:100%;
+}
+.hidden {
+  display:none;
+}
+.imgur-image {
+  height: 150px;
+  width: 150px;
+}
+@media (max-width: 992px) {
+  .imgur-image {
+    height: 100px !important;
+    width: 100px !important;
+  }
+}
