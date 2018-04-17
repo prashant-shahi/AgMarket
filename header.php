@@ -28,6 +28,7 @@
 	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
+	<link rel="stylesheet" type="text/css" href="vendor/slick2/slick2.css">
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/lightbox2/css/lightbox.min.css">
 	<!--===============================================================================================-->
@@ -35,7 +36,7 @@
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/alert/jAlert-v3.css" />
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/main.css?version=27">
+	<link rel="stylesheet" type="text/css" href="css/main.css?version=30">
 	<!--===============================================================================================-->
 </head>
 

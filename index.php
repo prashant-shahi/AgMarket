@@ -121,9 +121,9 @@ include('errors.php');
         </div>
     </div>
 </section>
-
+<hr/>
 <!-- Featured Product -->
-<section class="newproduct bgwhite p-t-45 p-b-105">
+<section class="newproduct bgwhite p-t-35 p-b-20">
     <div class="container">
         <div class="sec-title p-b-60">
             <h3 class="m-text5 t-center">
@@ -136,7 +136,7 @@ include('errors.php');
             <div class="slick2">
                 <?php
                 mysqli_query($db,"SET @count:=0");
-                $res1 = mysqli_query($db, "SELECT (@count:=@count+1) AS sn,t1.id, t1.name, t1.price, t1.avail,t1.vid,v.name as vname FROM vendors as v,commodities as t1 INNER JOIN(select min(price) as MP, name from commodities group by name) as t2 on t1.name = t2.name and t1.price = t2.MP WHERE v.id = t1.vid");
+                $res1 = mysqli_query($db, "SELECT (@count:=@count+1) AS sn,t1.id, t1.name, t1.price, t1.avail,t1.vid,v.name as vname, image_url FROM vendors as v,commodities as t1 INNER JOIN(select min(price) as MP, name from commodities group by name) as t2 on t1.name = t2.name and t1.price = t2.MP WHERE v.id = t1.vid");
 
                 if (mysqli_num_rows($res1)<=0) {
                     ?>
@@ -150,8 +150,8 @@ include('errors.php');
                             <!-- Block2 -->
                             <div class="block2">
                                 <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale">
-                                    <img src="images/item-02.jpg" alt="IMG-PRODUCT">
-                                    <div class="p-t-10 p-l-140 block2-overlay trans-0-4">
+                                    <img src="<?php echo $row1['image_url']; ?>"  alt="IMG-PRODUCT">
+                                    <div class="p-t-10 p-l-140 block2-overlay trans-0-4 text-white">
                                         Available : <?php echo $row1['avail']; ?>
                                     </div>
                                 </div>
@@ -179,10 +179,10 @@ include('errors.php');
         </div>
     </div>
 </section>
+<hr/>
 
 <!-- New Product -->
-
-<section class="newproduct bgwhite p-t-45 p-b-105">
+<section class="newproduct bgwhite p-t-15 p-b-25">
     <div class="container">
         <div class="sec-title p-b-60">
             <h3 class="m-text5 t-center">
@@ -193,7 +193,7 @@ include('errors.php');
             <div class="slick2">
                 <?php
                 mysqli_query($db,"SET @count:=0");
-                $res2 = mysqli_query($db, "SELECT (@count:=@count+1) AS sn, t1.id, t1.name as name, t1.price, t1.avail,t1.vid,v.name as vname FROM vendors as v,commodities as t1 INNER JOIN(select vid,min(id) as mi from commodities group by vid) as t2 on t1.vid = t2.vid and t1.id=t2.mi where v.id = t1.vid");
+                $res2 = mysqli_query($db, "SELECT (@count:=@count+1) AS sn, t1.id, t1.name as name, t1.price, t1.avail,t1.vid,v.name as vname, image_url FROM vendors as v,commodities as t1 INNER JOIN(select vid,min(id) as mi from commodities group by vid) as t2 on t1.vid = t2.vid and t1.id=t2.mi where v.id = t1.vid");
                 if(mysqli_num_rows($res2)<=0) {
 
                     ?>
@@ -213,8 +213,8 @@ include('errors.php');
                             <!-- Block2 -->
                             <div class="block2">
                                 <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-                                    <img src="images/item-03.jpg" alt="IMG-PRODUCT">
-                                    <div class="p-t-10 p-l-140 block2-overlay trans-0-4 avail">
+                                    <img src="<?php echo $row2['image_url']; ?>" alt="IMG-PRODUCT">
+                                    <div class="p-t-10 p-l-140 block2-overlay trans-0-4 text-white">
                                         Available : <?php echo $row2['avail']; ?>
                                     </div>
                                 </div>
@@ -241,7 +241,7 @@ include('errors.php');
             </div>
         </div>
     </section>
-
+    <hr/>
     <div class="sec-title p-t-15 p-b-15">
         <h4 class="m-text5 t-center">
             Benefits for customers

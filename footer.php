@@ -49,6 +49,8 @@
 <!--===============================================================================================-->
 <script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->
+<script type="text/javascript" src="slick2/slick2.min.js"></script>
+<!--===============================================================================================-->
 <script type="text/javascript" src="vendor/alert/jAlert-v3.min.js"></script>
 <script>
 	function agalert(title,content,theme,image){
