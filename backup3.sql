@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.21, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.22, for Linux (x86_64)
 --
 -- Host: localhost    Database: agmarket
 -- ------------------------------------------------------
--- Server version	5.7.21-0ubuntu0.17.10.1
+-- Server version	5.7.22-0ubuntu0.17.10.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -30,7 +30,7 @@ CREATE TABLE `cart` (
   PRIMARY KEY (`id`),
   KEY `uid` (`uid`),
   CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `customers` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `cart` (
 
 LOCK TABLES `cart` WRITE;
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
-INSERT INTO `cart` VALUES (11,6,5,50),(12,6,7,30),(13,6,5,50);
+INSERT INTO `cart` VALUES (21,6,18,3);
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -88,7 +88,7 @@ CREATE TABLE `commodities` (
   KEY `catid` (`catid`),
   CONSTRAINT `commodities_ibfk_1` FOREIGN KEY (`vid`) REFERENCES `vendors` (`id`) ON DELETE CASCADE,
   CONSTRAINT `commodities_ibfk_2` FOREIGN KEY (`catid`) REFERENCES `categories` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,7 +97,7 @@ CREATE TABLE `commodities` (
 
 LOCK TABLES `commodities` WRITE;
 /*!40000 ALTER TABLE `commodities` DISABLE KEYS */;
-INSERT INTO `commodities` VALUES (5,'Cucumber',123,8,12,8,'https://i.imgur.com/RdYA2NU.jpg'),(6,'Tomato',100,8,15,8,'https://i.imgur.com/FeTCit9.jpg'),(7,'Cucumber',150,8,25,8,'https://i.imgur.com/Qwwx4gJ.jpg'),(8,'Cucumber',10,8,5,8,'https://i.imgur.com/1N6A058.jpg'),(9,'Cucumber',100,8,15,8,'https://i.imgur.com/hsIObEy.jpg'),(10,'Cucumber',132,8,13,8,'https://i.imgur.com/XbpK1oK.jpg'),(11,'Tomato',150,8,8,8,'https://i.imgur.com/PlqKbAP.jpg'),(12,'Cucumber',150,8,115,8,'https://i.imgur.com/vf9Eyhd.jpg');
+INSERT INTO `commodities` VALUES (5,'Cucumber',123,8,12,8,'https://i.imgur.com/RdYA2NU.jpg'),(6,'Tomato',100,8,15,8,'https://i.imgur.com/FeTCit9.jpg'),(15,'Plow',2,9,21000,16,'https://i.imgur.com/iFikjvZ.jpg'),(16,'Tractor without plow or carriage',1,9,35000,18,'https://i.imgur.com/3p7eXp7.jpg'),(17,'Tomato Local',225,8,23,8,'https://i.imgur.com/Dyrq7cg.jpg'),(18,'Tractor Plow',3,8,19950,16,'https://i.imgur.com/rMDFzA4.jpg');
 /*!40000 ALTER TABLE `commodities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,7 +152,7 @@ CREATE TABLE `orders` (
   KEY `comid` (`comid`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `customers` (`id`) ON DELETE CASCADE,
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`comid`) REFERENCES `commodities` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,8 +161,69 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (6,6,6,50,'delivery','not confirmed','2018-04-17 05:28:12');
+INSERT INTO `orders` VALUES (6,6,6,50,'delivery','done','2018-05-04 12:51:13');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rating`
+--
+
+DROP TABLE IF EXISTS `rating`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rating` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL,
+  `vid` int(11) NOT NULL,
+  `rating` int(2) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `vid` (`vid`),
+  KEY `uid` (`uid`),
+  CONSTRAINT `rating_ibfk_1` FOREIGN KEY (`vid`) REFERENCES `vendors` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `rating_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `customers` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rating`
+--
+
+LOCK TABLES `rating` WRITE;
+/*!40000 ALTER TABLE `rating` DISABLE KEYS */;
+INSERT INTO `rating` VALUES (7,6,8,4,'2018-05-07 19:38:59'),(8,6,9,4,'2018-05-07 07:51:12'),(9,6,10,2,'2018-05-05 20:16:13'),(10,6,8,4,'2018-05-07 19:38:59'),(11,6,8,4,'2018-05-07 19:38:59');
+/*!40000 ALTER TABLE `rating` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ratings`
+--
+
+DROP TABLE IF EXISTS `ratings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ratings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `vid` int(11) NOT NULL,
+  `star5` int(11) NOT NULL,
+  `star4` int(11) NOT NULL,
+  `star3` int(11) NOT NULL,
+  `star2` int(11) NOT NULL,
+  `star1` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `vid` (`vid`),
+  CONSTRAINT `ratings_ibfk_1` FOREIGN KEY (`vid`) REFERENCES `vendors` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ratings`
+--
+
+LOCK TABLES `ratings` WRITE;
+/*!40000 ALTER TABLE `ratings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ratings` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -183,7 +244,7 @@ CREATE TABLE `vendors` (
   `lon` decimal(10,8) DEFAULT NULL,
   `saltstring` varchar(21) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -192,7 +253,7 @@ CREATE TABLE `vendors` (
 
 LOCK TABLES `vendors` WRITE;
 /*!40000 ALTER TABLE `vendors` DISABLE KEYS */;
-INSERT INTO `vendors` VALUES (8,'a','881d80c2cf5337e3fcb499f7d528bbeb','Bengaluru Urban',1111111111,'a@a.a',13.16155280,77.63439390,'78UOZ9xUhSfRnfsYouDW');
+INSERT INTO `vendors` VALUES (8,'a','881d80c2cf5337e3fcb499f7d528bbeb','Bengaluru Urban',1111111111,'a@a.a',13.16155280,77.63439390,'78UOZ9xUhSfRnfsYouDW'),(9,'x','c4756b3b8609c8204e2ebcfc5e657d3f','Bengaluru Urban',8888888888,'x@x.x',13.16144980,77.63425940,'1WiXDjklMs9jEyJ9Srux'),(10,'7','ca82ef2f97b94c480bc55459582129a8','Bengaluru Urban',7777777777,'7@7.7',13.16184490,77.63487750,'5SvT6uENqPlhKQqW5gB7');
 /*!40000 ALTER TABLE `vendors` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -205,4 +266,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-17 11:01:59
+-- Dump completed on 2018-05-08  9:49:12

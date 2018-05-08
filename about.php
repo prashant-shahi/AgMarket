@@ -7,8 +7,6 @@
 			About
 		</h2>
 	</section>
-
-
 						<!-- Uncomment below if required -->
 					<!--
 					<li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
@@ -95,7 +93,7 @@
 		});
 	</script>
 <!--===============================================================================================-->
-	<script src="js/main.js"></script>
+	<script src="js/main.js?v=1"></script>
 
 </body>
 </html>

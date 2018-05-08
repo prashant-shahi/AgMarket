@@ -4,11 +4,14 @@ session_start();
 require('database.php');
 // $res variable can be used to detect and describe error
 
-if(isset($_POST['submit']) && !empty($_POST['submit'])) {
+if(!isset($_SESSION['customer']) || empty($_SESSION['customer']))
+	header('location:index.php');
+
+if(isset($_POST['updatecart']) && !empty($_POST['updatecart'])) {
 	$ci = $_POST['cartid'];
 	$quantity = $_POST["quantity"];
 	foreach ($quantity as $key => $q) {
-		$res = mysqli_query($db, "UPDATE cart SET quantity=$q where id={$ci[$key]} and uid = 1");
+		$res = mysqli_query($db, "UPDATE cart SET quantity=$q where id={$ci[$key]} and uid = {$_SESSION['id']}");
 	}
 	if(mysqli_affected_rows($db)>=1) {
 		header('location:cart.php?status=success');
@@ -18,8 +21,7 @@ if(isset($_POST['submit']) && !empty($_POST['submit'])) {
 	}
 }
 if(isset($_GET['remove']) && !empty($_GET['remove'])) {
-	$res = mysqli_query($db, "DELETE FROM cart where id={$_GET['remove']} and uid = 1");
-	echo "Affected rows: " . mysqli_affected_rows($db);
+	$res = mysqli_query($db, "DELETE FROM cart where id={$_GET['remove']} and uid = {$_SESSION['id']}");
 	if(mysqli_affected_rows($db)==1) {
 		header('location:cart.php?remstatus=success');
 	}
@@ -35,7 +37,7 @@ require_once('errors.php');
 ?>
 
 <!-- Title Page -->
-<section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(images/heading-pages-01.jpg);">
+<section class="bg-title-page p-t-40 p-b-30 flex-col-c-m" style="background-image: url(images/heading-pages-01.jpg);">
 	<h2 class="l-text2 t-center">
 		Cart
 	</h2>
@@ -43,7 +45,7 @@ require_once('errors.php');
 
 <?php
 mysqli_query($db,"SET @count:=0");
-$res = mysqli_query($db, "SELECT cr.id as cartid,(@count:=@count+1) AS sn, uid, c.name as commodity, avail, v.name as vendor, cus.lat as lat, cus.lon as lon, quantity, price,(quantity*price) as total FROM customers as cus, cart as cr,commodities as c,vendors as v WHERE uid=".$_SESSION['id']." and cr.cid=c.id and c.vid=v.id and cus.id=uid");
+$res = mysqli_query($db, "SELECT cr.id as cartid,(@count:=@count+1) AS sn,image_url, uid, c.name as commodity, avail, v.name as vendor, cus.lat as lat, cus.lon as lon, quantity, price,(quantity*price) as total FROM customers as cus, cart as cr,commodities as c,vendors as v WHERE uid=".$_SESSION['id']." and cr.cid=c.id and c.vid=v.id and cus.id=uid");
 
 if (mysqli_num_rows($res) <= 0) {
 	?>
@@ -57,7 +59,7 @@ if (mysqli_num_rows($res) <= 0) {
 else {
 	?>
 	<!-- Cart -->
-	<section class="cart bgwhite p-t-70">
+	<section class="cart bgwhite p-t-20">
 		<div class="container">
 			<?php
 			if(isset($_GET['status']) and !empty($_GET['status'])) {
@@ -98,12 +100,13 @@ else {
 							<table class="table-shopping-cart" style="overflow: hidden;">
 								<tr class="table-head">
 									<th class="column-1 notranslate">S.N.</th>
-									<th class="column-2">Commodity Name</th>
+									<th class="column-2" colspan="2">Commodity Name</th>
 									<th class="column-3">Vendor Name</th>
 									<th class="column-4">Rate (₹ per KG/Entity)</th>
 									<th class="column-5">Quantity (KG/Entity)</th>
 									<th class="column-6">Price</th>
-									<th class="column-7"></th>
+									<th class="column-7">Map</th>
+									<th></th>
 								</tr>
 								<?php
 								$gtotal = 0;
@@ -113,13 +116,27 @@ else {
 									$total = 0;
 									$i = $row["sn"];
 									$j = $i - 1;
+									$lat = $row["lat"];
+									$lon = $row["lon"];
 									?>
 									<tr class="table-row">
 										<td class="column-1"><?php echo $i; ?></td>
-										<td class="column-2"><?php // Pachi Photo Rakhne eta ?><?php echo $row["commodity"]; ?></td>
-										<td class="column-3 notranslate"><?php echo $row["vendor"]; ?></td>
+										<td>
+											<a href="product-detail.php?commodityid=<?php echo $row["comid"]; ?>">
+												<img src="<?php echo $row['image_url']; ?>" class="imgur-image" />
+											</a>
+										</td>
+										<td>
+											<a href="product-detail.php?commodityid=<?php echo $row["comid"]; ?>">
+												<strong><?php echo $row["commodity"]; ?></strong>
+											</a>
+										</td>
+										<td class="column-3 notranslate">
+											<a href="profile.php?vendorid=<?php echo $row["vid"]; ?>">	
+												<strong><?php echo $row["vendor"]; ?></strong>
+											</a>
 										<td class="column-4 notranslate">
-											<strong class="price" id="<?php echo $j.'-price'; ?>">
+											₹ <strong class="price" id="<?php echo $j.'-price'; ?>">
 												<?php echo $row["price"]; ?>
 											</strong>
 										</td>
@@ -130,7 +147,7 @@ else {
 											<i class="plus fa fa-plus-square" style="font-size:36px;"></i>
 										</td>
 										<td class="column-6 notranslate">
-											<strong class="total" id="<?php echo $j.'-total'; ?>">
+											₹ <strong class="total" id="<?php echo $j.'-total'; ?>">
 												<?php
 												$total = $row["total"];
 												$gtotal += $total;
@@ -139,14 +156,15 @@ else {
 											</strong>
 										</td>
 										<td class="column-7">
+											<div><a style="padding:0; margin:0;" href="https://www.google.com/maps/dir/?api=1&destination=<?php echo $lat.','.$lon; ?>&dir_action=navigate" target="_blank">Navigate<span style="display:block;padding:0; margin:0;" class="notranslate">Google Maps</span></a></div>
+										</td>
+										<td>
 											<a href="cart.php?remove=<?php echo $row['cartid']; ?>">
 												<i class="fa fa-trash-o" style="font-size:36px"></i>
 											</a>
 										</td>
 									</tr>
 									<?php
-									$lat = $row["lat"];
-									$lon = $row["lon"];
 								}
 								?>
 							</table>
@@ -159,7 +177,7 @@ else {
 							</div>
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<!-- Button -->
-								<input type="submit" name="submit" class="float-left flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4" value="Update Cart" />
+								<input type="submit" name="updatecart" class="float-left flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4" value="Update Cart" />
 							</div>
 						</div>
 					</div>
@@ -217,7 +235,7 @@ else {
 							</div>
 							<div class="size15 trans-0-4">
 								<!-- Button -->
-								<input type="submit" name="submit" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4" value="Proceed to Checkout" />
+								<input type="submit" name="cartcheckout" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4" value="Proceed to Checkout" />
 							</div>
 						</div>
 					</form>

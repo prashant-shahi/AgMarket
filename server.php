@@ -159,7 +159,7 @@ else if (isset($_POST['login_vendor'])) {
 		array_push($errors, "Password is required");
 	}
 	if (count($errors) == 0) {
-		array_push($errors, "Password before salt: ".$password);
+//		array_push($errors, "Password before salt: ".$password);
 		$res=mysqli_query($db, "SELECT saltstring FROM vendors WHERE phone='$phone'");
 		if(mysqli_num_rows($res)<=0) {
 			array_push($errors, "This Phone number is not registered");
@@ -167,7 +167,7 @@ else if (isset($_POST['login_vendor'])) {
 		$first = mysqli_fetch_assoc($res);
 		$randstr = $first["saltstring"];
 		$salt = sha1(md5($password)).$randstr;
-		array_push($errors, "md5(password): ".md5($password));
+//		array_push($errors, "md5(password): ".md5($password));
 		$password = md5($password.$salt);
 
 		$res=mysqli_query($db, "SELECT * FROM vendors WHERE phone='$phone' AND password='$password'");
@@ -181,9 +181,9 @@ else if (isset($_POST['login_vendor'])) {
 		}
 		else {
 			array_push($errors, "Wrong phone number/password combination");
-			array_push($errors, "Salt: ".$salt);
-			array_push($errors, "Password after salt: ".$password);
-			array_push($errors, "Random string: ".$randstr);
+//			array_push($errors, "Salt: ".$salt);
+//			array_push($errors, "Password after salt: ".$password);
+//			array_push($errors, "Random string: ".$randstr);
 		}
 	}
 }

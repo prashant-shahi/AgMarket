@@ -10,6 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
 	<!--===============================================================================================-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href='vendor/jquery-bar-rating/dist/themes/fontawesome-stars.css' rel='stylesheet' type='text/css'>
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="fonts/themify/themify-icons.css">
 	<!--===============================================================================================-->
@@ -36,7 +37,7 @@
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/alert/jAlert-v3.css" />
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/main.css?version=30">
+	<link rel="stylesheet" type="text/css" href="css/main.css?v=9">
 	<!--===============================================================================================-->
 </head>
 
@@ -91,10 +92,10 @@
 								<li>
 									<a href="product.php">Shop</a>
 									<ul class="sub_menu">
-										<li><a href="livestock.php">Livestock</a></li>
-										<li><a href="crops.php">Crops</a></li>
-										<li><a href="machineries.php">Machineries</a></li>
-										<li><a href="seeds.php">Seeds</a></li>
+										<li><a href="product.php?categoryid=1">Crops</a></li>
+										<li><a href="product.php?categoryid=2">Livestock</a></li>
+										<li><a href="product.php?categoryid=3">Machineries</a></li>
+										<li><a href="product.php?categoryid=4">Seeds</a></li>
 									</ul>
 								</li>
 								<?php 
@@ -144,22 +145,22 @@
 								$res = mysqli_query($db, "SELECT uid,count(uid) as countcart FROM cart WHERE uid='$id' GROUP BY uid");
 								if(mysqli_num_rows($res)>0) {
 									$first = mysqli_fetch_assoc($res);
-									$id = $first['uid'];	 		// Redundant -,-
+									$id = $first['uid'];	 		// already in session. Redundant -,- but anyway..
 									$countcart = $first['countcart'];
 								}
-								$res = mysqli_query($db, "SELECT c.uid as uid,count(o.uid) as countorders FROM cart as c, orders as o WHERE c.uid=o.uid and o.uid='$id' and status <> 'Done' AND status <> 'Cancelled'GROUP BY c.uid");
+								$res = mysqli_query($db, "SELECT uid,count(uid) as countorders FROM orders WHERE uid='$id' and status not in ('done','cancelled','rejected') GROUP BY uid");
 								if(mysqli_num_rows($res)>0) {
 									$first = mysqli_fetch_assoc($res);
 									$countorders = $first['countorders'];
 								}
 								$url = "customer-orders";
 							}
-							elseif($v) {
+							elseif ($v) {
 								$phone = $_SESSION['vendor'];
 								$name = $_SESSION["name"];
 								$id = $_SESSION["id"];
 								$countorders = 0;
-								$res = mysqli_query($db, "SELECT v.id,count(v.id) as countorders FROM orders as o, commodities as c, vendors as v WHERE v.id = c.vid and o.comid = c.id and v.id='$id' GROUP BY v.id");
+								$res = mysqli_query($db, "SELECT v.id,count(v.id) as countorders FROM orders as o, commodities as c, vendors as v WHERE v.id = c.vid and o.comid = c.id and v.id='$id' and status not in ('done','cancelled','rejected') GROUP BY v.id");
 								if(mysqli_num_rows($res)>0) {
 									$first = mysqli_fetch_assoc($res);
 									$countorders = $first['countorders'];		// Not Redundant for Vendor ID
@@ -182,7 +183,7 @@
 							<span class="linedivide1"></span>
 							<a href="cart.php" class="header-wrapicon1 dis-block">
 								<img src="images/icons/icon-header-02.png" class="bg3 header-icon1" alt="ICON" />
-								<span class="header-icons-noti"><?php echo $countcart; ?></span>
+								<span class="header-icons-noti" id="cartcount"><?php echo $countcart; ?></span>
 							</a>
 							<?php
 						}
@@ -262,10 +263,10 @@
 					<li class="item-menu-mobile">
 						<a href="product.php">Shop</a>
 						<ul class="sub-menu">
-							<li><a href="crops.php">Crops</a></li>
-							<li><a href="livestock.php">Livestock</a></li>
-							<li><a href="machineries.php">Machineries</a></li>
-							<li><a href="plantseeds.php">Plants and Seeds</a></li>
+							<li><a href="product.php?categoryid=1">Crops</a></li>
+							<li><a href="product.php?categoryid=2">Livestock</a></li>
+							<li><a href="product.php?categoryid=3">Machineries</a></li>
+							<li><a href="product.php?categoryid=4">Plants and Seeds</a></li>
 						</ul>
 						<i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
 					</li>

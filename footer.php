@@ -52,6 +52,9 @@
 <script type="text/javascript" src="slick2/slick2.min.js"></script>
 <!--===============================================================================================-->
 <script type="text/javascript" src="vendor/alert/jAlert-v3.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/jquery-bar-rating/dist/jquery.barrating.min.js" type="text/javascript"></script>
+<!--===============================================================================================-->
 <script>
 	function agalert(title,content,theme,image){
 			//e.preventDefault();
@@ -94,7 +97,7 @@
 	<!--===============================================================================================-->
 	<script type="text/javascript" src="vendor/sweetalert/sweetalert.min.js"></script>
 	<!--===============================================================================================-->
-	<script src="js/main.js?v=1"></script>
+	<script src="js/main.js?v=2"></script>
 	<!--===============================================================================================-->
 	<script type="text/javascript">
 		function googleTranslateElementInit() {

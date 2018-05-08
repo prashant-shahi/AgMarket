@@ -151,15 +151,6 @@
         $(this).parent().remove();
     })    
 
-    /*[ Block2 button wishlist ]
-    ===========================================================*/
-    $('.block2-btn-addwishlist').on('click', function(e){
-        e.preventDefault();
-        $(this).addClass('block2-btn-towishlist');
-        $(this).removeClass('block2-btn-addwishlist');
-        $(this).off('click');
-    });
-
     /*[ +/- num product ]
     ===========================================================*/
     $('.btn-num-product-down').on('click', function(e){
