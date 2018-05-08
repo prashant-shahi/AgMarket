@@ -275,8 +275,10 @@
 					else if($v) {
 					?>
 					<li class="item-menu-mobile">
-						<!-- <a href="weather.php">Weather Utility</a> -->
-						<a href="geo.html">Weather Utility</a>
+						<a href="addcommodity.php">Add commodity</a>
+					</li>
+					<li class="item-menu-mobile">
+						<a href="weather.php">Weather Utility</a>
 					</li>
 					<?php
 					}

@@ -8,7 +8,7 @@ if(!isset($_SESSION['customer']) || empty($_SESSION['customer'])) {
 }
 $uid=$_SESSION['id'];
 
-if(isset($_POST['submit']) || !empty($_POST['submit'])) {
+if(isset($_POST['cartcheckout']) && !empty($_POST['cartcheckout'])) {
 	$ordertype = $_POST["ordertype"];
 
 	$res = mysqli_query($db, "SELECT id,cid,quantity FROM cart WHERE uid = $uid");
@@ -18,7 +18,7 @@ if(isset($_POST['submit']) || !empty($_POST['submit'])) {
 		$quantity[] = $row['quantity'];
 	}
 	foreach ($comid as $key => $c) {
-		$res = mysqli_query($db, "INSERT into orders(uid,comid,quantity,ordertype,status) values($uid, $comid[$key], $quantity[$key]),'$ordertype','not confirmed'");
+		$res = mysqli_query($db, "INSERT into orders(uid, comid, quantity, ordertype, status) values($uid $comid[$key], $quantity[$key],'$ordertype', 'not confirmed')");
 		$res = mysqli_query($db, "DELETE FROM cart WHERE id=$cartid[$key] and uid=$uid"); 
 	}
 }

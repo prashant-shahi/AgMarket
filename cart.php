@@ -9,19 +9,15 @@ if(!isset($_SESSION['customer']) || empty($_SESSION['customer']))
 
 if(isset($_POST['updatecart']) && !empty($_POST['updatecart'])) {
 	$ci = $_POST['cartid'];
+	$uid = $_SESSION['id'];
 	$quantity = $_POST["quantity"];
 	foreach ($quantity as $key => $q) {
-		$res = mysqli_query($db, "UPDATE cart SET quantity=$q where id={$ci[$key]} and uid = {$_SESSION['id']}");
+		$res = mysqli_query($db, "UPDATE cart SET quantity=$q where id={$ci[$key]} and uid = $uid");
 	}
-	if(mysqli_affected_rows($db)>=1) {
-		header('location:cart.php?status=success');
-	}
-	else {
-		header('location:cart.php?status=failure');
-	}
+	header('location:cart.php?status=success');
 }
 if(isset($_GET['remove']) && !empty($_GET['remove'])) {
-	$res = mysqli_query($db, "DELETE FROM cart where id={$_GET['remove']} and uid = {$_SESSION['id']}");
+	$res = mysqli_query($db, "DELETE FROM cart where id={$_GET['remove']} and uid = $uid");
 	if(mysqli_affected_rows($db)==1) {
 		header('location:cart.php?remstatus=success');
 	}
@@ -235,7 +231,7 @@ else {
 							</div>
 							<div class="size15 trans-0-4">
 								<!-- Button -->
-								<input type="submit" name="cartcheckout" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4" value="Proceed to Checkout" />
+								<input type="submit" name="cartcheckout" value="cartcheckout" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4" value="Proceed to Checkout" />
 							</div>
 						</div>
 					</form>

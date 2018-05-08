@@ -267,6 +267,43 @@ function distance($lat1, $lon1, $lat2, $lon2, $unit) {
 		dropdownParent: $('#dropDownSelect2')
 	});
 </script>
+<!-- Set rating -->
+<script type='text/javascript'>
+    $(document).ready(function() {
+        $(".addtocart").click(function() {
+            // Get element id by data-id attribute
+            var el_id = $(this).data("id")
+
+            // commodity was selected by a user
+            var split_id = el_id.split("_");
+            var comid = split_id[1]; // postid
+            var value = 1;
+
+            // AJAX Request
+            $.ajax({
+                url: 'addtocart_ajax.php',
+                type: 'post',
+                data: {comid:comid,quantity:value},
+                dataType: 'json',
+                success: function(data){
+                    var status = data['status'];
+                    var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
+                    $(this).on('click', function(){
+                        swal(nameProduct, "is added to cart !", "success");
+                    });
+                    if(!status)
+                        agalert("Alert","Commodity already exists in the cart","yellow");
+                    else if(status==-1)
+                        swal("Error while adding Commodity to cart","failure");
+                    else if(status==1) {
+                        $("#cartcount").text(parseInt($("#cartcount").text())+1);
+                        swal("Successfully added Commodity to cart","success");
+                    }
+                }
+            });
+        });
+    });
+</script>
 <!--===============================================================================================-->
 </body>
 </html>
