@@ -71,7 +71,7 @@ include('errors.php');
                     <img src="images/banner-02.jpg" alt="IMG-BENNER">
                     <div class="block1-wrapbtn w-size2">
                         <!-- Button -->
-                        <a href="machineries.php" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4 ">
+                        <a href="product.php?categoryid=3" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4 ">
                             Machineries
                         </a>
                     </div>
@@ -83,7 +83,7 @@ include('errors.php');
 
                     <div class="block1-wrapbtn w-size2">
                         <!-- Button -->
-                        <a href="livestock.php" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
+                        <a href="product.php?categoryid=2" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
                             Livestock
                         </a>
                     </div>
@@ -97,7 +97,7 @@ include('errors.php');
 
                     <div class="block1-wrapbtn w-size2">
                         <!-- Button -->
-                        <a href="plantseeds.php" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
+                        <a href="product.php?categoryid=4" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
                             Plants and Seeds
                         </a>
                     </div>
@@ -109,7 +109,7 @@ include('errors.php');
 
                     <div class="block1-wrapbtn w-size2">
                         <!-- Button -->
-                        <a href="crops.php" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
+                        <a href="product.php?categoryid=1" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
                             Crops
                         </a>
                     </div>
