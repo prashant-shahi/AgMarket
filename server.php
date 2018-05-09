@@ -9,6 +9,123 @@ $phonenumber = "";
 $_SESSION['success'] = "";
 */
 
+function sendSms($number, $message) {
+	$authKey = "209549A6j7ZUX5I8By5ace616c";
+
+	$curl = curl_init();
+
+	curl_setopt_array($curl, array(
+		CURLOPT_URL => "http://api.msg91.com/api/sendhttp.php?sender=AgMrkt&route=4&mobiles=".$number."&authkey=".$authKey."&encrypt=&country=91&message=".urlencode($message),
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => "",
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 30,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => "GET",
+		CURLOPT_SSL_VERIFYHOST => 0,
+		CURLOPT_SSL_VERIFYPEER => 0,
+	));
+
+	$response = curl_exec($curl);
+	$err = curl_error($curl);
+
+	curl_close($curl);
+
+	if ($err) {
+		return "cURL Error #:" . $err;
+	} else {
+		return $response;
+	}
+}
+
+function sendOtp($number, $message) {
+	$curl = curl_init();
+
+	curl_setopt_array($curl, array(
+		CURLOPT_URL => "http://control.msg91.com/api/sendotp.php?template=&otp_length=&authkey=".$authKey."&message=".$message."&sender=AgMart&mobile=".$number,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => "",
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 30,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => "POST",
+		CURLOPT_POSTFIELDS => "",
+		CURLOPT_SSL_VERIFYHOST => 0,
+		CURLOPT_SSL_VERIFYPEER => 0,
+	));
+
+	$response = curl_exec($curl);
+	$err = curl_error($curl);
+
+	curl_close($curl);
+
+	if ($err) {
+		return "cURL Error #:" . $err;
+	} else {
+		return $response;
+	}
+}
+function resendOtp($number, $message) {
+	$curl = curl_init();
+
+	curl_setopt_array($curl, array(
+		CURLOPT_URL => "http://control.msg91.com/api/retryotp.php?authkey=".$authKey."&mobile=+91".$number."&retrytype=",
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => "",
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 30,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => "POST",
+		CURLOPT_POSTFIELDS => "",
+		CURLOPT_SSL_VERIFYHOST => 0,
+		CURLOPT_SSL_VERIFYPEER => 0,
+		CURLOPT_HTTPHEADER => array(
+			"content-type: application/x-www-form-urlencoded"
+		),
+	));
+
+	$response = curl_exec($curl);
+	$err = curl_error($curl);
+
+	curl_close($curl);
+
+	if ($err) {
+		return "cURL Error #:" . $err;
+	} else {
+		return $response;
+	}
+}
+
+function verifyOtp($number, $otp) {
+	$curl = curl_init();
+
+	curl_setopt_array($curl, array(
+		CURLOPT_URL => "https://control.msg91.com/api/verifyRequestOTP.php?authkey=".$authkey."&mobile=".$number."&otp=".$otp,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => "",
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 30,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => "POST",
+		CURLOPT_POSTFIELDS => "",
+		CURLOPT_SSL_VERIFYHOST => 0,
+		CURLOPT_SSL_VERIFYPEER => 0,
+		CURLOPT_HTTPHEADER => array(
+			"content-type: application/x-www-form-urlencoded"
+		),
+	));
+
+	$response = curl_exec($curl);
+	$err = curl_error($curl);
+
+	curl_close($curl);
+
+	if ($err) {
+		return "cURL Error #:" . $err;
+	} else {
+		return $response;
+	}
+}
 function getRandomString() {
 	$length = 20;
 	$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -17,6 +134,25 @@ function getRandomString() {
 		$randomString .= $characters[rand(0, strlen($characters) - 1)];
 	}
 	return $randomString;
+}
+function distance($lat1, $lon1, $lat2, $lon2, $unit) {
+	$theta = $lon1 - $lon2;
+	$dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+	$dist = acos($dist);
+	$dist = rad2deg($dist);
+	$miles = $dist * 60 * 1.1515;
+	$unit = strtoupper($unit);
+
+	if ($unit == "K") {
+		return ($miles * 1.609344);
+	}
+	else if ($unit == "METER") {
+		return ($miles * 1.609344/1000);
+	} else if ($unit == "N") {
+		return ($miles * 0.8684);
+	} else {
+		return $miles;
+	}
 }
 
 // REGISTER Customer

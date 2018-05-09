@@ -61,7 +61,7 @@ $catstring = "";
 </div>
 
 <!-- Product Detail -->
-<div class="container bgwhite p-t-15 p-b-35">
+<div class="container bgwhite p-t-15 p-b-25">
 	<div class="flex-w flex-sb">
 		<div class="w-size13 p-t-30 respon5">
 			<div class="wrap-slick3 flex-sb flex-w">
@@ -164,12 +164,11 @@ $catstring = "";
 		</div>
 	</div>
 </div>
-
-
+<hr/>
 <!-- Relate Product -->
-<section class="newproduct bgwhite p-t-25 p-b-25">
+<section class="newproduct bgwhite p-b-25">
 	<div class="container">
-		<div class="sec-title p-b-20">
+		<div class="sec-title p-t-15 p-b-45">
 			<h3 class="m-text5 t-center">
 				Related Products
 			</h3>
@@ -231,7 +230,7 @@ $catstring = "";
 	</div>
 </section>
 
-<?php require('footer.php'); ?>
+<?php require_once('footer.php'); ?>
 
 <!--===============================================================================================-->
 <script type="text/javascript" src="vendor/sweetalert/sweetalert.min.js"></script>

@@ -37,7 +37,7 @@
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/alert/jAlert-v3.css" />
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/main.css?v=9">
+	<link rel="stylesheet" type="text/css" href="css/main.css?v=12">
 	<!--===============================================================================================-->
 </head>
 
@@ -168,7 +168,7 @@
 								$url = "vendor-orders";
 							}
 							?>
-							<a href="profile.php?<?php if($c) echo "customerid=".$id; if($v) echo "vendorid=".$id; ?>">
+							<a href="userprofile.php?<?php if($c) echo "customerid=".$id; if($v) echo "vendorid=".$id; ?>">
 								<img src="images/icons/icon-header-01.png" class="bg3 header-icon1" alt="ICON" />
 							</a>
 						</div>
@@ -218,7 +218,7 @@
 					<!-- Header Icon mobile -->
 					<div class="header-icons-mobile">
 						<div class="header-wrapicon1 dis-block">
-							<a href="profile.php?<?php if($c) echo "customerid=".$id; if($v) echo "vendorid=".$id; ?>">
+							<a href="userprofile.php?<?php if($c) echo "customerid=".$id; if($v) echo "vendorid=".$id; ?>">
 								<img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON" title="Profile" />
 							</a>
 						</div>
@@ -309,9 +309,3 @@
 			</nav>
 		</div>
 	</header>
-
-	<?php 
-	//foreach($_SESSION as $key => $val) {
-	//	echo "\$_SESSION[\$key] = \$_SESSION[$key] = ".$val."<br/>";
-	//}
-	?>

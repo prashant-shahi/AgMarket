@@ -1,7 +1,7 @@
 <?php
-require('database.php');
-require('server.php');
-require('header.php');
+require_once('database.php');
+require_once('server.php');
+require_once('header.php');
 include('errors.php');
 ?>
 
@@ -54,14 +54,15 @@ include('errors.php');
 					</button>
 				</div>
 				<p>
-					Already a member? <a href="customer-login.php">Sign in</a>
+					Already a member? <a href="customer-login.php"><strong>Sign in</strong></a>
 				</p>
 			</form>
 			<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2"></div>
 		</div>
-		<?php require('footer.php'); ?>
 	</div>
 </section>
+<?php require_once('footer.php'); ?>
+
 <!-- Loading Google API -->
 <script>
 	var x = document.getElementById("demo");

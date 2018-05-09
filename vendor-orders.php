@@ -113,14 +113,14 @@ else {
 										<?php
 										if($row["status"] === "not confirmed") {
 											?>
-											<a href="vendor-orders.php?approve=<?php echo $row["id"]; ?>">
+											<a href="vendor-orders.php?approve=<?php echo $row["id"]; ?>" title="Click to accept order">
 												<i class="fa fa-check" style="font-size:40px"></i>
 											</a>
 											<?php
 										}
 										else if($row["status"] === "confirmed") {
 											?>
-											<a href="vendor-orders.php?delivered=<?php echo $row["id"]; ?>">
+											<a href="vendor-orders.php?delivered=<?php echo $row["id"]; ?>" title="Click if delivered">
 												<i class="fa fa-truck" style="font-size:40px"></i>
 											</a>
 											<?php	
@@ -136,7 +136,7 @@ else {
 										<?php
 										if($row["status"] !== "rejected") {
 											?>
-											<a href="vendor-orders.php?reject=<?php echo $row["id"]; ?>">
+											<a href="vendor-orders.php?reject=<?php echo $row["id"]; ?>" title="Click to reject order">
 												<i class="fa fa-times" style="font-size:40px"></i>
 											</a>
 											<?php
@@ -216,10 +216,12 @@ else {
 								<tr class="table-row">
 									<td class="column-1"><?php echo $row['sn']; ?></td>
 									<td>
-										<img src="<?php echo $row['image_url']; ?>" class="imgur-image" />
+										<a href="product-detail.php?commodityid=<?php echo $row["comid"]; ?>">
+											<img src="<?php echo $row['image_url']; ?>" class="imgur-image" />
+										</a>
 									</td>
 									<td>
-										<a href="product-detail.php?id=<?php echo $row["comid"]; ?>"><?php echo ucwords($row["comname"]); ?></a>
+										<a href="product-detail.php?commodityid=<?php echo $row["comid"]; ?>"><?php echo ucwords($row["comname"]); ?></a>
 									</td>
 									<td class="column-3 notranslate"><?php echo $row["cusname"]."<br/>id: #{$row['cusid']}"; ?></td>
 									<td class="column-4"><?php echo $row["quantity"]; ?></td>

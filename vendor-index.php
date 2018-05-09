@@ -1,7 +1,9 @@
 <?php
 require_once('database.php');
 require_once('server.php');
-require_once('session-redirect.php');
+
+if(!isset($_SESSION['vendor']) || empty($_SESSION['vendor']))
+	header('location: index.php');
 
 if(isset($_GET['remove']) && !empty($_GET['remove'])) {
 	$res = mysqli_query($db, "DELETE FROM commodities where id={$_GET['remove']} and vid={$_SESSION['id']}");
@@ -14,7 +16,7 @@ if(isset($_GET['remove']) && !empty($_GET['remove'])) {
 	}
 }
 
-require('header.php'); 
+require_once('header.php'); 
 include('errors.php');
 ?>
 
@@ -102,93 +104,45 @@ else {
 	}
 	?>
 	<hr/>
-	<section class="banner bgwhite p-t-10 p-b-10">
-		<div class="sec-title p-b-10">
-			<h3 class="m-text5 t-center">
-				Features of our application
-			</h3>
-		</div>
-		<!-- Slide1 -->
-		<section class="slide1">
-			<div class="wrap-slick1">
-				<div class="slick1">
-					<div class="item-slick1 item1-slick1" style="background-image: url(images/master-slide-02.jpg);">
-						<div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
-							<span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="fadeInDown">
-								Use our android app for easy 
-							</span>
-
-							<h2 class="caption2-slide1 xl-text1 t-center animated visible-false m-b-37" data-appear="fadeInUp">
-								Android App
-							</h2>
-						</div>
-					</div>
-
-					<div class="item-slick1 item2-slick1" style="background-image: url(images/master-slide-03.jpg);">
-						<div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
-							<span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="rollIn">
-								Use this application in your own lanuage
-							</span>
-							<h2 class="caption2-slide1 xl-text1 t-center animated visible-false m-b-37" data-appear="lightSpeedIn">
-								Native Language
-							</h2>
-						</div>
-					</div>
-
-					<div class="item-slick1 item3-slick1" style="background-image: url(images/master-slide-04.jpg);">
-						<div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
-							<span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="rotateInDownLeft">
-								Know the predictions of weather
-							</span>
-							<h2 class="caption2-slide1 xl-text1 t-center animated visible-false m-b-37" data-appear="rotateInUpRight">
-								Weather Utilities
-							</h2> 
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-	</section>
-	<hr/>
 	<!-- Shipping -->
 	<div class="sec-title p-b-10">
 		<h4 class="m-text5 t-center">
-			Benefits for customers
+			Benefits for vendors
 		</h4>
 	</div>
 	<section class="shipping bgwhite p-t-15 p-b-15">
 		<div class="flex-w p-l-15 p-r-15">
 			<div class="flex-col-c w-size5 p-l-15 p-r-15 p-t-16 p-b-15 respon1">
 				<h4 class="m-text12 t-center">
-					Never be at loss
+					Reach more customer
 				</h4>
 				<span class="s-text11 t-center">
-					Compare rates from different vendors
+					AgMarket platform will make your commodities easily avail to customers
 				</span>
 			</div>
 
 			<div class="flex-col-c w-size5 p-l-15 p-r-15 p-t-16 p-b-15 bo2 respon2">
 				<h4 class="m-text12 t-center">
-					Delivery or Pick-up
+					Delivery or Pick-up or Reject
 				</h4>
 
 				<span class="s-text11 t-center">
-					Simply select option for either delivery or pick-up while ordering
+					Orders will be either for delivery or pick-up which is upto vendors to accept or reject the order
 				</span>
 			</div>
 
 			<div class="flex-col-c w-size5 p-l-15 p-r-15 p-t-16 p-b-15 respon1">
 				<h4 class="m-text12 t-center">
-					Place Order anytime
+					Weather Utilites
 				</h4>
 
 				<span class="s-text11 t-center">
-					Our site is 24/7 available for your service
+					We also provide weather forecast
 				</span>
 			</div>
 		</div>
 	</section>
 
-	<?php require('footer.php'); ?>
+	<?php require_once('footer.php'); ?>
 </body>
 </html>

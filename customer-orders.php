@@ -1,25 +1,34 @@
 <?php
-require('database.php');
-require('server.php');
+require_once('database.php');
+require_once('server.php');
+
 // $res variable can be used to detect and describe error
 
 if(!isset($_SESSION['customer']) || empty($_SESSION['customer'])) {
-	header('location:customer-index.php');
+	header('location:index.php');
 }
+
 $uid=$_SESSION['id'];
+$uname=$_SESSION['name'];
+$uphone=$_SESSION['customer'];
 
 if(isset($_POST['cartcheckout']) && !empty($_POST['cartcheckout'])) {
 	$ordertype = $_POST["ordertype"];
 
-	$res = mysqli_query($db, "SELECT id,cid,quantity FROM cart WHERE uid = $uid");
+	$res = mysqli_query($db, "SELECT v.name as vname, c.name as comname,phone,car.id,cid,quantity FROM cart as car, commodities as c, vendors as v WHERE car.cid=c.id and c.vid=v.id and uid = $uid");
 	while($row = mysqli_fetch_assoc($res)) {
 		$cartid[] = $row['id'];
-		$comid[] = $row['comid'];
+		$comid[] = $row['cid'];
+		$comname[] = $row['comname'];
 		$quantity[] = $row['quantity'];
+		$phone[] = $row['phone'];
+		$vname[] = $row['vname'];
 	}
 	foreach ($comid as $key => $c) {
-		$res = mysqli_query($db, "INSERT into orders(uid, comid, quantity, ordertype, status) values($uid $comid[$key], $quantity[$key],'$ordertype', 'not confirmed')");
-		$res = mysqli_query($db, "DELETE FROM cart WHERE id=$cartid[$key] and uid=$uid"); 
+		$res = mysqli_query($db, "INSERT into orders(uid, comid, quantity, ordertype, status) values($uid, {$comid[$key]}, {$quantity[$key]},'$ordertype', 'not confirmed')");
+		$res = mysqli_query($db, "DELETE FROM cart WHERE id={$cartid[$key]} and uid=$uid"); 
+		echo "Dear {$vname[$key]}, $uname ($uphone) has ordered {$quantity[$key]} quantity of {$comname[$key]}. Contact your customer.";
+		sendSms($phone[$key],"Dear {$vname[$key]}, $uname ($uphone) has ordered {$quantity[$key]} quantity of {$comname[$key]} for $ordertype. Check our website/application. -- AgMarket.in");
 	}
 }
 if(isset($_GET['remove']) && !empty($_GET['remove'])) {
@@ -33,7 +42,7 @@ if(isset($_GET['remove']) && !empty($_GET['remove'])) {
 	}
 }
 
-require('header.php');
+require_once('header.php');
 include('errors.php');
 ?>
 
@@ -125,6 +134,7 @@ include('errors.php');
 											</strong>
 										</td>
 										<td class="column-7">
+
 											<div><a style="padding:0; margin:0;" href="https://www.google.com/maps/dir/?api=1&destination=<?php echo $lat.','.$lon; ?>&dir_action=navigate" target="_blank" title="Navigate in Google Maps">Navigate<span style="display:block;padding:0; margin:0;" class="notranslate">Google Maps</span></a></div>
 										</td>
 										<td>
@@ -250,6 +260,6 @@ include('errors.php');
 		<div> Done <span> - Order is successfully received by Customer</span></div>
 	</div>
 </section>
-<?php require('footer.php'); ?>
+<?php require_once('footer.php'); ?>
 </body>
 </html>

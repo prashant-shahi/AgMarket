@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "database.php";
+require_once("database.php");
 
 $uid = $_SESSION['id']; // User id
 $vid = $_POST['vid'];

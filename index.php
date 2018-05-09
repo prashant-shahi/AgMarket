@@ -1,13 +1,13 @@
 <?php
-require('database.php');
-require('server.php');
+require_once('database.php');
+require_once('server.php');
 
 if(isset($_SESSION['customer']))
 	header('location: customer-index.php');
 if(isset($_SESSION['vendor']))
 	header('location: vendor-index.php');
 
-require('header.php'); 
+require_once('header.php'); 
 include('errors.php');
 ?>
 
@@ -22,19 +22,8 @@ include('errors.php');
 	<section class="slide1">
 		<div class="wrap-slick1">
 			<div class="slick1">
-				<div class="item-slick1 item1-slick1" style="background-image: url(images/master-slide-02.jpg);">
-					<div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
-						<span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="fadeInDown">
-							Use our android app for easy 
-						</span>
 
-						<h2 class="caption2-slide1 xl-text1 t-center animated visible-false m-b-37" data-appear="fadeInUp">
-							Android App
-						</h2>
-					</div>
-				</div>
-
-				<div class="item-slick1 item2-slick1" style="background-image: url(images/master-slide-03.jpg);">
+				<div class="item-slick1 item1-slick1" style="background-image: url(images/master-slide-03.jpg);">
 					<div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
 						<span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="rollIn">
 							Use this application in your own lanuage
@@ -45,7 +34,7 @@ include('errors.php');
 					</div>
 				</div>
 
-				<div class="item-slick1 item3-slick1" style="background-image: url(images/master-slide-04.jpg);">
+				<div class="item-slick1 item2-slick1" style="background-image: url(images/master-slide-04.jpg);">
 					<div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
 						<span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="rotateInDownLeft">
 							Know the predictions of weather
@@ -55,6 +44,18 @@ include('errors.php');
 						</h2> 
 					</div>
 				</div>
+
+				<div class="item-slick1 item3-slick1" style="background-image: url(images/master-slide-02.jpg);">
+					<div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
+						<span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="fadeInDown">
+							Coordinates are shared between vendors and customers
+						</span>
+
+						<h2 class="caption2-slide1 xl-text1 t-center animated visible-false m-b-37 notranslate" data-appear="fadeInUp">
+							Google Maps Geolocation
+						</h2>
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>
@@ -62,8 +63,8 @@ include('errors.php');
 <hr/>
 
 <!-- Banner -->
-<section class="banner bgwhite p-t-40 p-b-40">
-	<div class="sec-title p-b-60">
+<section class="banner bgwhite p-t-20 p-b-30">
+	<div class="sec-title p-b-30">
 		<h3 class="m-text5 t-center">
 			Categories
 		</h3>
@@ -76,7 +77,7 @@ include('errors.php');
 					<img src="images/banner-02.jpg" alt="IMG-BENNER">
 					<div class="block1-wrapbtn w-size2">
 						<!-- Button -->
-						<a href="product.php?categoryid=3" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4 ">
+						<a href="customer-login.php" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4 ">
 							Machineries
 						</a>
 					</div>
@@ -88,7 +89,7 @@ include('errors.php');
 
 					<div class="block1-wrapbtn w-size2">
 						<!-- Button -->
-						<a href="product.php?categoryid=2" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
+						<a href="customer-login.php" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
 							Livestock
 						</a>
 					</div>
@@ -102,7 +103,7 @@ include('errors.php');
 
 					<div class="block1-wrapbtn w-size2">
 						<!-- Button -->
-						<a href="product.php?categoryid=4" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
+						<a href="customer-login.php" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
 							Plants and Seeds
 						</a>
 					</div>
@@ -114,7 +115,7 @@ include('errors.php');
 
 					<div class="block1-wrapbtn w-size2">
 						<!-- Button -->
-						<a href="product.php?categoryid=1" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
+						<a href="customer-login.php" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
 							Crops
 						</a>
 					</div>
@@ -125,9 +126,9 @@ include('errors.php');
 </section>
 <hr/>
 <!-- Featured Product -->
-<section class="newproduct bgwhite p-t-35 p-b-20">
+<section class="newproduct bgwhite p-t-10">
 	<div class="container">
-		<div class="sec-title p-b-60">
+		<div class="sec-title p-b-30">
 			<h3 class="m-text5 t-center">
 				Featured Commodities
 			</h3>
@@ -151,7 +152,7 @@ include('errors.php');
 							<!-- Block2 -->
 							<div class="block2">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale">
-									<img src="<?php echo $row1['image_url']; ?>"  alt="IMG-PRODUCT">
+									<img class="featured-img" src="<?php echo $row1['image_url']; ?>"  alt="IMG-PRODUCT">
 									<div class="p-t-10 p-l-140 block2-overlay trans-0-4 text-white">
 										Available : <?php echo $row1['avail']; ?>
 									</div>
@@ -187,7 +188,7 @@ include('errors.php');
 							<!-- Block2 -->
 							<div class="block2">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-									<img src="<?php echo $row2['image_url']; ?>" alt="IMG-PRODUCT">
+									<img class="featured-img" src="<?php echo $row2['image_url']; ?>" alt="IMG-PRODUCT">
 									<div class="p-t-10 p-l-140 block2-overlay trans-0-4 text-white">
 										Available : <?php echo $row2['avail']; ?>
 									</div>
@@ -261,7 +262,7 @@ include('errors.php');
 	</div>
 </section>
 
-<?php require('footer.php'); ?>
+<?php require_once('footer.php'); ?>
 
 <script type="text/javascript">
 	$('.block2-btn-addcart').each(function(){

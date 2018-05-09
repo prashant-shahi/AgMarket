@@ -1,8 +1,11 @@
 <?php
-require('database.php');
-require('server.php');
-require('session-redirect.php');
-require('header.php'); 
+require_once('database.php');
+require_once('server.php');
+
+if(!isset($_SESSION['customer']) || empty($_SESSION['customer']))
+    header('location: index.php');
+
+require_once('header.php'); 
 include('errors.php'); 
 ?>
 
@@ -17,14 +20,14 @@ include('errors.php');
     <section class="slide1">
         <div class="wrap-slick1">
             <div class="slick1">
-                <div class="item-slick1 item1-slick1" style="background-image: url(images/master-slide-02.jpg);">
+                <div class="item-slick1 item3-slick1" style="background-image: url(images/master-slide-02.jpg);">
                     <div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
                         <span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="fadeInDown">
-                            Use our android app for easy 
+                            Coordinates are shared between vendors and customers
                         </span>
 
                         <h2 class="caption2-slide1 xl-text1 t-center animated visible-false m-b-37" data-appear="fadeInUp">
-                            Android App
+                            Google Maps Geolocation
                         </h2>
                     </div>
                 </div>
@@ -145,7 +148,7 @@ include('errors.php');
                             <!-- Block2 -->
                             <div class="block2">
                                 <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelsale">
-                                    <img src="<?php echo $row1['image_url']; ?>"  alt="IMG-PRODUCT">
+                                    <img class="featured-img" src="<?php echo $row1['image_url']; ?>"  alt="IMG-PRODUCT">
                                     <div class="p-t-10 p-l-140 block2-overlay trans-0-4 text-white">
                                         Available : <?php echo $row1['avail']; ?>
                                         <div class="block2-btn-addcart w-size1">
@@ -157,7 +160,7 @@ include('errors.php');
                                     </div>
                                 </div>
                                 <div class="block2-txt p-t-5 p-b-5">
-                                    <a href="product-detail.php?id=<?php echo $row1['id']; ?>" class="block2-name dis-block s-text3">
+                                    <a href="product-detail.php?commodityid=<?php echo $row1['id']; ?>" class="block2-name dis-block s-text3">
                                         <?php echo  ucfirst($row1['name']); ?>
                                     </a>
                                     <span class="block2-price m-text6">
@@ -187,7 +190,7 @@ include('errors.php');
                             <!-- Block2 -->
                             <div class="block2">
                                 <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-                                    <img src="<?php echo $row2['image_url']; ?>" alt="IMG-PRODUCT">
+                                    <img class="featured-img" src="<?php echo $row2['image_url']; ?>" alt="IMG-PRODUCT">
                                     <div class="p-t-10 p-l-140 block2-overlay trans-0-4 text-white">
                                         Available : <?php echo $row2['avail']; ?>
                                         <div class="w-size1">
@@ -201,7 +204,7 @@ include('errors.php');
                                     </div>
                                 </div>
                                 <div class="block2-txt p-t-5 p-b-5">
-                                    <a href="product-detail.html?id=<?php echo $row2['id'];?>" class="block2-name dis-block s-text3 p-b-5">
+                                    <a href="product-detail.php?commodityid=<?php echo $row2['id'];?>" class="block2-name dis-block s-text3 p-b-5">
                                         <?php echo  ucfirst($row2['name']); ?>
                                     </a>
                                     <span class="block2-price m-text6 p-r-5">
@@ -264,7 +267,7 @@ include('errors.php');
     </div>
 </section>
 
-<?php require('footer.php'); ?>
+<?php require_once('footer.php'); ?>
 <!-- Set rating -->
 <script type='text/javascript'>
     $(document).ready(function() {

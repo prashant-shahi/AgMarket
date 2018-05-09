@@ -1,7 +1,7 @@
 <?php
-require('database.php');
-require('server.php');
-require('categoryfunction.php');
+require_once('database.php');
+require_once('server.php');
+require_once('categoryfunction.php');
 
 if(isset($_SESSION['customer']) && !empty($_SESSION['customer'])) {
 	$cid=$_SESSION['id'];
@@ -38,28 +38,8 @@ $res = mysqli_query($db,"SELECT count(*) as count from commodities as com, categ
 $countresult=mysqli_fetch_assoc($res);
 $count = $countresult['count'];
 
-require('header.php');
-require('errors.php');
-
-function distance($lat1, $lon1, $lat2, $lon2, $unit) {
-	$theta = $lon1 - $lon2;
-	$dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
-	$dist = acos($dist);
-	$dist = rad2deg($dist);
-	$miles = $dist * 60 * 1.1515;
-	$unit = strtoupper($unit);
-
-	if ($unit == "K") {
-		return ($miles * 1.609344);
-	}
-	else if ($unit == "METER") {
-		return ($miles * 1.609344/1000);
-	} else if ($unit == "N") {
-		return ($miles * 0.8684);
-	} else {
-		return $miles;
-	}
-}
+require_once('header.php');
+include('errors.php');
 
 ?>
 
@@ -202,7 +182,7 @@ function distance($lat1, $lon1, $lat2, $lon2, $unit) {
 								</div>
 							</div>
 							<div class="block2-txt p-t-5 p-b-5">
-								<a href="product-detail.html?id=<?php echo $row['comid'];?>" class="block2-name dis-block s-text3 p-b-5">
+								<a href="product-detail.php?commodityid=<?php echo $row['comid'];?>" class="block2-name dis-block s-text3 p-b-5">
 									<?php echo  ucwords($row['comname']); ?>
 								</a>
 								<span class="p-r-5">
@@ -251,7 +231,7 @@ function distance($lat1, $lon1, $lat2, $lon2, $unit) {
 	</span>
 </div>
 
-<?php require('footer.php'); ?>
+<?php require_once('footer.php'); ?>
 
 <!-- Container Selection -->
 <div id="dropDownSelect1"></div>

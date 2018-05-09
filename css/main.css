@@ -364,6 +364,12 @@ iframe {
   }
 }
 
+@media (max-width: 768px) {
+  .mob-hide {
+    display: hidden !important;
+  } 
+}
+
 /*[ Restyle Select2 ]
 ///////////////////////////////////////////////////////////
 */
@@ -2543,4 +2549,9 @@ avail {
 }
 .star-checked {
     color: #EDB867 !important;
+}
+
+/* Feature Image Max-Height */
+.featured-img {
+  max-height: 310px;
 }

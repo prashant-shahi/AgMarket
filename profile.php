@@ -1,7 +1,6 @@
 <?php
 require_once('database.php');
 require_once('server.php');
-require_once('session-redirect.php');
 
 if(isset($_GET['vendorid']) && !empty($_GET['vendorid'])) {
 	$vid = $_GET['vendorid'];
@@ -19,9 +18,11 @@ else if(isset($_SESSION['vendor']) && !empty($_SESSION['vendor']))
 else
 	header('location: index.php');
 
-require('header.php'); 
+require_once('header.php'); 
 
-$res = mysqli_query($db, "SELECT id, (select count(id) from commodities where vid=$vid group by vid) as stockitems,name, place, phone, email, lat, lon FROM vendors WHERE id=$vid");
+// SELECT id, (select count(id) from commodities where vid=$vid group by vid) as stockitems,name, place, phone, email, lat, lon FROM vendors WHERE id=$vid
+
+$res = mysqli_query($db, "SELECT id, (select count(*) from commodities where vid=$vid) as stockitems,name, place, phone, email, lat, lon FROM vendors WHERE id=$vid");
 if(!$res) {
 	array_push($errors, mysqli_error($db));
 }
@@ -32,7 +33,7 @@ include('errors.php');
 <!-- Title Page -->
 <section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(images/heading-pages-01.jpg);">
 	<h2 class="l-text2 t-center">
-		User Profile
+		Vendor Profile
 	</h2>
 </section>
 
@@ -64,42 +65,48 @@ else {
 						</h5>
 						<div class="content">
 							<?php
+							$averageRating = 0;
+							$countRating = 0;
 						// User rating
 							$query = "SELECT * FROM rating WHERE vid=$vid ";
 							if(isset($_SESSION['customer']) && !empty($_SESSION['customer']))
 								$query .= 'and uid='.$_SESSION['id'];
+
 							$userresult = mysqli_query($db,$query);
 							if(!$userresult)
 								array_push($errors,mysqli_error());
+
 							$fetchRating = mysqli_fetch_array($userresult);
 							$rating = $fetchRating['rating'];
 
 						// get average
-							$query = "SELECT ROUND(AVG(rating),1) as averageRating FROM rating WHERE vid=$vid";
+							$query = "SELECT ROUND(AVG(rating),1) as averageRating,count(*) as countRating FROM rating WHERE vid=$vid";
 							$avgresult = mysqli_query($db,$query);
 							if(!$avgresult)
 								array_push($errors,mysqli_error());
-							$fetchAverage = mysqli_fetch_array($avgresult);
-							$averageRating = $fetchAverage['averageRating'];
-
+							
+							if(mysqli_num_rows($avgresult)>=1) {
+								$fetchAverage = mysqli_fetch_array($avgresult);
+								$averageRating = $fetchAverage['averageRating'];
+								$countRating = $fetchAverage['countRating'];
+							}
+							if($averageRating <= 0) {
+								$averageRating = "No rating yet";
+								$countRating = 0;
+							}
 							?>
 							<div class="post">
 								<div class="post-action">
 									<!-- Rating -->
-									<h3>Average Rating : <span id='avgrating_<?php echo $vid; ?>'><?php echo $averageRating; ?></span></h3>
+									<h4>Average Rating : <span id='avgrating_<?php echo $vid; ?>'><?php echo $averageRating; ?></span><?php echo "(".$countRating.")";;?></h4>
 									<?php
-									if($averageRating <= 0) {
-										$averageRating = "No rating yet.";
-									}
-									else {
-										for($x=1;$x<=5;$x++) {
-											?>
-											<i class="fa fa-star fa-2x star <?php
-											if($x<=floor($averageRating))
-												echo "star-checked";
-											?>"></i>
-											<?php
-										}
+									for($x=1;$x<=5;$x++) {
+										?>
+										<i class="fa fa-star fa-2x star <?php
+										if($x<=floor($averageRating))
+											echo "star-checked";
+										?>"></i>
+										<?php
 									}
 								?>
 								<div style='clear: both;'></div>
@@ -153,39 +160,52 @@ else {
 				<?php
 				$res = mysqli_query($db,"set @count:=0");
 				$res = mysqli_query($db, "SELECT (@count:=@count+1) as sn, v.id, c.id as cid, c.name as cname, cat.name as category, avail, price, catid, image_url FROM commodities as c, categories as cat, vendors as v WHERE cat.id=c.catid and v.id=c.vid and v.id=$vid LIMIT 0,10");
-				?>
-				<!-- Cart item -->
-				<div class="container-table-cart pos-relative p-t-20">
-					<div class="wrap-table-shopping-cart bgwhite">
-						<table class="table-shopping-cart" style="overflow: hidden;">
-							<tr class="table-head">
-								<th class="column-1 notranslate">S.N.</th>
-								<th class="column-2" colspan="2">Commodity Name</th>
-								<th class="column-3">Category</th>
-								<th class="column-4">Rate (₹ per KG/Entity)</th>
-								<th class="column-5">Available (KG/Entity)</th>
-							</tr>
-							<?php
-							while($row = mysqli_fetch_assoc($res)) {
-								?>
-								<tr class="table-row">
-									<td class="column-1"><?php echo $row["sn"]; ?></td>
-									<td>
-										<img src="<?php echo $row['image_url']; ?>" class="imgur-image" />
-									</td>
-									<td>
-										<?php echo $row["cname"]; ?>
-									</td>
-									<td class="column-3"><?php echo $row["category"]; ?></td>
-									<td class="column-4"><?php echo $row["price"]; ?></td>
-									<td class="column-5"><?php echo $row["avail"]; ?></td>
+				if(mysqli_num_rows($res)<=0) {
+					?>
+					<section class="cart bgwhite text-center p-t-70 p-b-70">
+						<div class="container">
+							<h5 class="center">Vendor does not have any commodities available for sale right now!</h5>
+						</div>
+					</section>
+					<?
+				}
+				else {
+					?>
+					<!-- Cart item -->
+					<div class="container-table-cart pos-relative p-t-20">
+						<div class="wrap-table-shopping-cart bgwhite">
+							<table class="table-shopping-cart" style="overflow: hidden;">
+								<tr class="table-head">
+									<th class="column-1 notranslate">S.N.</th>
+									<th class="column-2" colspan="2">Commodity Name</th>
+									<th class="column-3">Category</th>
+									<th class="column-4">Rate (₹ per KG/Entity)</th>
+									<th class="column-5">Available (KG/Entity)</th>
 								</tr>
 								<?php
-							}
-							?>
-						</table>
+								while($row = mysqli_fetch_assoc($res)) {
+									?>
+									<tr class="table-row">
+										<td class="column-1"><?php echo $row["sn"]; ?></td>
+										<td>
+											<img src="<?php echo $row['image_url']; ?>" class="imgur-image" />
+										</td>
+										<td>
+											<?php echo $row["cname"]; ?>
+										</td>
+										<td class="column-3"><?php echo $row["category"]; ?></td>
+										<td class="column-4"><?php echo $row["price"]; ?></td>
+										<td class="column-5"><?php echo $row["avail"]; ?></td>
+									</tr>
+									<?php
+								}
+								?>
+							</table>
+						</div>
 					</div>
-				</div>
+					<?php
+				}
+				?>
 			</div>
 		</div>
 	</div>
@@ -195,7 +215,7 @@ else {
 }
 ?>
 <hr/>
-<?php require('footer.php'); ?>
+<?php require_once('footer.php'); ?>
 <!--===============================================================================================-->
 <!-- Set rating -->
 <script type='text/javascript'>

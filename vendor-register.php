@@ -1,7 +1,7 @@
 <?php
-require('database.php');
-require('server.php');
-require('header.php');
+require_once('database.php');
+require_once('server.php');
+require_once('header.php');
 include('errors.php');
 ?>
 <section class="bg9 p-b-30">
@@ -53,12 +53,12 @@ include('errors.php');
 					</button>
 				</div>
 				<p>
-					Already a member? <a href="vendor-login.php">Sign in</a>
+					Already a member? <a href="vendor-login.php"><strong>Sign in</strong></a>
 				</p>
 			</form>
 			<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2"></div>
 		</div>
-		<?php require('footer.php'); ?>
+		<?php require_once('footer.php'); ?>
 	</div>
 </section>
 <!-- Loading Google API -->
