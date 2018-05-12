@@ -14,15 +14,15 @@ if(isset($_POST['updatecart']) && !empty($_POST['updatecart'])) {
 	foreach ($quantity as $key => $q) {
 		$res = mysqli_query($db, "UPDATE cart SET quantity=$q where id={$ci[$key]} and uid = $uid");
 	}
-	header('location:cart.php?status=success');
+	array_push($success, "Cart item successfully updated.");
 }
 if(isset($_GET['remove']) && !empty($_GET['remove'])) {
 	$res = mysqli_query($db, "DELETE FROM cart where id={$_GET['remove']} and uid = $uid");
 	if(mysqli_affected_rows($db)==1) {
-		header('location:cart.php?remstatus=success');
+		array_push($success, "Cart item successfully removed.");
 	}
 	else {
-		header('location:cart.php?remstatus=failure');
+		array_push($errors,"Cart item failed to be removed !");
 	}
 }
 require_once('header.php'); 
@@ -30,8 +30,8 @@ require_once('errors.php');
 ?>
 
 <!-- Title Page -->
-<section class="bg-title-page p-t-40 p-b-30 flex-col-c-m" style="background-image: url(images/heading-pages-01.jpg);">
-	<h2 class="l-text2 t-center">
+<section class="bg-title-page p-t-20 p-b-20 flex-col-c-m" style="background-image: url(https://i.imgur.com/gb2XZv8.png);">
+	<h2 class="l-text2 t-center rounded p-t-10 p-b-10 p-l-10 p-r-10 bg-info">
 		Cart
 	</h2>
 </section>
@@ -57,37 +57,6 @@ else {
 	<!-- Cart -->
 	<section class="cart bgwhite p-t-20">
 		<div class="container">
-			<?php
-			if(isset($_GET['status']) and !empty($_GET['status'])) {
-				$str = "updated";
-				$s = $_GET['status'];
-				if($s != "success" and $s != "failure")
-					$s = "warning";
-			}
-			if(isset($_GET['remstatus']) and !empty($_GET['remstatus'])) {
-				$str = "removed";
-				$s = $_GET['remstatus'];
-				if($s != "success" and $s != "failure")
-					$s = "warning";
-			}
-			if(isset($str)) {
-				?>
-				<div class="alert <?php echo $s; ?>">
-					<span class="closebtn">&times;</span> 
-					<strong><?php echo ucfirst($s); ?>!</strong>
-					<?php
-					switch($s) {
-						case "success"	: echo "Cart item successfully $str !!";
-						break;
-						case "failure" 	: echo "Cart item failed to be $str !!";
-						break;
-						default 		: echo "Baka, Cart item status not to be played with !!";
-					}
-					?>
-				</div>
-				<?php
-			}
-			?>
 			<div class="row">
 				<form method="POST" action="" class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
 					<!-- Cart item -->
@@ -200,8 +169,8 @@ else {
 							<div class="rs2-select2 rs3-select2 rs4-select2 bo4 of-hidden w-size21 m-b-12">
 								<select class="selection-2" name="ordertype" required>
 									<option selected="true" disabled="disabled"  value="">Order Type</option>
-									<option>Delivery</option>
-									<option>Pickup</option>
+									<option value="delivery">Delivery</option>
+									<option value="pickup">Pickup</option>
 								</select>
 							</div>
 

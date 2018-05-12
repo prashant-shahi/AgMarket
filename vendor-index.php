@@ -29,8 +29,8 @@ if(!$res) {
 ?>
 
 <!-- Title Page -->
-<section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(images/heading-pages-01.jpg);">
-	<h2 class="l-text2 t-center">
+<section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(https://i.imgur.com/HVNZcxb.jpg);">
+	<h2 class="l-text2 t-center bg-primary rounded p-t-5 p-b-5 p-l-5 p-r-5">
 		List of your commoditites
 	</h2>
 </section>

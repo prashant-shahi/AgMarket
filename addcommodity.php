@@ -1,7 +1,11 @@
 <?php
 require_once('database.php');
 require_once('server.php');
-require_once('session-redirect.php');
+
+if(!isset($_SESSION['vendor']) || empty($_SESSION['vendor'])) {
+	header('location:index.php');
+}
+
 require_once('header.php'); 
 // call this file only after database connection
 require_once 'categoryfunction.php';
@@ -9,8 +13,8 @@ require_once('errors.php');
 ?>
 <section class="banner bgwhite" id="vendorstock">
 	<!-- Title Page -->
-	<section class="bg-title-page p-b-50 flex-col-c-m" style="background-image: url(images/heading-pages-01.jpg);">
-		<h2 class="l-text2 t-center">
+	<section class="bg-title-page p-b-50 flex-col-c-m" style="background-image: url(https://i.imgur.com/HVNZcxb.jpg);">
+		<h2 class="l-text2 t-center bg-info rounded p-t-5 p-b-5 p-l-5 p-r-5">
 			Add Commodity for sale
 		</h2>
 	</section>

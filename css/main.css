@@ -1,9 +1,10 @@
 /*------------------------------------------------------------------
 Project:  VTU Final Year Project
-Version:  v1.0
-Last change:  6 April 2018, 1:00 AM
+Version:  v2.0
+Last change:  12 March 2018, 2:54 PM
 Assigned to:  Prashant Shahi
 Primary use:  E-commerce Project for Final Year
+Live Website: www.AgMarket.in
 -------------------------------------------------------------------*/
 /*------------------------------------------------------------------
 [LAYOUT]
@@ -89,7 +90,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 	box-sizing: border-box;
 }
 
-/* Hide Translate Header Bar and On-Hover original text*/
+/* Hide Google Translate Header Bar and On-Hover original text*/
 .goog-tooltip {
     display: none !important;
 }
@@ -1404,7 +1405,8 @@ li.sale-noti > a {
 }
 
 .item-slick1 {
-  height: 570px;
+  height: 450px;
+  width: 100%;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -2461,7 +2463,7 @@ img {
       display: none;
   } 
 }
-avail {
+.avail {
   background-color: rgba(255,255,255, 0.5);
 }
 

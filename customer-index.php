@@ -11,46 +11,41 @@ include('errors.php');
 
 <!-- Slide1 -->
 <section class="banner bgwhite p-t-10 p-b-10">
-    <div class="sec-title p-b-10">
-        <h3 class="m-text5 t-center">
-            Features of our application
-        </h3>
-    </div>
     <!-- Slide1 -->
     <section class="slide1">
         <div class="wrap-slick1">
             <div class="slick1">
-                <div class="item-slick1 item3-slick1" style="background-image: url(images/master-slide-02.jpg);">
-                    <div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
-                        <span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="fadeInDown">
-                            Coordinates are shared between vendors and customers
+                                <div class="item-slick1 item1-slick1" style="background-size: contain;  background-image: url(https://i.imgur.com/OFPM0Va.png);">
+                    <div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15">
+                        <span class="rounded caption1-slide1 xs-text1 text-dark bg-white t-center animated visible-false m-b-15 p-t-10 p-b-10 p-l-10 p-r-10" data-appear="rollIn">
+                            Use this application in your own language
                         </span>
-
-                        <h2 class="caption2-slide1 xl-text1 t-center animated visible-false m-b-37" data-appear="fadeInUp">
-                            Google Maps Geolocation
-                        </h2>
-                    </div>
-                </div>
-
-                <div class="item-slick1 item2-slick1" style="background-image: url(images/master-slide-03.jpg);">
-                    <div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
-                        <span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="rollIn">
-                            Use this application in your own lanuage
-                        </span>
-                        <h2 class="caption2-slide1 xl-text1 t-center animated visible-false m-b-37" data-appear="lightSpeedIn">
+                        <h3 class="rounded caption2-slide1 text-dark bg-white t-center animated visible-false m-b-15 p-t-10 p-b-10 p-l-10 p-r-10" data-appear="lightSpeedIn">
                             Native Language
-                        </h2>
+                        </h3>
                     </div>
                 </div>
 
-                <div class="item-slick1 item3-slick1" style="background-image: url(images/master-slide-04.jpg);">
-                    <div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
-                        <span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="rotateInDownLeft">
+                <div class="item-slick1 item2-slick1" style="background-size: contain;  background-image: url(https://i.imgur.com/R73dDfC.png);">
+                    <div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15">
+                        <span class="rounded caption1-slide1 xs-text1 t-center bg-danger animated visible-false m-b-15 p-t-10 p-b-10 p-l-10 p-r-10" data-appear="rotateInDownLeft">
                             Know the predictions of weather
                         </span>
-                        <h2 class="caption2-slide1 xl-text1 t-center animated visible-false m-b-37" data-appear="rotateInUpRight">
+                        <h3 class="rounded caption2-slide1 t-center animated visible-false bg-danger m-b-15 p-t-10 p-b-10 p-l-10 p-r-10" data-appear="rotateInUpRight">
                             Weather Utilities
-                        </h2> 
+                        </h3> 
+                    </div>
+                </div>
+
+                <div class="item-slick1 item3-slick1" style="background-size: contain;  background-image: url(https://i.imgur.com/zGIb4OA.png);">
+                    <div class="wrap-content-slide1 sizefull text-white flex-col-c-m p-l-15 p-r-15">
+                        <span class="rounded caption1-slide1 xs-text1 bg-info t-center animated visible-false m-b-15 p-t-10 p-b-10 p-l-10 p-r-10" data-appear="fadeInDown">
+                            Exact GPS locations are shared between involved parties.
+                        </span>
+
+                        <h3 class="rounded caption2-slide1 bg-info t-center animated visible-false m-b-15 p-t-10 p-b-10 p-l-10 p-r-10" data-appear="fadeInUp">
+                            Google Maps Geolocation
+                        </h3>
                     </div>
                 </div>
             </div>
@@ -60,7 +55,7 @@ include('errors.php');
 <hr/>
 
 <!-- Banner -->
-<section class="banner bgwhite p-t-40 p-b-40">
+<section class="banner bgwhite p-t-30 p-b-30">
     <div class="sec-title p-b-20">
         <h3 class="m-text5 t-center">
             Categories
@@ -71,18 +66,19 @@ include('errors.php');
             <div class="col-sm-10 col-md-8 col-lg-4 m-l-r-auto">
                 <!-- block1 -->
                 <div class="block1 hov-img-zoom pos-relative m-b-30">
-                    <img src="images/banner-02.jpg" alt="IMG-BENNER">
+                    <img src="https://i.imgur.com/rHSh5T9.png" alt="IMG-BENNER">
+
                     <div class="block1-wrapbtn w-size2">
                         <!-- Button -->
-                        <a href="product.php?categoryid=3" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4 ">
-                            Machineries
+                        <a href="product.php?categoryid=1" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
+                            Crops
                         </a>
                     </div>
                 </div>
 
                 <!-- block1 -->
                 <div class="block1 hov-img-zoom pos-relative m-b-30">
-                    <img src="images/banner-05.jpg" alt="IMG-BENNER">
+                    <img src="https://i.imgur.com/ADryhSF.jpg" alt="IMG-BENNER">
 
                     <div class="block1-wrapbtn w-size2">
                         <!-- Button -->
@@ -96,24 +92,23 @@ include('errors.php');
             <div class="col-sm-10 col-md-8 col-lg-4 m-l-r-auto">
                 <!-- block1 -->
                 <div class="block1 hov-img-zoom pos-relative m-b-30">
-                    <img src="images/banner-03.jpg" alt="IMG-BENNER">
-
+                    <img src="https://i.imgur.com/XHcw59Y.jpg" alt="IMG-BENNER">
                     <div class="block1-wrapbtn w-size2">
                         <!-- Button -->
-                        <a href="product.php?categoryid=4" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
-                            Plants and Seeds
+                        <a href="product.php?categoryid=3" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4 ">
+                            Machineries
                         </a>
                     </div>
                 </div>
 
                 <!-- block1 -->
                 <div class="block1 hov-img-zoom pos-relative m-b-30">
-                    <img src="images/banner-07.jpg" alt="IMG-BENNER">
+                    <img src="https://i.imgur.com/d3ydZeJ.jpg" alt="IMG-BENNER">
 
                     <div class="block1-wrapbtn w-size2">
                         <!-- Button -->
-                        <a href="product.php?categoryid=1" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
-                            Crops
+                        <a href="product.php?categoryid=4" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
+                            Plants and Seeds
                         </a>
                     </div>
                 </div>
@@ -195,7 +190,7 @@ include('errors.php');
                                         Available : <?php echo $row2['avail']; ?>
                                         <div class="w-size1">
                                             <div class="block2-btn-addcart w-size1">
-                                            <!-- Button -->
+                                                <!-- Button -->
                                                 <button class="addtocart flex-c-m size1 bg4 bo-rad-23 hov1 s-text1" id='addtocart_<?php echo $row2['id']; ?>' data-id='addtocart_<?php echo $row2['id']; ?>'>
                                                     Add to Cart
                                                 </button>
@@ -297,7 +292,7 @@ include('errors.php');
                     else if(status==-1)
                         swal("Error while adding Commodity to cart","failure");
                     else if(status==1) {
-                        $("#cartcount").text(parseInt($("#cartcount").text())+1);
+                        $(".cartcount").text(parseInt($(".cartcount").text())+1);
                         swal("Successfully added Commodity to cart","success");
                     }
                 }

@@ -1,22 +1,64 @@
 <?php
 require_once('database.php');
 require_once('server.php');
-require_once('session-redirect.php');
+
+if(!isset($_SESSION['vendor']) || empty($_SESSION['vendor'])) {
+	header('location:index.php');
+}
+$vid=$_SESSION['id'];
+$vname=$_SESSION['name'];
+$vemail = filter_var($_SESSION['email'], FILTER_SANITIZE_EMAIL);
+$vphone=$_SESSION['vendor'];
+
+if(isset($_GET['approve']) || isset($_GET['delivered']) || isset($_GET['reject'])) {
+	$res = mysqli_query("SELECT email,phone,price,ordertype,quantity,c.name as comname,c.name from customers as c, orders as o, commodities as com where o.comid=com.id and c.id=o.uid and o.id=$orderid and o.uid=$uid");
+	$first = mysqli_fetch_assoc($res);
+}
 
 // UPDATE orders SET status='not confirmed' where id=8 and comid in (SELECT id from commodities where vid=8);
 
 if(isset($_GET['approve']) && !empty($_GET['approve'])) {
+	$orderid = $_GET['approve'];
 	$res = mysqli_query($db, "UPDATE orders SET status='confirmed' where id={$_GET['approve']} and comid in (SELECT id from commodities where vid={$_SESSION['id']})");
 	if(mysqli_affected_rows($db)==1) {
+		
+		// SMS and E-mail Response
+		$uemail = filter_var($first['email'], FILTER_SANITIZE_EMAIL);
+		$response = sendSms($first['phone'],"Hi ".custom_msg($first['name'],20).", Order(#$orderid]) for {$first['ordertype']} of ".custom_msg($first['comname'],20)." has been accepted by the ".custom_msg($vname,20)."($vphone) - AgMarket.in");
+		/*
+		if (filter_var($uemail, FILTER_VALIDATE_EMAIL)) {
+			mail($uemail,"Order Accepted for {$first['comname']} #$orderid","Greetings {$first['name']}, \r\n\r\n Your order(#$orderid) has been accepted by the vendor. \r\n\r\n \r\nOrder Summary:\r\n Order Type: {$first['ordertype']} \r\n Commodity: {$first['comname']} <br/> Quantity: {$first['quantity']} <br/> Rate (per KG/Entity): {$first['price']} \r\n Vendor Name: $vname \r\n Phone Number: $vphone \r\n\r\n\r\n <a href='www.AgMarket.in'>VIA: www.AgMarket.in </a>",'From: no.reply @ agmarket.in');
+		}
+		if (filter_var($vemail[$key], FILTER_VALIDATE_EMAIL)) {
+			mail($vemail,"Order Accepted for {$first['comname']} #$orderid","Greetings $vname, \r\n\r\n Order(#$orderid) has been successfully accepted as per your request. \r\n\r\n \r\nOrder Summary:\r\n Order Type: {$first['ordertype']} \r\nCommodity: {$first['comname']} <BR> Quantity: {$first['quantity']} <br/> Rate (per KG/Entity): {$first['price']} \r\n Customer Name: {$first['name']} \r\n Phone Number: {$first['phone']} \r\n\r\n\r\n\r\n <a href='www.AgMarket.in'>VIA: www.AgMarket.in </a>",'From: no.reply @ agmarket.in');
+		}
+		*/
+
 		array_push($success,"Successfully approved the order");
 	}
 	else {
+		
 		array_push($errors,"Failed to approve the order with id {$_GET['approve']}");
 	}
 }
 if(isset($_GET['delivered']) && !empty($_GET['delivered'])) {
+	$orderid = $_GET['delivered'];
 	$res = mysqli_query($db, "UPDATE orders SET status='done' where id={$_GET['delivered']} and comid in (SELECT id from commodities where vid={$_SESSION['id']})");
 	if(mysqli_affected_rows($db)==1) {
+
+		// Decreasing quantity from the stock
+		$res = mysqli_query("SELECT quantity,comid from orders where id={$_GET['delivered']}");
+		$deliveredresult = mysqli_fetch_assoc($res);
+		$res = mysqli_query($db, "UPDATE commodities SET avail = avail - {$deliveredresult['quantity']} where id = {$deliveredresult['comid']}");
+		/*
+		if (filter_var($uemail, FILTER_VALIDATE_EMAIL)) {
+			mail($uemail,"Order Delivered for {$first['comname']} #$orderid","Greetings {$first['name']}, \r\n\r\n Your order(#$orderid) has been successfully delivered by the vendor. \r\n\r\n \r\nOrder Summary:\r\n Order Type: {$first['ordertype']} \r\n Commodity: {$first['comname']} <br/> Quantity: {$first['quantity']} <br/> Rate (per KG/Entity): {$first['price']} \r\n Vendor Name: $vname \r\n Phone Number: $vphone \r\n\r\n\r\n <a href='www.AgMarket.in'>VIA: www.AgMarket.in </a>",'From: no.reply @ agmarket.in');
+		}
+		if (filter_var($vemail[$key], FILTER_VALIDATE_EMAIL)) {
+			mail($vemail,"Order Delivered for {$first['comname']} #$orderid","Greetings $vname, \r\n\r\n Order(#$orderid) has been delivered by you. \r\n\r\n \r\nOrder Summary:\r\n Order Type: {$first['ordertype']} \r\nCommodity: {$first['comname']} <BR> Quantity: {$first['quantity']} <br/> Rate (per KG/Entity): {$first['price']} \r\n Customer Name: {$first['name']} \r\n Phone Number: {$first['phone']} \r\n\r\n\r\n\r\n <a href='www.AgMarket.in'>VIA: www.AgMarket.in </a>",'From: no.reply @ agmarket.in');
+		}
+		*/
+
 		array_push($success,"Successfully delivered the order");
 	}
 	else {
@@ -26,6 +68,19 @@ if(isset($_GET['delivered']) && !empty($_GET['delivered'])) {
 if(isset($_GET['reject']) && !empty($_GET['reject'])) {
 	$res = mysqli_query($db, "UPDATE orders SET status='rejected' where id={$_GET['reject']} and comid in (SELECT id from commodities where vid={$_SESSION['id']})");
 	if(mysqli_affected_rows($db)==1) {
+
+		// SMS and E-mail Response
+		$uemail = filter_var($first['email'], FILTER_SANITIZE_EMAIL);
+		$response = sendSms($first['phone'],"Hi ".custom_msg($first['name'],20).", Order(#$orderid]) for {$first['ordertype']} of ".custom_msg($first['comname'],20)." has been rejected by the Vendor. - AgMarket.in");
+		/*
+		if (filter_var($uemail, FILTER_VALIDATE_EMAIL)) {
+			mail($uemail,"Order Rejected for {$first['comname']} #$orderid","Greetings {$first['name']}, \r\n\r\n Your order(#$orderid) has been rejected by the vendor. \r\n\r\n \r\nOrder Summary:\r\n Order Type: {$first['ordertype']} \r\n Commodity: {$first['comname']} <br/> Quantity: {$first['quantity']} <br/> Rate (per KG/Entity): {$first['price']} \r\n\r\n\r\n <a href='www.AgMarket.in'>VIA: www.AgMarket.in </a>",'From: no.reply @ agmarket.in');
+		}
+		if (filter_var($vemail[$key], FILTER_VALIDATE_EMAIL)) {
+			mail($vemail,"Order Rejected for {$first['comname']} #$orderid","Greetings $vname, \r\n\r\n Order(#$orderid) has been successfully rejected as per your request. \r\n\r\n \r\nOrder Summary:\r\n Order Type: {$first['ordertype']} \r\nCommodity: {$first['comname']} <BR> Quantity: {$first['quantity']} <br/> Rate (per KG/Entity): {$first['price']} \r\n\r\n\r\n\r\n <a href='www.AgMarket.in'>VIA: www.AgMarket.in </a>",'From: no.reply @ agmarket.in');
+		}
+		*/
+
 		array_push($success,"Successfully rejected the order");
 	}
 	else {
@@ -245,20 +300,21 @@ else {
 					</div>
 				</div>
 			</div>
-		</section>
-		<hr/>
-		<?php
-	}
-	?>
-	<section class="cart bgwhite p-t-10">
-		<div class="container">
-			<h4>Status Note:</h4>
-			<div> Rejected <span> - Rejected by the Vendor</span></div>
-			<div> Cancelled <span> - Cancelled by the Customer</span></div>
-			<div> Not Confirmed <span> - Yet to be approved by Vendor</span></div>
-			<div> Done <span> - Order is successfully received by Customer</span></div>
 		</div>
 	</section>
-	<? require('footer.php'); ?>
+	<hr/>
+	<?php
+}
+?>
+<section class="cart bgwhite p-t-10">
+	<div class="container">
+		<h4>Status Note:</h4>
+		<div> Rejected <span> - Rejected by the Vendor</span></div>
+		<div> Cancelled <span> - Cancelled by the Customer</span></div>
+		<div> Not Confirmed <span> - Yet to be approved by Vendor</span></div>
+		<div> Done <span> - Order is successfully received by Customer</span></div>
+	</div>
+</section>
+<? require('footer.php'); ?>
 </body>
 </html>

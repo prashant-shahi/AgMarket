@@ -2,43 +2,92 @@
 require_once('database.php');
 require_once('server.php');
 
-// $res variable can be used to detect and describe error
-
 if(!isset($_SESSION['customer']) || empty($_SESSION['customer'])) {
 	header('location:index.php');
 }
-
+$lat = 0;
+$lon = 0;
 $uid=$_SESSION['id'];
 $uname=$_SESSION['name'];
+$uemail = filter_var($_SESSION['email'], FILTER_SANITIZE_EMAIL);
 $uphone=$_SESSION['customer'];
+
+function custom_msg($x, $length)
+{
+	if(strlen($x)<=$length)
+	{
+		return $x;
+	}
+	else
+	{
+		$y=substr($x,0,$length) . '...';
+		return $y;
+	}
+}
+
 
 if(isset($_POST['cartcheckout']) && !empty($_POST['cartcheckout'])) {
 	$ordertype = $_POST["ordertype"];
 
-	$res = mysqli_query($db, "SELECT v.name as vname, c.name as comname,phone,car.id,cid,quantity FROM cart as car, commodities as c, vendors as v WHERE car.cid=c.id and c.vid=v.id and uid = $uid");
+	$res = mysqli_query($db, "SELECT v.name as vname, email, c.name as comname,price,phone,car.id,cid,quantity FROM cart as car, commodities as c, vendors as v WHERE car.cid=c.id and c.vid=v.id and uid = $uid");
 	while($row = mysqli_fetch_assoc($res)) {
 		$cartid[] = $row['id'];
 		$comid[] = $row['cid'];
 		$comname[] = $row['comname'];
 		$quantity[] = $row['quantity'];
-		$phone[] = $row['phone'];
+		$price[] = $row['price'];
+		$vphone[] = $row['phone'];
+		$vemail[] = filter_var($row['email'], FILTER_SANITIZE_EMAIL);
 		$vname[] = $row['vname'];
 	}
 	foreach ($comid as $key => $c) {
 		$res = mysqli_query($db, "INSERT into orders(uid, comid, quantity, ordertype, status) values($uid, {$comid[$key]}, {$quantity[$key]},'$ordertype', 'not confirmed')");
 		$res = mysqli_query($db, "DELETE FROM cart WHERE id={$cartid[$key]} and uid=$uid"); 
-		echo "Dear {$vname[$key]}, $uname ($uphone) has ordered {$quantity[$key]} quantity of {$comname[$key]}. Contact your customer.";
-		sendSms($phone[$key],"Dear {$vname[$key]}, $uname ($uphone) has ordered {$quantity[$key]} quantity of {$comname[$key]} for $ordertype. Check our website/application. -- AgMarket.in");
+		$res = mysqli_query($db, "SELECT o.id from orders as o, commodities as c where o.comid=c.id and o.uid=$uid and c.id={$comid[$key]} and quantity={$quantity[$key]} and status='not confirmed' order by ts desc");
+
+		$first = mysqli_fetch_assoc($res);
+		$orderid = $first['id'];
+
+		// Send SMS to Vendor.. And, Email to Vendor and Customer
+		$response = sendSms($vphone[$key],"Hi ".custom_msg($vname[$key],20).", you received an order(#".$orderid.") for $ordertype of {$quantity[$key]} quantity of ".custom_msg($comname[$key],20)." by ".custom_msg($uname,20)."($uphone). - AgMarket.in");
+		/*
+		if (filter_var($uemail, FILTER_VALIDATE_EMAIL)) {
+			mail($uemail,'Order for {$comname[$key]} #$orderid',"Greetings $uname, \r\n\r\n Your order has been successfully placed with order id #$orderid. \r\n\r\n \r\n Order Summary:\r\n Order Type: $ordertype \r\n Commodity: {$comname[$key]} <br/> Quantity: {$quantity[$key]} <br/> Rate (per KG/Entity): {$price[$key]} <br/> Vendor Name: {$vname[$key]} <br/> Vendor Number: {$vphone[$key]} \r\n\r\n\r\n\r\n <a href='www.AgMarket.in'>VIA: www.AgMarket.in </a>",'From: no.reply @ agmarket.in');
+		}
+		if (filter_var($vemail[$key], FILTER_VALIDATE_EMAIL)) {
+			mail($vemail[$key],'Order for {$comname[$key]} #$orderid',"Greetings {$vname[$key]}, \r\n\r\n You have received an order with order id #$orderid. \r\n\r\n \r\n Order Summary:\r\n Order Type: $ordertype \r\n Commodity: {$comname[$key]} <BR> Quantity: {$quantity[$key]} <br/> Rate (per KG/Entity): {$price[$key]} <br/> Customer Name: $uname <br/> Customer Number: $uphone \r\n\r\n\r\n\r\n <a href='www.AgMarket.in'>VIA: www.AgMarket.in </a>",'From: no.reply @ agmarket.in');
+		}
+		*/
+
+		# echo "SMS Response : $response";
+		// Length:	name = 20, uname = 20, comname=20, if exceeds then 20 + 3 dots = 23 each
 	}
 }
+
 if(isset($_GET['remove']) && !empty($_GET['remove'])) {
-	$res = mysqli_query($db, "UPDATE orders SET status='cancelled' where id={$_GET['remove']} and uid=$uid");
-	echo "Affected rows: " . mysqli_affected_rows($db);
+	$orderid = $_GET['remove'];
+	$res = mysqli_query($db, "UPDATE orders SET status='cancelled' where id=$orderid and uid=$uid");
+
 	if(mysqli_affected_rows($db)==1) {
-		header('location:customer-orders.php?remstatus=success');
+		$res = mysqli_query($db,"SELECT email,phone,price,ordertype,quantity,c.name as comname,v.name as vname from vendors as v, orders as o, commodities as c where o.comid=c.id and v.id=c.vid and o.id=$orderid and uid=$uid");
+		$first = mysqli_fetch_assoc($res);
+		
+		// SMS and E-mail Response
+		$vemail = filter_var($first['email'], FILTER_SANITIZE_EMAIL);
+		$response = sendSms($first['phone'],"Hi ".custom_msg($first['vname'],20).", Order(#".$orderid.") for {$first['ordertype']} of ".custom_msg($first['comname'],20)." has been cancelled by the customer. - AgMarket.in");
+		/*
+		if (filter_var($uemail, FILTER_VALIDATE_EMAIL)) {
+			mail($uemail,"Order Cancelled for {$first['comname']} #$orderid","Greetings $uname, \r\n\r\n Your order(#$orderid) has been successfully cancelled as per your request. \r\n\r\n \r\nOrder Summary:\r\n Order Type: {$first['ordertype']} \r\n Commodity: {$first['comname']} <br/> Quantity: {$first['quantity']} <br/> Rate (per KG/Entity): {$first['price']} \r\n\r\n\r\n <a href='www.AgMarket.in'>VIA: www.AgMarket.in </a>",'From: no.reply @ agmarket.in');
+		}
+		if (filter_var($vemail, FILTER_VALIDATE_EMAIL)) {
+			mail($vemail[$key],'Order for {$comname[$key]} #$orderid',"Greetings {$first['vname']}, \r\n\r\n Order with order id #$orderid has been cancelled by the customer. \r\n\r\n \r\nOrder Summary:\r\n Order Type: {$first['ordertype']} \r\nCommodity: {$first['comname']} <BR> Quantity: {$first['quantity']} <br/> Rate (per KG/Entity): {$first['price']} \r\n\r\n\r\n\r\n <a href='www.AgMarket.in'>VIA: www.AgMarket.in </a>",'From: no.reply @ agmarket.in');
+		}
+		*/
+
+		array_push($success,"Order successfully cancelled.");
 	}
 	else {
-		header('location:customer-orders.php?remstatus=failure');
+		array_push($errors,"Order failed to be cancelled.");
 	}
 }
 
@@ -47,8 +96,8 @@ include('errors.php');
 ?>
 
 <!-- Title Page -->
-<section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(images/heading-pages-01.jpg);">
-	<h2 class="l-text2 t-center">
+<section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(https://i.imgur.com/gb2XZv8.png);">
+	<h2 class="l-text2 t-center rounded p-t-10 p-b-10 p-l-10 p-r-10 bg-primary">
 		Orders
 	</h2>
 </section>
@@ -91,10 +140,10 @@ include('errors.php');
 									<th></th>
 								</tr>
 								<?php
-								$lat = 0;
-								$lon = 0;
 								while($row = mysqli_fetch_assoc($res)) {
 									$total = 0;
+									$lat = $row['lat'];
+									$lon = $row['lon'];
 									?>
 									<tr class="table-row">
 										<td class="column-1"><?php echo $row['sn']; ?></td>
@@ -135,7 +184,7 @@ include('errors.php');
 										</td>
 										<td class="column-7">
 
-											<div><a style="padding:0; margin:0;" href="https://www.google.com/maps/dir/?api=1&destination=<?php echo $lat.','.$lon; ?>&dir_action=navigate" target="_blank" title="Navigate in Google Maps">Navigate<span style="display:block;padding:0; margin:0;" class="notranslate">Google Maps</span></a></div>
+											<div><a style="padding:0; margin:0;" href="https://www.google.com/maps/dir/?api=1&destination=<?php echo $lat.','.$lon; ?>&dir_action=navigate" target="_blank" title="Navigate in Google Maps">Navigate to <span style="display:block;padding:0; margin:0;" class="notranslate">Vendor</span></a></div>
 										</td>
 										<td>
 											<a href="customer-orders.php?remove=<?php echo $row['id']; ?>" title="Cancel the Order">
@@ -157,12 +206,12 @@ include('errors.php');
 		<hr/>
 		<section class="cart bgwhite text-center p-t-30 p-b-10">
 			<div class="container">
-				<h2 class="center">List of Completed Orders</h2>
+				<h2 class="center">List of Recently Completed Orders</h2>
 			</div>
 		</section>
 		<?php
 		mysqli_query($db,"SET @count:=0");
-		$res = mysqli_query($db, "SELECT (@count:=@count+1) as sn, comid, lat,lon, o.id, com.name as comname,v.name as vname, vid, uid, price, quantity, ordertype, image_url, status from orders as o, vendors as v,commodities as com where o.comid=com.id and com.vid=v.id and uid=$uid and status in ('cancelled','rejected','done')");
+		$res = mysqli_query($db, "SELECT (@count:=@count+1) as sn, comid, lat,lon, o.id, com.name as comname,v.name as vname, vid, uid, price, quantity, ordertype, image_url, status from orders as o, vendors as v,commodities as com where o.comid=com.id and com.vid=v.id and uid=$uid and status in ('cancelled','rejected','done') order by ts limit 0,10");
 		if(!$res)
 			array_push($errors,mysqli_error());
 
@@ -192,12 +241,13 @@ include('errors.php');
 									<th class="column-6">Quantity<br/>(KG/Entity)</th>
 									<th class="column-7">Price</th>
 									<th>Map</th>
+									<th></th>
 								</tr>
 								<?php
-								$lat = 0;
-								$lon = 0;
 								while($row = mysqli_fetch_assoc($res)) {
 									$total = 0;
+									$lat = $row['lat'];
+									$lon = $row['lon'];
 									?>
 									<tr class="table-row">
 										<td class="column-1"><?php echo $row['sn']; ?></td>
@@ -234,7 +284,7 @@ include('errors.php');
 											</strong>
 										</td>
 										<td class="column-7">
-											<div><a style="padding:0; margin:0;" href="https://www.google.com/maps/dir/?api=1&destination=<?php echo $lat.','.$lon; ?>&dir_action=navigate" target="_blank" title="Open Google Maps">Navigate<span style="display:block;padding:0; margin:0;" class="notranslate">Google Maps</span></a></div>
+											<div><a style="padding:0; margin:0;" href="https://www.google.com/maps/dir/?api=1&destination=<?php echo $lat.','.$lon; ?>&dir_action=navigate" target="_blank" title="Navigate in Google Maps">Navigate to <span style="display:block;padding:0; margin:0;" class="notranslate" at>Vendor</span></a></div>
 										</td>
 									</tr>
 									<?php

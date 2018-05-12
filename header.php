@@ -12,13 +12,13 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link href='vendor/jquery-bar-rating/dist/themes/fontawesome-stars.css' rel='stylesheet' type='text/css'>
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/themify/themify-icons.css">
+	<link rel="stylesheet" type="text/css" href="fonts/themify/themify-icons.min.css">
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/elegant-font/html-css/style.css">
+	<link rel="stylesheet" type="text/css" href="fonts/elegant-font/html-css/style.min.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.min.css">
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
 	<!--===============================================================================================-->
@@ -26,18 +26,17 @@
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.min.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
-	<link rel="stylesheet" type="text/css" href="vendor/slick2/slick2.css">
+	<link rel="stylesheet" type="text/css" href="vendor/slick/slick.min.css">
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/lightbox2/css/lightbox.min.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/util.min.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/alert/jAlert-v3.css" />
+	<link rel="stylesheet" type="text/css" href="vendor/alert/jAlert-v3.min.css" />
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/main.css?v=12">
+	<link rel="stylesheet" type="text/css" href="css/main.min.css">
 	<!--===============================================================================================-->
 </head>
 
@@ -110,9 +109,18 @@
 								</li>
 								<?php 
 							}
+
+							// Check if Android (in-app)
+							if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || $_SERVER['HTTP_X_REQUESTED_WITH'] != "in.agmarket") {
+								?>
+								<li>
+									<a href="http://bit.ly/agmarket-in" target="_blank">Download our App</a>
+								</li>
+								<?php
+							}
 							?>
 							<li>
-								<a href="about.php">About</a>
+								<a href="about.php">About us</a>
 							</li>
 							<?php
 							if(!$c && !$v) {
@@ -183,7 +191,7 @@
 							<span class="linedivide1"></span>
 							<a href="cart.php" class="header-wrapicon1 dis-block">
 								<img src="images/icons/icon-header-02.png" class="bg3 header-icon1" alt="ICON" />
-								<span class="header-icons-noti" id="cartcount"><?php echo $countcart; ?></span>
+								<span class="cartcount header-icons-noti"><?php echo $countcart; ?></span>
 							</a>
 							<?php
 						}
@@ -229,15 +237,17 @@
 								<span class="header-icons-noti"><?php echo $countorders; ?></span>
 							</a>
 						</div>
-						<?php if($c) { ?>
-						<span class="linedivide2"></span>
-						<div class="header-wrapicon2">
-							<a href="cart.php">
-								<img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON" title="Cart" />
-								<span class="header-icons-noti"><?php echo $countcart; ?></span>
-							</a>
-						</div>
 						<?php
+						if($c) {
+							?>
+							<span class="linedivide2"></span>
+							<div class="header-wrapicon2">
+								<a href="cart.php">
+									<img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON" title="Cart" />
+									<span class="cartcount header-icons-noti"><?php echo $countcart; ?></span>
+								</a>
+							</div>
+							<?php
 						}
 						?>
 					</div>
@@ -259,32 +269,42 @@
 					<li class="item-menu-mobile">
 						<a href="<?php echo $index; ?>.php">Home</a>
 					</li>
-					<?php if($c) { ?>
-					<li class="item-menu-mobile">
-						<a href="product.php">Shop</a>
-						<ul class="sub-menu">
-							<li><a href="product.php?categoryid=1">Crops</a></li>
-							<li><a href="product.php?categoryid=2">Livestock</a></li>
-							<li><a href="product.php?categoryid=3">Machineries</a></li>
-							<li><a href="product.php?categoryid=4">Plants and Seeds</a></li>
-						</ul>
-						<i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
-					</li>
 					<?php
+					if($c) {
+						?>
+						<li class="item-menu-mobile">
+							<a href="product.php">Shop</a>
+							<ul class="sub-menu">
+								<li><a href="product.php?categoryid=1">Crops</a></li>
+								<li><a href="product.php?categoryid=2">Livestock</a></li>
+								<li><a href="product.php?categoryid=3">Machineries</a></li>
+								<li><a href="product.php?categoryid=4">Plants and Seeds</a></li>
+							</ul>
+							<i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
+						</li>
+						<?php
 					}
 					else if($v) {
-					?>
-					<li class="item-menu-mobile">
-						<a href="addcommodity.php">Add commodity</a>
-					</li>
-					<li class="item-menu-mobile">
-						<a href="weather.php">Weather Utility</a>
-					</li>
-					<?php
+						?>
+						<li class="item-menu-mobile">
+							<a href="addcommodity.php">Add commodity</a>
+						</li>
+						<li class="item-menu-mobile">
+							<a href="weather.php">Weather Utility</a>
+						</li>
+						<?php
+					}
+				// Check if Android (in-app)
+					if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || $_SERVER['HTTP_X_REQUESTED_WITH'] != "in.agmarket") {
+						?>
+						<li class="item-menu-mobile">
+							<a href="http://bit.ly/agmarket-in" target="_blank">Download our App</a>
+						</li>
+						<?php
 					}
 					?>
 					<li class="item-menu-mobile">
-						<a href="about.php">About</a>
+						<a href="about.php">About us</a>
 					</li>
 					<?php
 					if(!$c && !$v) {
@@ -298,7 +318,7 @@
 						<?php
 					}
 					else {
-					?>
+						?>
 						<li class="item-menu-mobile">
 							<a href="index.php?logout">Log Out</a>
 						</li>

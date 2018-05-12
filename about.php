@@ -2,9 +2,9 @@
 <?php require_once('header.php'); ?>
 
 	<!-- Title Page -->
-	<section class="bg-title-page p-t-40 p-b-30 flex-col-c-m" style="background-image: url(images/heading-pages-06.jpg);">
+	<section class="bg-title-page p-t-40 p-b-30 flex-col-c-m" style="background-image: url(https://i.imgur.com/ujagc02.jpg);">
 		<h2 class="l-text2 t-center">
-			About
+			ABOUT US
 		</h2>
 	</section>
 	<!-- content page -->

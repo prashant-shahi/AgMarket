@@ -3,14 +3,9 @@ session_start();
 $errors = array();
 $success = array();
 
-/* variable declaration
-$username = "";
-$phonenumber = ""; 
-$_SESSION['success'] = "";
-*/
-
 function sendSms($number, $message) {
-	$authKey = "209549A6j7ZUX5I8By5ace616c";
+	// $authKey = "209549A6j7ZUX5I8By5ace616c";		// Bibek Singh ko
+	$authKey = "214511AjSNk4gz5zj5af2336e";			// Prashant Shahi ko
 
 	$curl = curl_init();
 
@@ -38,11 +33,29 @@ function sendSms($number, $message) {
 	}
 }
 
-function sendOtp($number, $message) {
+function sendOtp($number) {
+	$authKey = "214511AjSNk4gz5zj5af2336e";
+	$message = "Your verification code is ##OTP##. \n It will be valid for 24 hours. \n\n - AgMarket.in";
+	/*
+		{
+		  "message": "38656c766a45373236333334",
+		  "type": "success"
+		}
+		{
+		  "message": "38656c76745a313333383333",
+		  "type": "success"
+		}
+		{
+		  "message": "Please Enter valid mobile no",
+		  "type": "error"
+		}
+	*/
+
+	// ###OTP###
 	$curl = curl_init();
 
 	curl_setopt_array($curl, array(
-		CURLOPT_URL => "http://control.msg91.com/api/sendotp.php?template=&otp_length=&authkey=".$authKey."&message=".$message."&sender=AgMart&mobile=".$number,
+		CURLOPT_URL => "http://control.msg91.com/api/sendotp.php?otp_length=7&authkey=".$authKey."&message=".urlencode($message)."&sender=AgMart&mobile=91".$number,
 		CURLOPT_RETURNTRANSFER => true,
 		CURLOPT_ENCODING => "",
 		CURLOPT_MAXREDIRS => 10,
@@ -66,10 +79,11 @@ function sendOtp($number, $message) {
 	}
 }
 function resendOtp($number, $message) {
+	$authKey = "214511AjSNk4gz5zj5af2336e";
 	$curl = curl_init();
 
 	curl_setopt_array($curl, array(
-		CURLOPT_URL => "http://control.msg91.com/api/retryotp.php?authkey=".$authKey."&mobile=+91".$number."&retrytype=",
+		CURLOPT_URL => "http://control.msg91.com/api/retryotp.php?authkey=".$authKey."&mobile=".$number."&retrytype=",
 		CURLOPT_RETURNTRANSFER => true,
 		CURLOPT_ENCODING => "",
 		CURLOPT_MAXREDIRS => 10,
@@ -97,6 +111,7 @@ function resendOtp($number, $message) {
 }
 
 function verifyOtp($number, $otp) {
+	$authKey = "214511AjSNk4gz5zj5af2336e";
 	$curl = curl_init();
 
 	curl_setopt_array($curl, array(
@@ -170,7 +185,7 @@ if (isset($_POST['reg_customer'])) {
 
 // form validation: ensure that the form is correctly filled
 	if (empty($name)) { array_push($errors, "Name is required"); }
-	if (empty($phone)) { array_push($errors, "Phone Number is required"); }
+	if (empty($phone) || strlen($phone)!=10) { array_push($errors, "Valid Phone Number is required"); }
 	if (empty($password_1)) { array_push($errors, "Password is required"); }
 	if (empty($place)) { array_push($errors, "Place is required"); }
 	if ($password_1 != $password_2) {
@@ -223,12 +238,13 @@ else if (isset($_POST['login_customer'])) {
 		$password = md5($password.$salt);
 
 
-		$res=mysqli_query($db, "SELECT id, name FROM customers WHERE phone='$phone' AND password='$password'");
+		$res=mysqli_query($db, "SELECT id, name,email FROM customers WHERE phone='$phone' AND password='$password'");
 		if(mysqli_num_rows($res)>0) {
 			$_SESSION['customer'] = $phone;
 			$_SESSION['success'] = "You are now logged in";
 			$first = mysqli_fetch_assoc($res);
 			$_SESSION['name'] = $first["name"];
+			$_SESSION['email'] = $first["email"];
 			$_SESSION['id'] = $first["id"];
 			header('location: customer-index.php');
 		}

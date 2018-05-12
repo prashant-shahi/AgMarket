@@ -1,12 +1,16 @@
 <?php
 require_once 'database.php';
-require_once 'categoryfunction.php';
 require_once 'server.php';
-?>
+require_once 'categoryfunction.php';
 
-<?php
+if(isset($_SESSION['customer']) && !empty($_SESSION['customer'])) {
+	$cid=$_SESSION['id'];
+}
+else {
+	header('location:index.php');
+}
 
-if(!isset($_SESSION['id']) || empty($_SESSION['id']) || !isset($_GET['commodityid']) || empty($_GET['commodityid']))
+if(!isset($_GET['commodityid']) || empty($_GET['commodityid']))
 	header('location:index.php');
 
 $comid = $_GET['commodityid'];
@@ -40,17 +44,17 @@ $catstring = "";
 ?>
 <!-- breadcrumb -->
 <div class="bread-crumb bgwhite flex-w p-l-52 p-r-15 p-t-30 p-l-15-sm">
-	<a href="index.html" class="s-text16">
+	<a href="index.php" class="s-text16">
 		Home
 		<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
 	</a>
 
-	<a href="product.html" class="s-text16">
+	<a href="product.php" class="s-text16">
 		Categories
 		<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
 	</a>
 
-	<a href="product.html?categoryid=<?php echo $catid; ?>" class="s-text16">
+	<a href="product.php?categoryid=<?php echo $catid; ?>" class="s-text16">
 		<?php echo ucwords($catname); ?>
 		<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
 	</a>
@@ -255,7 +259,7 @@ $catstring = "";
     				else if(status==-1)
     					swal("Error while adding Commodity to cart","failure");
     				else if(status==1) {
-    					$("#cartcount").text(parseInt($("#cartcount").text())+1);
+    					$(".cartcount").text(parseInt($(".cartcount").text())+1);
     					swal("Successfully added Commodity to cart","success");
     				}
     			}

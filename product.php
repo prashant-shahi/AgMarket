@@ -4,16 +4,16 @@ require_once('server.php');
 require_once('categoryfunction.php');
 
 if(isset($_SESSION['customer']) && !empty($_SESSION['customer'])) {
-	$cid=$_SESSION['id'];
+	$cid = $_SESSION['id'];
 }
 else {
 	header('location:index.php');
 }
 
 $catid = 0;
-$begin=0;
-$offset=9;
-$searchtxt="";
+$begin = 0;
+$offset = 9;
+$searchtxt = "";
 
 if(isset($_GET['categoryid']) && !empty($_GET['categoryid'])) {
 	$catid = $_GET['categoryid'];
@@ -44,11 +44,11 @@ include('errors.php');
 ?>
 
 <!-- Title Page -->
-<section class="bg-title-page p-t-50 p-b-40 flex-col-c-m" style="background-image: url(images/heading-pages-02.jpg);">
-	<h2 class="l-text2 t-center">
+<section class="bg-title-page p-t-50 p-b-40 flex-col-c-m" style="background-image: url(https://i.imgur.com/HVNZcxb.jpg);">
+	<h2 class="l-text2 bg-info rounded p-t-5 p-b-5 p-l-5 p-r-5 t-center">
 		Agriculture Commodities
 	</h2>
-	<p class="m-text13 t-center">
+	<p class="m-text13 bg-info rounded p-t-5 p-b-5 p-l-5 p-r-5 t-center">
 		All types of Agriculture Commodities Trade
 	</p>
 </section>
@@ -276,7 +276,7 @@ include('errors.php');
                     else if(status==-1)
                         swal("Error while adding Commodity to cart","failure");
                     else if(status==1) {
-                        $("#cartcount").text(parseInt($("#cartcount").text())+1);
+                        $(".cartcount").text(parseInt($(".cartcount").text())+1);
                         swal("Successfully added Commodity to cart","success");
                     }
                 }
