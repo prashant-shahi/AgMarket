@@ -32,7 +32,7 @@ include('errors.php');
 
 <!-- Title Page -->
 <section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(https://i.imgur.com/CX5GhVZ.png);">
-	<h2 class="bgwhite rounded p-t-10 p-b-10 p-l-10 p-r-10 t-center">
+	<h2 class="l-text2 t-center rounded p-t-10 p-b-10 p-l-10 p-r-10 bg-danger text-white">
 		Vendor Profile
 	</h2>
 </section>

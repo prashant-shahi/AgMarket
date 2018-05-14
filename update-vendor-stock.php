@@ -14,8 +14,8 @@ require_once('errors.php');
 ?>
 <section class="banner bgwhite" id="vendorstock">
 	<!-- Title Page -->
-	<section class="bg-title-page p-b-50 flex-col-c-m" style="background-image: url(images/heading-pages-01.jpg);">
-		<h2 class="l-text2 t-center">
+	<section class="bg-title-page p-b-50 flex-col-c-m" style="background-image: url(https://i.imgur.com/HVNZcxb.jpg);">
+		<h2 class="l-text2 t-center bg-info rounded p-t-5 p-b-5 p-l-5 p-r-5">
 			Update Commodity Details
 		</h2>
 	</section>

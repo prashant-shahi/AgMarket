@@ -25,7 +25,6 @@ function custom_msg($x, $length)
 	}
 }
 
-
 if(isset($_POST['cartcheckout']) && !empty($_POST['cartcheckout'])) {
 	$ordertype = $_POST["ordertype"];
 

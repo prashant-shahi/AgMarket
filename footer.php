@@ -7,7 +7,7 @@
 			</h4>
 			<form>
 				<div class="effect1 w-size9">
-					<input class="s-text7 bg6 w-full p-b-5" type="text" name="email" placeholder="email@example.com">
+					<input class="s-text7 bg6 w-full p-b-5" type="email" name="email" placeholder="email@example.com">
 					<span class="effect1-line"></span>
 				</div>
 				<div class="w-size2 p-t-20">

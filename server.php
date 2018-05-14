@@ -328,6 +328,7 @@ else if (isset($_POST['login_vendor'])) {
 			$_SESSION['success'] = "You are now logged in";
 			$first = mysqli_fetch_assoc($res);
 			$_SESSION["name"] = $first["name"];
+			$_SESSION['email'] = $first["email"];
 			$_SESSION["id"] = $first["id"];
 			header('location: vendor-index.php');
 		}
