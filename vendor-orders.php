@@ -117,7 +117,7 @@ if(isset($_GET['reject']) && !empty($_GET['reject'])) {
 	}
 }
 
-require('header.php'); 
+require_once('header.php'); 
 include('errors.php');
 ?>
 
@@ -344,6 +344,8 @@ else {
 		<div> Done <span> - Order is successfully received by Customer</span></div>
 	</div>
 </section>
-<? require('footer.php'); ?>
+
+<?php require_once('footer.php'); ?>
+
 </body>
 </html>

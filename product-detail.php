@@ -4,7 +4,7 @@ require_once 'server.php';
 require_once 'categoryfunction.php';
 
 if(isset($_SESSION['customer']) && !empty($_SESSION['customer'])) {
-	$cid=$_SESSION['id'];
+	$uid = $_SESSION['id'];
 }
 else {
 	header('location:index.php');
@@ -14,7 +14,6 @@ if(!isset($_GET['commodityid']) || empty($_GET['commodityid']))
 	header('location:index.php');
 
 $comid = $_GET['commodityid'];
-$uid = $_SESSION['id'];
 
 $query = "SELECT cat.name as catname,com.id as comid, v.id as vid, catid, avail, price, image_url, com.name as comname, v.name as vname, place, lat, lon from commodities as com,vendors as v,categories as cat where cat.id=catid and vid=v.id and com.id=$comid";
 
