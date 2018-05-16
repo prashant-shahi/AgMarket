@@ -35,7 +35,7 @@ function sendSms($number, $message) {
 
 function sendOtp($number) {
 	$authKey = "214511AjSNk4gz5zj5af2336e";
-	$message = "Your verification code is ##OTP##. \n It will be valid for 24 hours. \n\n - AgMarket.in";
+	$message = "Your verification code is ##OTP##. It will be valid for 24 hours. -- AgMarket.in";
 	/*
 		{
 		  "message": "38656c766a45373236333334",
@@ -55,7 +55,7 @@ function sendOtp($number) {
 	$curl = curl_init();
 
 	curl_setopt_array($curl, array(
-		CURLOPT_URL => "http://control.msg91.com/api/sendotp.php?otp_length=7&authkey=".$authKey."&message=".urlencode($message)."&sender=AgMart&mobile=91".$number,
+		CURLOPT_URL => "http://control.msg91.com/api/sendotp.php?otp_length=7&authkey=".$authKey."&message=".urlencode($message)."&sender=AgMart&mobile=".$number,
 		CURLOPT_RETURNTRANSFER => true,
 		CURLOPT_ENCODING => "",
 		CURLOPT_MAXREDIRS => 10,
@@ -78,12 +78,20 @@ function sendOtp($number) {
 		return $response;
 	}
 }
-function resendOtp($number, $message) {
+function resendOtp($number, $retrytype) {
 	$authKey = "214511AjSNk4gz5zj5af2336e";
-	$curl = curl_init();
 
+	/*
+	http://control.msg91.com/api/retryotp.php?authkey=214511AjSNk4gz5zj5af2336e&mobile=8880517895&retrytype=text
+	{
+	  "type": "error"
+	}
+	*/
+
+
+	$curl = curl_init();
 	curl_setopt_array($curl, array(
-		CURLOPT_URL => "http://control.msg91.com/api/retryotp.php?authkey=".$authKey."&mobile=".$number."&retrytype=",
+		CURLOPT_URL => "http://control.msg91.com/api/retryotp.php?authkey=".$authKey."&mobile=".$number."&retrytype=".$retrytype,
 		CURLOPT_RETURNTRANSFER => true,
 		CURLOPT_ENCODING => "",
 		CURLOPT_MAXREDIRS => 10,
@@ -112,8 +120,14 @@ function resendOtp($number, $message) {
 
 function verifyOtp($number, $otp) {
 	$authKey = "214511AjSNk4gz5zj5af2336e";
-	$curl = curl_init();
+	/*
+	{
+	  "message": "otp_verified",
+	  "type": "success"
+	}
+	*/
 
+	$curl = curl_init();
 	curl_setopt_array($curl, array(
 		CURLOPT_URL => "https://control.msg91.com/api/verifyRequestOTP.php?authkey=".$authkey."&mobile=".$number."&otp=".$otp,
 		CURLOPT_RETURNTRANSFER => true,
