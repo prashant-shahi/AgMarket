@@ -4,3 +4,4 @@ google*.html
 zohoverify
 .gitignore
 *.swp
+*.sql
