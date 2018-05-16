@@ -232,7 +232,7 @@ include('errors.php');
 </div>
 
 <?php require_once('footer.php'); ?>
-
+<!--===============================================================================================-->
 <!-- Container Selection -->
 <div id="dropDownSelect1"></div>
 <div id="dropDownSelect2"></div>
@@ -276,7 +276,7 @@ include('errors.php');
                     else if(status==-1)
                         swal("Error while adding Commodity to cart","failure");
                     else if(status==1) {
-                        $(".cartcount").text(parseInt($(".cartcount").text())+1);
+                    	$(".cartcount").text(parseInt($(".cartcount").text()[0])+1);
                         swal("Successfully added Commodity to cart","success");
                     }
                 }

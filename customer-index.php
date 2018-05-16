@@ -15,7 +15,7 @@ include('errors.php');
     <section class="slide1">
         <div class="wrap-slick1">
             <div class="slick1">
-                                <div class="item-slick1 item1-slick1" style="background-size: contain;  background-image: url(https://i.imgur.com/OFPM0Va.png);">
+                <div class="item-slick1 item1-slick1" style="background-size: contain;  background-image: url(https://i.imgur.com/OFPM0Va.png);">
                     <div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15">
                         <span class="rounded caption1-slide1 xs-text1 text-dark bg-white t-center animated visible-false m-b-15 p-t-10 p-b-10 p-l-10 p-r-10" data-appear="rollIn">
                             Use this application in your own language
@@ -292,7 +292,7 @@ include('errors.php');
                     else if(status==-1)
                         swal("Error while adding Commodity to cart","failure");
                     else if(status==1) {
-                        $(".cartcount").text(parseInt($(".cartcount").text())+1);
+                        $(".cartcount").text(parseInt($(".cartcount").text()[0])+1);
                         swal("Successfully added Commodity to cart","success");
                     }
                 }

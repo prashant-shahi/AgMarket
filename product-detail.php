@@ -258,7 +258,7 @@ $catstring = "";
     				else if(status==-1)
     					swal("Error while adding Commodity to cart","failure");
     				else if(status==1) {
-    					$(".cartcount").text(parseInt($(".cartcount").text())+1);
+    					$(".cartcount").text(parseInt($(".cartcount").text()[0])+1);
     					swal("Successfully added Commodity to cart","success");
     				}
     			}
