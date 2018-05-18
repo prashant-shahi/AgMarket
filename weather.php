@@ -105,7 +105,8 @@ else {
 			$sunset = $sunset->format("g:i a")
 			?>
 			<div class="p-t-10 p-b-10 col-xs-12 col-md-12 col-lg-12">
-				<h3><?php echo $cityname . " - " .$today; ?></h3>
+				<p><?php echo $today; ?></p>
+				<h3>Your Location: <?php echo $place." - ".$cityname; ?></h3>
 			</div>
 			<div class="col-xs-12 col-md-4 col-lg-4">
 				<?php
@@ -121,10 +122,10 @@ else {
 				echo "Humidity: " . $humidity ." %<br>";
 				?>
 			</div>
-			<div class="col-xs-12 col-md-4 col-lg-4 notranslate">
+			<div class="col-xs-12 col-md-4 col-lg-4">
 				<?php
-				echo "Sunrise: " . $sunrise ."<br>";
-				echo "Sunset: " . $sunset ."<br>";
+				echo "Sunrise: <span class='notranslate'>" . $sunrise ."</span><br>";
+				echo "Sunset: <span class='notranslate'>" . $sunset ."</span><br>";
 				?>
 			</div>
 		</div>
@@ -202,6 +203,36 @@ else {
 <!--===============================================================================================-->
 <script type="text/javascript" src="js/main.min.js"></script>
 <!--===============================================================================================-->
+<script src='https://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
+<script type="text/javascript">
+	var cityid = 0;
+	$(document).ready(function(){
+		$.ajax({
+			url: "https://api.openweathermap.org/data/2.5/weather?lat=<?php echo $lat; ?>&lon=<?php echo $lon; ?>&appid=3b3f916823675274f2fb80b7f4dd3d59",
+			dataType: 'json',
+			success: function(result){
+				cityid = result["id"];
+			}
+		});
+		setTimeout(function() {
+			window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];
+			window.myWidgetParam.push({id: 21,cityid: cityid, appid: '3b3f916823675274f2fb80b7f4dd3d59',units: 'metric',containerid: 'openweathermap-widget-21'});
+			(function() {
+				var script = document.createElement('script');
+				script.async = true;
+				script.charset = "utf-8";
+				script.src = "https://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(script, s);
+			})();
+		}, 600);
+		$('#openweathermap-widget-21').bind('DOMNodeInserted', function(event) {
+			$(".weather-left-card__number").addClass("notranslate");
+			$(".widget-left-menu__links").remove();
+		});
+	});
+</script>
+<!--===============================================================================================-->
 <script type="text/javascript">
 	function googleTranslateElementInit() {
 		new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'kn,te,ta,en,hi,ne', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, gaTrack: true, gaId: 'UA-116535819-1'}, 'google_translate_element');
@@ -230,36 +261,5 @@ else {
 	gtag('config', 'UA-116535819-1');
 </script>
 <!--===============================================================================================-->
-<script type="text/javascript">
-	var cityid = 0;
-	$.ajax({
-		url: "https://api.openweathermap.org/data/2.5/weather?lat=<?php echo $lat; ?>&lon=<?php echo $lon; ?>&appid=3b3f916823675274f2fb80b7f4dd3d59",
-		dataType: 'json',
-		success: function(result){
-			cityid = result["id"];
-		}
-	});
-</script>
-<script src='https://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		setTimeout(function() {
-			window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];
-			window.myWidgetParam.push({id: 21,cityid: cityid, appid: '3b3f916823675274f2fb80b7f4dd3d59',units: 'metric',containerid: 'openweathermap-widget-21'});
-			(function() {
-				var script = document.createElement('script');
-				script.async = true;
-				script.charset = "utf-8";
-				script.src = "https://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
-				var s = document.getElementsByTagName('script')[0];
-				s.parentNode.insertBefore(script, s);
-			})();
-		}, 800);
-		$('#openweathermap-widget-21').bind('DOMNodeInserted', function(event) {
-			$(".weather-left-card__number").addClass("notranslate");
-			$(".widget-left-menu__links").remove();
-		});
-	});
-</script>
 </body>
 </html>
