@@ -195,9 +195,11 @@ else {
 </div>
 
 
-<script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
 <?php 
 }
+?>
+<script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<?php
 if(!$counterrors) {
 	?>
 	<script type="text/javascript">
