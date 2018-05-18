@@ -2,81 +2,242 @@
 
 require_once('database.php');
 require_once('server.php');
+require_once('sms.php');
 
-if(isset($_SESSION['customer']) && !empty($_SESSION['customer']))
-	header('location:customer-index.php');
-if(isset($_SESSION['vendor']) && !empty($_SESSION['vendor']))
-	header('location:vendor-index.php');
+if((isset($_SESSION['customer']) && !empty($_SESSION['customer'])) || (isset($_SESSION['vendor']) && !empty($_SESSION['vendor'])))
+	header('location:index.php');
 
 if(isset($_POST['changepassword'])) {
-	$password_old = mysqli_real_escape_string($db, $_POST['password_old']);
+	$profile = mysqli_real_escape_string($db, $_POST['profile']);
+	$phone = mysqli_real_escape_string($db, $_POST['phone']);
 	$password_1 = mysqli_real_escape_string($db, $_POST['password_1']);
 	$password_2 = mysqli_real_escape_string($db, $_POST['password_2']);
 
 	// form validation: ensure that the form is correctly filled
-	if (empty($password_old)) { array_push($errors, "Old Password is required"); }
+	if (empty($password_2)) { array_push($errors, "Confirm Password is required"); }
 	if (empty($password_1)) { array_push($errors, "New Password is required"); }
 	if ($password_1 != $password_2) {
 		array_push($errors, "The two passwords do not match");
 	}
 
-	$password = $password_old;
-	$res = mysqli_query($db, "SELECT saltstring FROM $profiletable WHERE id=$id");
-	$first = mysqli_fetch_assoc($res);
-	$randstr = $first["saltstring"];
-
-	$salt = sha1(md5($password)).$randstr;
-	$password = md5($password.$salt);
-
-	echo "SELECT id, name FROM $profiletable WHERE id=$id AND password='$password'";
-	if (mysqli_num_rows(mysqli_query($db, "SELECT id FROM $profiletable WHERE id=$id AND password='$password'")) <= 0) {
-		array_push($errors,"Old Password is incorrect !!<br/><a href='iforgot.php' >Forgot Password</a>");
-	}
-// change password if old password if matched
+// change password if two passwords matched
 	if (count($errors) == 0) {
 		$password = $password_1;
 		$randstr = getRandomString();
 		$salt = sha1(md5($password)).$randstr;
 		$password = md5($password.$salt);
-		$res = mysqli_query($db, "UPDATE $profiletable set saltstring='$randstr', password='$password' WHERE id=$id");
+		$res = mysqli_query($db, "UPDATE ".$profile."s set saltstring='$randstr', password='$password' WHERE phone=$phone");
 		if(!$res)
-			array_push($errors,mysqli_error());
-		if(mysqli_affected_rows($db)>=1)
+			array_push($errors,mysqli_error($db));
+		if(mysqli_affected_rows($db)>=1){
 			array_push($success,"User password successfully changed");
+			header('location: index.php?status=passwordchanged');
+			exit();
+		}
 		else
-			array_push($errors,"User password failed to change");
+			array_push($errors,"Failed to change user password");
 	}
+}
+else if(isset($_GET['otp']) || isset($_POST['otp-entered'])) {
+	array_push($success,"get otp / post otp-entered");
+	if(isset($_POST['otp'])) {
+		array_push($success,"post otp-entered");
+		$profile = $_POST['profile'];
+		$phone = $_POST['phone'];
+		$otp = $_POST['otp'];
+	}
+	else if(isset($_GET['u']) && isset($_GET['p']) && isset($_GET['otp'])) {
+		array_push($success,"get otp");
+		$u=$_GET['u'];
+		if($u=='c')
+			$profile = "customer";
+		else if($u=='v')
+			$profile = "vendor";
+		$phone = $_GET['p'];
+		$otp = $_GET['otp'];
+	}
+	else
+		array_push($errors,"Not sufficient datas for verification");
+
+	if(count($errors)==0) {
+		array_push($success,"verification");
+		$response = verifyOtp($phone, $otp);
+		$response = json_decode($response,true);
+
+		if($response['type']=="error") {
+			if(isset($response['message'])) {
+				if($response['message']=="otp_not_verified" || $response['message']=="invalid_otp") {
+					array_push($errors,"Incorrect OTP. <a href='iforgot.php?u=$u&p=$phone'>Try Again</a>");
+				}
+				else if($response['message']=="already_verified") {
+					array_push($success,"OTP has been successfully approved. You can change password now.");
+					$changepermission = "approved";
+				}
+				else {
+					array_push($errors,$response['message']);
+				}
+			}
+			else
+				array_push($errors,"Error occured while verifying otp.");
+		}
+		else {
+			array_push($success,"OTP has been successfully approved. You can change password now.");
+			$changepermission = "approved";
+		}
+	}
+}
+else if(isset($_POST['otp-verify'])) {
+	array_push($success,"otp-verify :  post and get");
+	if(isset($_POST['otp-verify'])) {
+		array_push($success,"otp-verify :  post");
+		$phone = mysqli_real_escape_string($db, $_POST['phone']);
+		$profile = mysqli_real_escape_string($db, $_POST['profile']);
+		if($profile == "vendor")
+			$u = "v";
+		else if ($profile == "customer")
+			$u = "c";
+	}
+	else
+		array_push($errors,"Not sufficient datas for sending otp.");
+
+	if(count($errors)==0) {
+		array_push($success,"forgot: send otp");
+		$response = sendOtp($phone, $u, "forgot");
+		$response = json_decode($response, true);
+
+		if($response['type']=="error") {
+			if(isset($response['message'])){
+				array_push($errors,$response['message']);
+			}
+			else
+				array_push($errors,"Error occured while verifying otp.");
+		}
+		else{
+			array_push($success,"OTP has been successfully processed to your number.");
+		}
+	}
+}
+else if(isset($_GET['u']) && isset($_GET['p'])) {
+	array_push($success,"otp-verify :  get");
+	$u = $_GET['u'];
+	$phone = $_GET['p'];
+	if($u=='c')
+		$profile = "customer";
+	else if($u=='v')
+		$profile = "vendor";
+}
+
+$counterrors = count($errors);
 
 require_once('header.php'); 
 require_once('errors.php'); 
 
-?>
-<!--
-<div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2"></div>
-	<form class="bgwhite p-b-20 p-l-20 p-t-20 col-xs-12 col-sm-12 col-md-8 col-lg-8" method="POST" action="" autocomplete="off">
-		<h1>UNDER CONSTRUCTION !!</h1>
-		<h3 class="bg6 text-center p-t-35 p-b-15">Change Password</h3>
-		<div class="form-group">
-			New Password:
-			<input class="bo9 p-t-10 p-l-10 p-r-10 p-b-10" type="password" name="password_1" minlength="5" maxlength="35" required="required" placeholder="New Password" autocomplete="off" />
-		</div>
-		<div class="form-group">
-			Confirm Password:
-			<input class="bo9 p-t-10 p-l-10 p-r-10 p-b-10" type="password" name="password_2" minlength="5" maxlength="35" required="required" placeholder="Confirm Password" autocomplete="off" />
-		</div>
-		<div class="form-group">
-			<button type="submit" name="changepassword" class="t-center w-size2 flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4">
-				Change Password
-			</button>
-		</div>
-	</form>
-	<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2"></div>
-</div>
--->
-<?php
+if($counterrors!=0) {
+	?>
+	<h3 class="text-center">Error</h3>
+	<p class="bg6 text-center p-t-35 p-b-15">Error occurred while processing your request.</p>
+	<?php
 }
-require_once('footer.php');
+else if(isset($changepermission) && $changepermission=="approved") {
+	?>
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2"></div>
+		<form class="bgwhite p-b-20 p-l-20 p-t-20 col-xs-12 col-sm-12 col-md-8 col-lg-8" method="POST" action="iforgot.php" autocomplete="off">
+			<h1 class="text-center">Forgot Password</h1>
+			<h3 class="bg6 text-center p-t-35 p-b-15">Change your password</h3>
+			<input  type="phonenumber" name="phone" minlength="10" maxlength="10" hidden="hidden" value="<?php echo $phone; ?>" />
+			<input  type="text" name="profile"  hidden="hidden" value="<?php echo $profile; ?>" />
+			<div class="form-group">
+				New Password:
+				<input class="bo9 p-t-10 p-l-10 p-r-10 p-b-10" type="password" name="password_1" minlength="5" maxlength="35" required="required" placeholder="New Password" autocomplete="off" />
+			</div>
+			<div class="form-group">
+				Confirm Password:
+				<input class="bo9 p-t-10 p-l-10 p-r-10 p-b-10" type="password" name="password_2" minlength="5" maxlength="35" required="required" placeholder="Confirm Password" autocomplete="off" />
+			</div>
+			<div class="form-group">
+				<button type="submit" name="changepassword" class="t-center w-size2 flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4">
+					Change Password
+				</button>
+			</div>
+		</form>
+		<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2"></div>
+	</div>
+	<?php
+}
+else if(isset($_POST['otp-verify']) || (isset($_GET['u']) && isset($_GET['p']))) {
+	?>
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2"></div>
+		<form class="bgwhite p-b-20 p-l-20 p-t-20 col-xs-12 col-sm-12 col-md-8 col-lg-8" method="POST" action="iforgot.php" autocomplete="off">
+			<h1 class="text-center">Forgot Password</h1>
+			<h3 class="bg6 text-center p-t-35 p-b-15">OTP Verify</h3>
+			<p>Your Number: <?php echo $phone; ?></p>
+			<input  type="phonenumber" name="phone" minlength="10" maxlength="10" hidden="hidden" value="<?php echo $phone; ?>" />
+			<input  type="text" name="u"  hidden="hidden" value="<?php echo $u; ?>" />
+			<input  type="text" name="profile"  hidden="hidden" value="<?php echo $profile; ?>" />
+			<div class="form-group">
+				OTP:
+				<input class="bo9 p-t-10 p-l-10 p-r-10 p-b-10" type="number" name="otp" minlength="7" maxlength="7" required="required" placeholder="Received OTP" autocomplete="off" />
+			</div>
+			<div class="form-group">
+				<button type="submit" name="otp-entered" class="t-center w-size2 flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4">
+					Verify
+				</button>
+			</div>
+		</form>
+		<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2"></div>
+	</div>
+	<?php
+}
+else {
+	?>
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2"></div>
+		<form class="bgwhite p-b-20 p-l-20 p-t-20 col-xs-12 col-sm-12 col-md-8 col-lg-8" method="POST" action="iforgot.php" autocomplete="off">
+			<h1 class="text-center">Forgot Password</h1>
+			<h3 class="bg6 text-center p-t-35 p-b-15">Claim your account</h3>
+			<div class="form-group">
+				Phone Number:
+				<input class="bo9 p-t-10 p-l-10 p-r-10 p-b-10" type="phonenumber" name="phone" minlength="10" maxlength="10" required="required" placeholder="Phone Number" autocomplete="off" />
+			</div>
+			<div class="form-group bo9 p-t-10 p-l-10 p-r-10 p-b-10 " style="width:300px;">
+				<select name="profile" class="selection-2">
+					<option selected="true" disabled="disabled"  value="">Select Your Profile</option>
+					<option value="customer">Customer</option>
+					<option value="vendor">Vendor</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<button type="submit" name="otp-verify" class="t-center w-size2 flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4">
+					Reset Password
+				</button>
+			</div>
+			<p>
+				<a href="index.php">Go Back to <strong>Homepage</strong></a>
+			</p>
+		</form>
+		<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2"></div>
+	</div>
+	<?php
+}
 ?>
+
+<?php require_once('footer.php'); ?>
+<!-- Container Selection -->
+<div id="dropDownSelect1"></div>
+<div id="dropDownSelect2"></div>
+
+<script type="text/javascript">
+	$(".selection-1").select2({
+		minimumResultsForSearch: 20,
+		dropdownParent: $('#dropDownSelect1')
+	});
+
+	$(".selection-2").select2({
+		minimumResultsForSearch: 20,
+		dropdownParent: $('#dropDownSelect2')
+	});
+</script>
 </body>
 </html>

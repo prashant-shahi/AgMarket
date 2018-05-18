@@ -13,7 +13,7 @@
 			<div class="row">
 				<div class="col-md-12 p-b-30">
 					<h2 class="m-text26 p-t-15 p-b-16">
-						AgMarket - Marketing Network for Agriculture Commoditites
+						AgMarket - Marketing Network for Agriculture Commodities
 					</h2>
 
 					<p class="p-b-28">

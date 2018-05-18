@@ -172,8 +172,8 @@ else {
 						Name: 
 						<input class="bo9 p-t-10 p-l-10 p-r-7 p-b-7" type="text" name="name" maxlength="25" required="required" placeholder="Full Name" value="<?php echo $name; ?>" autocomplete="off" />
 					</div>
-					<div>
-						<select name="place" id="place" class="bo9 p-t-10 p-l-10 p-r-10 p-b-10">
+					<div class="form-group bo9 p-t-10 p-l-10 p-r-10 p-b-10 " style="width:300px;">
+						<select name="place" id="place" class="selection-2">
 							<option selected="true" disabled="disabled"  value="">Your Place</option>
 							<?php
 							$places = array("Bengaluru Urban","Bagalkot","Bellary","Chamarajanagar","Bengaluru Rural","Belgaum","Bidar","Chikkamagaluru","Chikkaballapur","Vijayapura","Kalaburagi","Dakshina Kannada","Chitradurga","Dharwad","Koppal","Hassan","Davanagere","Gadag","Raichur","Kodagu","Kolar","Haveri","Yadgir","Mandya","Ramanagara","Uttara Kannada","Mysuru","Shivamogga","Udupi","Tumakuru","Others");
@@ -241,6 +241,21 @@ else {
 ?>
 <hr/>
 <?php require_once('footer.php'); ?>
+<!-- Container Selection -->
+<div id="dropDownSelect1"></div>
+<div id="dropDownSelect2"></div>
+
+<script type="text/javascript">
+	$(".selection-1").select2({
+		minimumResultsForSearch: 20,
+		dropdownParent: $('#dropDownSelect1')
+	});
+
+	$(".selection-2").select2({
+		minimumResultsForSearch: 20,
+		dropdownParent: $('#dropDownSelect2')
+	});
+</script>
 <!--===============================================================================================-->
 <script>
 	var x = document.getElementById("demo");

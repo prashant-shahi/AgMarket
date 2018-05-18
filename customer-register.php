@@ -1,5 +1,6 @@
 <?php
 require_once('database.php');
+require_once('sms.php');
 require_once('server.php');
 require_once('header.php');
 include('errors.php');
@@ -23,9 +24,9 @@ include('errors.php');
 				<div class="form-group">
 					<input class="bo9 p-t-10 p-l-10 p-r-10 p-b-10" type="password" name="password_2" maxlength="35" required="required" placeholder="Confirm Password" autocomplete="off" />
 				</div>
-				<div>
-					<select name="place" id="place" class="bo9 p-t-10 p-l-10 p-r-10 p-b-10">
-						<option selected="true" disabled="disabled"  value="">Your Place</option>
+				<div class="form-group bo9 p-t-10 p-l-10 p-r-10 p-b-10 " style="width:300px;">
+					<select name="place" id="place" class="selection-2">
+						<option selected="true" disabled="disabled"  value="">Select your Place</option>
 						<?php
 						$places = array("Bengaluru Urban","Bagalkot","Bellary","Chamarajanagar","Bengaluru Rural","Belgaum","Bidar","Chikkamagaluru","Chikkaballapur","Vijayapura","Kalaburagi","Dakshina Kannada","Chitradurga","Dharwad","Koppal","Hassan","Davanagere","Gadag","Raichur","Kodagu","Kolar","Haveri","Yadgir","Mandya","Ramanagara","Uttara Kannada","Mysuru","Shivamogga","Udupi","Tumakuru","Others");
 						sort($places);
@@ -59,10 +60,25 @@ include('errors.php');
 			</form>
 			<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2"></div>
 		</div>
+		<?php require_once('footer.php'); ?>
 	</div>
 </section>
-<?php require_once('footer.php'); ?>
 
+<!-- Container Selection -->
+<div id="dropDownSelect1"></div>
+<div id="dropDownSelect2"></div>
+
+<script type="text/javascript">
+	$(".selection-1").select2({
+		minimumResultsForSearch: 20,
+		dropdownParent: $('#dropDownSelect1')
+	});
+
+	$(".selection-2").select2({
+		minimumResultsForSearch: 20,
+		dropdownParent: $('#dropDownSelect2')
+	});
+</script>
 <!-- Loading Google API -->
 <script>
 	var x = document.getElementById("demo");

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>AgMarket - Marketing Network for Agriculure Commodities</title>
+	<title>AgMarket - Marketing Network for Agriculture Commodities</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
 	<!--===============================================================================================-->
@@ -36,7 +36,9 @@
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/alert/jAlert-v3.min.css" />
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/main.min.css">
+	<link rel="stylesheet" type="text/css" href="weather-icons/css/weather-icons.css" />
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/main.min.css?v=1">
 	<!--===============================================================================================-->
 </head>
 

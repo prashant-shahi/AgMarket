@@ -205,10 +205,10 @@ include('errors.php');
 						<?php
 					}
 				}
-			?>
+				?>
+			</div>
 		</div>
 	</div>
-</div>
 </section>
 <hr/>
 <div class="sec-title ">
@@ -250,9 +250,34 @@ include('errors.php');
 	</div>
 </section>
 
-<?php require_once('footer.php'); ?>
+<?php
+require_once('footer.php');
+?>
 
 <script type="text/javascript">
+
+	<?php
+	if(isset($_GET['status'])) {
+		switch ($_GET['status']) {
+			case 'alreadyverified':
+				echo "agalert('Success','User is already verified.', 'green')";
+				break;
+			case 'verified':
+				echo "agalert('Success','User is successfully verified.', 'green')";
+				break;
+			case 'passwordchanged':
+				echo "agalert('Success','User password is successfully updated.', 'green')";
+				break;
+			case 'nosession':
+				echo "agalert('Error','User session not found !! Sign in again.', 'red')";
+				break;
+			default:
+				break;
+		}
+	}
+
+	?>
+
 	$('.block2-btn-addcart').each(function(){
 		var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
 		$(this).on('click', function(){

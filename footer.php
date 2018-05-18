@@ -5,9 +5,9 @@
 			<h4 class="s-text12 p-b-30">
 				Newsletter
 			</h4>
-			<form>
+			<form method="POST" action="">
 				<div class="effect1 w-size9">
-					<input class="s-text7 bg6 w-full p-b-5" type="email" name="email" placeholder="email@example.com">
+					<input class="s-text7 bg6 w-full p-b-5" type="email" name="newsletteremail" placeholder="email@example.com">
 					<span class="effect1-line"></span>
 				</div>
 				<div class="w-size2 p-t-20">

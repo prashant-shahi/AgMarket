@@ -1,6 +1,7 @@
 <?php
 require_once('database.php');
 require_once('server.php');
+require_once('sms.php');
 
 if(!isset($_SESSION['customer']) || empty($_SESSION['customer'])) {
 	header('location:index.php');

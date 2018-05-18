@@ -90,7 +90,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 	box-sizing: border-box;
 }
 
-/* Hide Google Translate Header Bar and On-Hover original text*/
+/* Hide Google Translate Header Bar and On-Hover original text */
 .goog-tooltip {
     display: none !important;
 }
@@ -102,7 +102,6 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
     border: none !important; 
     box-shadow: none !important;
 }
-
 .goog-te-banner-frame.skiptranslate {
     display: none !important;
 }
@@ -2556,4 +2555,13 @@ img {
 /* Feature Image Max-Height */
 .featured-img {
   max-height: 310px;
+}
+
+input[type='number'] {
+    -moz-appearance:textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
 }
