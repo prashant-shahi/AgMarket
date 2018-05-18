@@ -10,17 +10,31 @@ if((isset($_SESSION['customer']) && !empty($_SESSION['customer'])) || (isset($_S
 	header('location:index.php');
 	die();
 }
-
-if($_GET['u']=='c') {
-	$u = $_GET['u'];
-	$utable = "customers";
+if(isset($_GET['u'])) {
+	if($_GET['u']=='c') {
+		$u = $_GET['u'];
+		$utable = "customers";
+	}
+	else if($_GET['u']=='v') {
+		$u = $_GET['u'];
+		$utable = "vendors";
+	}
+	else {
+		array_push($errors, "Error Occurred while fetching user type.");
+	}
 }
-else if($_GET['u']=='v') {
-	$u = $_GET['u'];
-	$utable = "vendors";
-}
-else {
-	array_push($errors, "Error Occurred while fetching user type.");
+else if(isset($_POST['u'])) {
+	if($_POST['u']=='c') {
+		$u = $_POST['u'];
+		$utable = "customers";
+	}
+	else if($_POST['u']=='v') {
+		$u = $_POST['u'];
+		$utable = "vendors";
+	}
+	else {
+		array_push($errors, "Error Occurred while fetching user type.");
+	}
 }
 
 if(isset($_SESSION['phone']) && !empty($_SESSION['phone'])) {
@@ -63,6 +77,7 @@ if(count($errors)==0) {
 		$response = json_decode($response,true);
 
 		if($response['type']=="error") {
+			array_push($success,"Failed to verify OTP.");
 			if(isset($response['message'])) {
 				if($response['message']=="already_verified" || $response['message']=="no_request_found") {
 					sendOtp($phone,$u);
