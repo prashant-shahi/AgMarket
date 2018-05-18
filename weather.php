@@ -224,7 +224,7 @@ if(!$counterrors) {
 					var s = document.getElementsByTagName('script')[0];
 					s.parentNode.insertBefore(script, s);
 				})();
-			}, 1000);
+			}, 700);
 			$('#openweathermap-widget-21').bind('DOMNodeInserted', function(event) {
 				$(".weather-left-card__number").addClass("notranslate");
 				$(".widget-left-menu__links").remove();

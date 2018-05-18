@@ -47,32 +47,39 @@ else  {
 	array_push($errors, "Error while fetching phone number.");
 }
 
+if(isset($_POST['otp-verify'])) {
+	$phone = $_POST['phone'];
+	$u = $_POST['u'];
+	$utable = $_POST['utable'];
+}
+
 $query = "SELECT verify from $utable WHERE phone=$phone";
 $res = mysqli_query($db,$query);
 if(!$res) {
 	array_push($errors,mysqli_error($db));
 }
 if(mysqli_num_rows($res)!=1) {
-	array_push($errors, "Error occured while fetching verified data.");
+	array_push($errors, "It appears that entered phone number is not in our database");
 }
-$first = mysqli_fetch_array($res);
-if($first['verify']==1) {
-	header('location:index.php?status=alreadyverified');
-	exit();
+else {
+	$first = mysqli_fetch_array($res);
+	if($first['verify']==1) {
+		header('location:index.php?status=alreadyverified');
+		exit();
+	}
 }
+
 $errorcount = count($errors);
 
 if(count($errors)==0) {
 	if(isset($_POST['otp-verify']) || isset($_GET['otp'])) {
 		if(isset($_POST['otp-verify'])) {
-			$phone = $_POST['phone'];
-			$u = $_POST['u'];
-			$utable = $_POST['utable'];
 			$otp = $_POST['otp'];
 		}
 		else if(isset($_GET['otp'])) {
 			$otp = $_GET['otp'];
 		}
+
 		$response = verifyOtp($phone, $otp);
 		$response = json_decode($response,true);
 
