@@ -206,43 +206,11 @@ else {
 <script type="text/javascript" src="js/main.min.js"></script>
 <!--===============================================================================================-->
 <script type="text/javascript">
-	var cityid = 0;
-	$.ajax({
-		url: "https://api.openweathermap.org/data/2.5/weather?lat=<?php echo $lat; ?>&lon=<?php echo $lon; ?>&appid=3b3f916823675274f2fb80b7f4dd3d59",
-		dataType: 'json',
-		success: function(result){
-			cityid = result["id"];
-		}
-	});
-</script>
-<script src='https://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		setTimeout(function() {
-			window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];
-			window.myWidgetParam.push({id: 21,cityid: cityid, appid: '3b3f916823675274f2fb80b7f4dd3d59',units: 'metric',containerid: 'openweathermap-widget-21'});
-			(function() {
-				var script = document.createElement('script');
-				script.async = true;
-				script.charset = "utf-8";
-				script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
-				var s = document.getElementsByTagName('script')[0];
-				s.parentNode.insertBefore(script, s);
-			})();
-		}, 800);
-		$('#openweathermap-widget-21').bind('DOMNodeInserted', function(event) {
-			$(".weather-left-card__number").addClass("notranslate");
-			$(".widget-left-menu__links").remove();
-		});
-	});
-</script>
-<script type="text/javascript">
 	function googleTranslateElementInit() {
 		new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'kn,te,ta,en,hi,ne', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, gaTrack: true, gaId: 'UA-116535819-1'}, 'google_translate_element');
 	}
 </script>
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#google_translate_element').bind('DOMNodeInserted', function(event) {
@@ -263,6 +231,38 @@ else {
 	gtag('js', new Date());
 
 	gtag('config', 'UA-116535819-1');
+</script>
+<!--===============================================================================================-->
+<script type="text/javascript">
+	var cityid = 0;
+	$.ajax({
+		url: "https://api.openweathermap.org/data/2.5/weather?lat=<?php echo $lat; ?>&lon=<?php echo $lon; ?>&appid=3b3f916823675274f2fb80b7f4dd3d59",
+		dataType: 'json',
+		success: function(result){
+			cityid = result["id"];
+		}
+	});
+</script>
+<script src='https://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		setTimeout(function() {
+			window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];
+			window.myWidgetParam.push({id: 21,cityid: cityid, appid: '3b3f916823675274f2fb80b7f4dd3d59',units: 'metric',containerid: 'openweathermap-widget-21'});
+			(function() {
+				var script = document.createElement('script');
+				script.async = true;
+				script.charset = "utf-8";
+				script.src = "https://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(script, s);
+			})();
+		}, 800);
+		$('#openweathermap-widget-21').bind('DOMNodeInserted', function(event) {
+			$(".weather-left-card__number").addClass("notranslate");
+			$(".widget-left-menu__links").remove();
+		});
+	});
 </script>
 </body>
 </html>
