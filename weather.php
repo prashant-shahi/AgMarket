@@ -145,6 +145,9 @@ else {
 		</div>
 	</div>
 </div>
+<?php 
+}
+?>
 
 <!-- Footer -->
 <footer class="bg6 p-t-30 p-b-45 p-l-45 p-r-45">
@@ -184,6 +187,7 @@ else {
 		</div>
 	</div>
 </footer>
+
 <!-- Google Translate -->
 <div class="gTranslate" id="google_translate_element"></div>
 
@@ -193,11 +197,6 @@ else {
 		<i class="fa fa-angle-double-up" aria-hidden="true"></i>
 	</span>
 </div>
-
-
-<?php 
-}
-?>
 <script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
 <?php
 if(!$counterrors) {
@@ -205,7 +204,7 @@ if(!$counterrors) {
 	<script type="text/javascript">
 		var cityid = 0;
 		$.ajax({
-			url: "http://api.openweathermap.org/data/2.5/weather?lat=<?php echo $lat; ?>&lon=<?php echo $lon; ?>&appid=3b3f916823675274f2fb80b7f4dd3d59",
+			url: "https://api.openweathermap.org/data/2.5/weather?lat=<?php echo $lat; ?>&lon=<?php echo $lon; ?>&appid=3b3f916823675274f2fb80b7f4dd3d59",
 			dataType: 'json',
 			success: function(result){
 				cityid = result["id"];
