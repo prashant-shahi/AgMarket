@@ -26,6 +26,23 @@ else {
 
 $counterrors = count($errors);
 
+function geticonprefix($code) {
+	global $weatherIcons;
+	$prefix = 'wi wi-';
+	$icon = $weatherIcons->$code->icon;
+  // If we are not in the ranges mentioned above, add a day/night prefix.
+	if (!($code > 699 && $code < 800) && !($code > 899 && $code < 1000)) {
+		$icon = 'day-' . $icon;
+	}
+	// Finally tack on the prefix.
+	$icon = $prefix . $icon;
+	return $icon;
+}
+function k_to_c($temp) {
+	if ( !is_numeric($temp) ) { return false; }
+	return round(($temp - 273.15));
+}
+
 require_once('header.php');
 include('errors.php');
 
@@ -40,25 +57,8 @@ if($counterrors!=0) {
 	<?
 }
 else {
-	$json  =  file_get_contents("./weatherIcons.json");
+	$json  =  file_get_contents("weatherIcons.json");
 	$weatherIcons  =  json_decode($json);
-
-	function geticonprefix($code) {
-		global $weatherIcons;
-		$prefix = 'wi wi-';
-		$icon = $weatherIcons->$code->icon;
-  // If we are not in the ranges mentioned above, add a day/night prefix.
-		if (!($code > 699 && $code < 800) && !($code > 899 && $code < 1000)) {
-			$icon = 'day-' . $icon;
-		}
-	// Finally tack on the prefix.
-		$icon = $prefix . $icon;
-		return $icon;
-	}
-	function k_to_c($temp) {
-		if ( !is_numeric($temp) ) { return false; }
-		return round(($temp - 273.15));
-	}
 
 // http://api.openweathermap.org/data/2.5/weather?id = 5128638&lang = en&units = metric&APPID = 3b3f916823675274f2fb80b7f4dd3d59";
 	?>
@@ -71,7 +71,6 @@ else {
 				<?php
 //$url = "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=3b3f916823675274f2fb80b7f4dd3d59";
 				$url = "https://api.openweathermap.org/data/2.5/weather?q=yelahanka&appid=3b3f916823675274f2fb80b7f4dd3d59";
-
 				$json  =  file_get_contents($url);
 				$currentdata  =  json_decode($json);
 
@@ -211,7 +210,7 @@ if(!$counterrors) {
 			}
 		});
 	</script>
-	<script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
+	<script src='https://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			setTimeout(function() {
@@ -225,7 +224,7 @@ if(!$counterrors) {
 					var s = document.getElementsByTagName('script')[0];
 					s.parentNode.insertBefore(script, s);
 				})();
-			}, 700);
+			}, 800);
 			$('#openweathermap-widget-21').bind('DOMNodeInserted', function(event) {
 				$(".weather-left-card__number").addClass("notranslate");
 				$(".widget-left-menu__links").remove();

@@ -116,7 +116,7 @@
 							if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || $_SERVER['HTTP_X_REQUESTED_WITH'] != "in.agmarket") {
 								?>
 								<li>
-									<a href="http://bit.ly/agmarket-in" target="_blank">Download our App</a>
+									<a href="https://bit.ly/agmarket-in" target="_blank">Download our App</a>
 								</li>
 								<?php
 							}
@@ -300,7 +300,7 @@
 					if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || $_SERVER['HTTP_X_REQUESTED_WITH'] != "in.agmarket") {
 						?>
 						<li class="item-menu-mobile">
-							<a href="http://bit.ly/agmarket-in" target="_blank">Download our App</a>
+							<a href="https://bit.ly/agmarket-in" target="_blank">Download our App</a>
 						</li>
 						<?php
 					}
