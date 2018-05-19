@@ -1,7 +1,8 @@
 <?php
 require_once('database.php');
 require_once('server.php');
-
+$json  =  file_get_contents("./weatherIcons.json");
+$weatherIcons  =  json_decode($json);
 function geticonprefix($code) {
 	global $weatherIcons;
 	$prefix = 'wi wi-';
@@ -59,10 +60,6 @@ if($counterrors!=0) {
 	<?
 }
 else {
-	$json  =  file_get_contents("weatherIcons.json");
-	$weatherIcons  =  json_decode($json);
-
-// http://api.openweathermap.org/data/2.5/weather?id = 5128638&lang = en&units = metric&APPID = 3b3f916823675274f2fb80b7f4dd3d59";
 	?>
 	<div class = 'currentweather p-t-30 p-b-10'>
 		<div class="container">
@@ -71,8 +68,8 @@ else {
 					<h2 class = "text-center">Current Weather</h2><br/>
 				</div>
 				<?php
-//$url = "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=3b3f916823675274f2fb80b7f4dd3d59";
-				$url = "https://api.openweathermap.org/data/2.5/weather?q=yelahanka&appid=3b3f916823675274f2fb80b7f4dd3d59";
+				$url = "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=3b3f916823675274f2fb80b7f4dd3d59";
+				// $url = "https://api.openweathermap.org/data/2.5/weather?q=yelahanka&appid=3b3f916823675274f2fb80b7f4dd3d59";
 				$json  =  file_get_contents($url);
 				$currentdata  =  json_decode($json);
 
@@ -112,7 +109,7 @@ else {
 			</div>
 			<div class="col-xs-12 col-md-4 col-lg-4">
 				<?php
-				echo '<span class="center"><i class="'.geticonprefix($currentdata->weather[0]->id).'" style="font-size:36px;"></i></span><br/>';
+				echo '<span class="center"><i class="' . geticonprefix($currentdata->weather[0]->id) . '" style="font-size:36px;"></i></span><br/>';
 				echo "Weather Main: <span class='weathermain'>" . ucwords($weathermain). "</span><br/>";
 				echo "Weather Description: <span class='weatherdesc'>" . ucwords($weatherdescription)."</span><br/>";
 				?>
@@ -142,20 +139,6 @@ else {
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-2 col-xl-2"></div>
 			<div class="col-xs-12 col-sm-12 col-md-8 col-xl-8" id="openweathermap-widget-21" style="overflow: scroll;"></div>
-			<!--===============================================================================================-->
-			<script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
-			<script type="text/javascript" src="vendor/animsition/js/animsition.min.js"></script>
-			<script type="text/javascript">
-				$.ajax({
-					url: "https://api.openweathermap.org/data/2.5/weather?lat=<?php echo $lat; ?>&lon=<?php echo $lon; ?>&appid=3b3f916823675274f2fb80b7f4dd3d59",
-					dataType: 'json',
-					success: function(result){
-						var cityid = result["id"];
-						window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 21,cityid: cityid,appid: '3b3f916823675274f2fb80b7f4dd3d59',units: 'metric',containerid: 'openweathermap-widget-21',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();
-					}
-				});
-			</script>
-			<!--===============================================================================================-->
 			<div class="col-xs-12 col-sm-12 col-md-2 col-xl-2"></div>
 		</div>
 	</div>
@@ -213,10 +196,25 @@ else {
 	</span>
 </div>
 <!--===============================================================================================-->
+<script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script type="text/javascript">
+	$.ajax({
+		url: "https://api.openweathermap.org/data/2.5/weather?lat=<?php echo $lat; ?>&lon=<?php echo $lon; ?>&appid=3b3f916823675274f2fb80b7f4dd3d59",
+		dataType: 'json',
+		success: function(result){
+			var cityid = result["id"];
+			window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 21,cityid: cityid,appid: '3b3f916823675274f2fb80b7f4dd3d59',units: 'metric',containerid: 'openweathermap-widget-21',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();
+		}
+	});
+</script>
+<!--===============================================================================================-->
 <script type="text/javascript" src="js/main.min.js"></script>
 <!--===============================================================================================-->
 <script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
-
+<!--===============================================================================================-->
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#openweathermap-widget-21').bind('DOMNodeInserted', function(event) {
