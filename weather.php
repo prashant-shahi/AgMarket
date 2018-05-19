@@ -205,7 +205,7 @@ else {
 <!--===============================================================================================-->
 <script type="text/javascript" src="js/main.min.js"></script>
 <!--===============================================================================================-->
-<script src='https://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
+<script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$.ajax({
@@ -213,16 +213,7 @@ else {
 			dataType: 'json',
 			success: function(result){
 				var cityid = result["id"];
-				window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];
-				window.myWidgetParam.push({id: 21,cityid: cityid, appid: '3b3f916823675274f2fb80b7f4dd3d59',units: 'metric',containerid: 'openweathermap-widget-21'});
-				(function() {
-					var script = document.createElement('script');
-					script.async = true;
-					script.charset = "utf-8";
-					script.src = "./weather-widget-generator.js";
-					var s = document.getElementsByTagName('script')[0];
-					s.parentNode.insertBefore(script, s);
-				})();
+				window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 21,cityid: cityid,appid: '3b3f916823675274f2fb80b7f4dd3d59',units: 'metric',containerid: 'openweathermap-widget-21',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();
 			}
 		});
 		$('#openweathermap-widget-21').bind('DOMNodeInserted', function(event) {
