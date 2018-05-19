@@ -2,6 +2,25 @@
 require_once('database.php');
 require_once('server.php');
 
+function geticonprefix($code) {
+	global $weatherIcons;
+	$prefix = 'wi wi-';
+	$icon = $weatherIcons->$code->icon;
+  // If we are not in the ranges mentioned above, add a day/night prefix.
+	if (!($code > 699 && $code < 800) && !($code > 899 && $code < 1000)) {
+		$icon = 'day-' . $icon;
+	}
+	// Finally tack on the prefix.
+	$icon = $prefix . $icon;
+	return $icon;
+}
+function k_to_c($temp) {
+	if ( !is_numeric($temp) ) {
+		return false;
+	}
+	return round($temp - 273.15);
+}
+
 if(!isset($_SESSION['vendor']) || empty($_SESSION['vendor'])) {
 	header("location: index.php?status=nosession");
 	die();
@@ -25,23 +44,6 @@ else {
 }
 
 $counterrors = count($errors);
-
-function geticonprefix($code) {
-	global $weatherIcons;
-	$prefix = 'wi wi-';
-	$icon = $weatherIcons->$code->icon;
-  // If we are not in the ranges mentioned above, add a day/night prefix.
-	if (!($code > 699 && $code < 800) && !($code > 899 && $code < 1000)) {
-		$icon = 'day-' . $icon;
-	}
-	// Finally tack on the prefix.
-	$icon = $prefix . $icon;
-	return $icon;
-}
-function k_to_c($temp) {
-	if ( !is_numeric($temp) ) { return false; }
-	return round(($temp - 273.15));
-}
 
 require_once('header.php');
 include('errors.php');
@@ -106,7 +108,7 @@ else {
 			?>
 			<div class="p-t-10 p-b-10 col-xs-12 col-md-12 col-lg-12">
 				<p><?php echo $today; ?></p>
-				<h3>Your Location: <?php echo $place." - ".$cityname; ?></h3>
+				<h3>Location: <?php echo $place." - ".$cityname; ?></h3>
 			</div>
 			<div class="col-xs-12 col-md-4 col-lg-4">
 				<?php
@@ -205,42 +207,28 @@ else {
 <!--===============================================================================================-->
 <script src='https://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
 <script type="text/javascript">
-	var cityid = 0;
 	$(document).ready(function(){
 		$.ajax({
 			url: "https://api.openweathermap.org/data/2.5/weather?lat=<?php echo $lat; ?>&lon=<?php echo $lon; ?>&appid=3b3f916823675274f2fb80b7f4dd3d59",
 			dataType: 'json',
 			success: function(result){
-				cityid = result["id"];
+				var cityid = result["id"];
+				window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];
+				window.myWidgetParam.push({id: 21,cityid: cityid, appid: '3b3f916823675274f2fb80b7f4dd3d59',units: 'metric',containerid: 'openweathermap-widget-21'});
+				(function() {
+					var script = document.createElement('script');
+					script.async = true;
+					script.charset = "utf-8";
+					script.src = "./weather-widget-generator.js";
+					var s = document.getElementsByTagName('script')[0];
+					s.parentNode.insertBefore(script, s);
+				})();
 			}
 		});
-		setTimeout(function() {
-			window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];
-			window.myWidgetParam.push({id: 21,cityid: cityid, appid: '3b3f916823675274f2fb80b7f4dd3d59',units: 'metric',containerid: 'openweathermap-widget-21'});
-			(function() {
-				var script = document.createElement('script');
-				script.async = true;
-				script.charset = "utf-8";
-				script.src = "https://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
-				var s = document.getElementsByTagName('script')[0];
-				s.parentNode.insertBefore(script, s);
-			})();
-		}, 600);
 		$('#openweathermap-widget-21').bind('DOMNodeInserted', function(event) {
 			$(".weather-left-card__number").addClass("notranslate");
 			$(".widget-left-menu__links").remove();
 		});
-	});
-</script>
-<!--===============================================================================================-->
-<script type="text/javascript">
-	function googleTranslateElementInit() {
-		new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'kn,te,ta,en,hi,ne', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, gaTrack: true, gaId: 'UA-116535819-1'}, 'google_translate_element');
-	}
-</script>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-<script type="text/javascript">
-	$(document).ready(function(){
 		$('#google_translate_element').bind('DOMNodeInserted', function(event) {
 			$('.goog-te-menu-value span:first').html('Translate');
 			$('.goog-te-menu-frame.skiptranslate').on("load", function(){
@@ -251,6 +239,13 @@ else {
 		});
 	});
 </script>
+<!--===============================================================================================-->
+<script type="text/javascript">
+	function googleTranslateElementInit() {
+		new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'kn,te,ta,en,hi,ne', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, gaTrack: true, gaId: 'UA-116535819-1'}, 'google_translate_element');
+	}
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-116535819-1"></script>
 <script>
