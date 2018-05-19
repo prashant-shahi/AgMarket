@@ -186,6 +186,8 @@ else {
 <!--===============================================================================================-->
 <script type="text/javascript" src="vendor/animsition/js/animsition.min.js"></script>
 <!--===============================================================================================-->
+<script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
+<!--===============================================================================================-->
 <script type="text/javascript">
 	$.ajax({
 		url: "https://api.openweathermap.org/data/2.5/weather?lat=<?php echo $lat; ?>&lon=<?php echo $lon; ?>&appid=3b3f916823675274f2fb80b7f4dd3d59",
@@ -200,8 +202,6 @@ else {
 </script>
 <!--===============================================================================================-->
 <script type="text/javascript" src="js/main.min.js"></script>
-<!--===============================================================================================-->
-<script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
 <!--===============================================================================================-->
 <script type="text/javascript">
 	$(document).ready(function(){
