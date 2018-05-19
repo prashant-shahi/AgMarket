@@ -20,7 +20,7 @@
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.min.css">
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css?v=1">
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
 	<!--===============================================================================================-->
@@ -38,7 +38,7 @@
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="weather-icons/css/weather-icons.css" />
 	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/main.min.css?v=1">
+	<link rel="stylesheet" type="text/css" href="css/main.min.css?v=3">
 	<!--===============================================================================================-->
 </head>
 

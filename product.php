@@ -96,7 +96,7 @@ include('errors.php');
 
 				while($latlon = mysqli_fetch_assoc($res)) {
 					$distancearray[$latlon['vid']] = distance($latlon['lat1'],$latlon['lon1'],$latlon['lat2'],$latlon['lon2'],"K");
-					}
+				}
 				$vidstr = "ORDER BY FIELD(vid, '0'";
 				asort($distancearray);
 				foreach ($distancearray as $key => $value) {
@@ -109,118 +109,86 @@ include('errors.php');
 					array_push($errors,mysqli_error());
 				?>
 				<div class="col-sm-6 col-md-8 col-lg-9 p-b-25">
-					<!--  -->
 					<div class="flex-sb-m flex-w p-b-35">
-					<!--
-					<div class="flex-w">
-						<div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
-							<select class="selection-2" name="sorting">
-								<option>Default Sorting</option>
-								<option>Popularity</option>
-								<option>Price: low to high</option>
-								<option>Price: high to low</option>
-							</select>
-						</div>
-
-						<div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
-							<select class="selection-2" name="sorting">
-								<option>Price per kg</option>
-								<option>₹0 - ₹100</option>
-								<option>₹100 - ₹500</option>
-								<option>₹500 - ₹1000</option>
-								<option>₹1000 - ₹5000</option>
-								<option>₹5000+</option>
-							</select>
-						</div>
-						<div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
-							<select class="selection-2" name="sorting">
-								<option>Price per kg</option>
-								<option>₹0 - ₹100</option>
-								<option>₹100 - ₹500</option>
-								<option>₹500 - ₹1000</option>
-								<option>₹1000 - ₹5000</option>
-								<option>₹5000+</option>
-							</select>
-						</div>
+						<span class="s-text7 p-t-5 p-b-5">
+							Default Sorting: Nearest Location
+						</span>
+						<span class="s-text8 p-t-5 p-b-5">
+							Showing <?php
+							echo $begin."-";
+							if(($begin+$offset)<=$count)
+								echo $begin+$offset;
+							else
+								echo $count;
+							echo " of ".$count;
+							?> results
+						</span>
 					</div>
-				-->
-				<span class="s-text7 p-t-5 p-b-5">
-					Default Sorting: Nearest Location
-				</span>
-				<span class="s-text8 p-t-5 p-b-5">
-					Showing <?php
-					echo $begin."-";
-					if(($begin+$offset)<=$count)
-						echo $begin+$offset;
-					else
-						echo $count;
-					echo " of ".$count;
-					?> results
-				</span>
-			</div>
 
-			<!-- 12? Product -->
-			<div class="row">
-				<?php
-				while($row=mysqli_fetch_assoc($res)) {
-					?>
-					<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-						<!-- Block2 -->
-						<div class="block2">
-							<div class="block2-img wrap-pic-w of-hidden pos-relative">
-								<img src="<?php echo $row['image_url']; ?>" alt="IMG-PRODUCT">
-								<div class="p-t-10 p-l-140 block2-overlay trans-0-4 text-white">
-									Available : <?php echo $row['avail']; ?>
-									<div class="w-size1">
-										<div class="block2-btn-addcart w-size1">
-											<!-- Button -->
-											<button class="addtocart flex-c-m size1 bg4 bo-rad-23 hov1 s-text1" id='addtocart_<?php echo $row['comid']; ?>' data-id='addtocart_<?php echo $row['comid']; ?>'>
-												Add to Cart
-											</button>
+					<!-- 12? Product -->
+					<div class="row">
+						<?php
+						while($row=mysqli_fetch_assoc($res)) {
+							?>
+							<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
+								<!-- Block2 -->
+								<div class="block2">
+									<div class="block2-img wrap-pic-w of-hidden pos-relative">
+										<img class="featured-img" src="<?php echo $row['image_url']; ?>" alt="IMG-PRODUCT">
+										<div class="p-t-10 p-l-140 block2-overlay trans-0-4 text-white">
+											Available : <?php echo $row['avail']; ?>
+											<div class="w-size1">
+												<div class="block2-btn-addcart w-size1">
+													<!-- Button -->
+													<button class="addtocart flex-c-m size1 bg4 bo-rad-23 hov1 s-text1" id='addtocart_<?php echo $row['comid']; ?>' data-id='addtocart_<?php echo $row['comid']; ?>'>
+														Add to Cart
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="block2-txt p-t-5 p-b-5">
+										<a href="product-detail.php?commodityid=<?php echo $row['comid'];?>" class="block2-name dis-block s-text3 p-b-5">
+											<?php echo  ucwords($row['comname']); ?>
+										</a>
+										<span class="p-r-5">
+											Rate: ₹ <span class="block2-price m-text6" ><?php echo $row['price']; ?></span>
+										</span>
+										<span class="p-r-5">
+											Distance: <span ><?php echo round($distancearray[$row['vid']],4); ?> km</span>
+										</span>
+										<div class="p-r-5">
+											Vendor:
+											<a href="profile.php?vendorid=<?php echo $row['vid']; ?>" class="m-text6 notranslate">
+												<?php echo $row['vname']; ?>
+											</a>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="block2-txt p-t-5 p-b-5">
-								<a href="product-detail.php?commodityid=<?php echo $row['comid'];?>" class="block2-name dis-block s-text3 p-b-5">
-									<?php echo  ucwords($row['comname']); ?>
-								</a>
-								<span class="p-r-5">
-									Rate: ₹ <span class="block2-price m-text6" ><?php echo $row['price']; ?></span>
-								</span>
-								<span class="p-r-5">
-									Distance: <span ><?php echo round($distancearray[$row['vid']],4); ?> km</span>
-								</span>
-								<div class="p-r-5">
-									Vendor:
-									<a href="profile.php?vendorid=<?php echo $row['vid']; ?>" class="m-text6 notranslate">
-										<?php echo $row['vname']; ?>
-									</a>
-								</div>
-							</div>
-						</div>
+							<?php
+						}
+						?>
 					</div>
-					<?php
-				}
-				?>
-			</div>
 
-			<!-- Pagination -->
-			<div class="pagination flex-m flex-w p-t-26">
+					<!-- Pagination -->
+					<div class="pagination flex-m flex-w p-t-26">
+						<?php
+						if($count/$offset>1) {
+							for($x=0;$x<$count/$offset;$x++) {
+								?>
+								<a href="product.php?categoryid=<?php echo $catid; ?>&begin=<?php echo $x*$offset; ?>" class="item-pagination flex-c-m trans-0-4 active-pagination"><?php echo $x+1; ?></a>
+								<?php
+							}
+						}
+						?>
+					</div>
+				</div>
 				<?php
-				for($x=0;$x<$count/$offset;$x++) {
-					?>
-					<a href="product.php?categoryid=<?php echo $catid; ?>&begin=<?php echo $x*$offset; ?>" class="item-pagination flex-c-m trans-0-4 active-pagination"><?php echo $x+1; ?></a>
-					<?php
-				}
-				?>
-			</div>
+			}
+			?>
 		</div>
-		<?php
-	}
-	?>
-</div>
-</div>
+	</div>
 </section>
 
 
@@ -249,8 +217,8 @@ include('errors.php');
 </script>
 <!-- Set rating -->
 <script type='text/javascript'>
-    $(document).ready(function() {
-        $(".addtocart").click(function() {
+	$(document).ready(function() {
+		$(".addtocart").click(function() {
             // Get element id by data-id attribute
             var el_id = $(this).data("id")
 
@@ -261,28 +229,28 @@ include('errors.php');
 
             // AJAX Request
             $.ajax({
-                url: 'addtocart_ajax.php',
-                type: 'post',
-                data: {comid:comid,quantity:value},
-                dataType: 'json',
-                success: function(data){
-                    var status = data['status'];
-                    var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
-                    $(this).on('click', function(){
-                        swal(nameProduct, "is added to cart !", "success");
-                    });
-                    if(!status)
-                        agalert("Alert","Commodity already exists in the cart","yellow");
-                    else if(status==-1)
-                        swal("Error while adding Commodity to cart","failure");
-                    else if(status==1) {
-                    	$(".cartcount").text(parseInt($(".cartcount").text()[0])+1);
-                        swal("Successfully added Commodity to cart","success");
-                    }
-                }
+            	url: 'addtocart_ajax.php',
+            	type: 'post',
+            	data: {comid:comid,quantity:value},
+            	dataType: 'json',
+            	success: function(data){
+            		var status = data['status'];
+            		var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
+            		$(this).on('click', function(){
+            			swal(nameProduct, "is added to cart !", "success");
+            		});
+            		if(!status)
+            			agalert("Alert","Commodity already exists in the cart","yellow");
+            		else if(status==-1)
+            			swal("Error while adding Commodity to cart","failure");
+            		else if(status==1) {
+            			$(".cartcount").text(parseInt($(".cartcount").text()[0])+1);
+            			swal("Successfully added Commodity to cart","success");
+            		}
+            	}
             });
         });
-    });
+	});
 </script>
 <!--===============================================================================================-->
 </body>

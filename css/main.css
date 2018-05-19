@@ -1020,6 +1020,7 @@ li.sale-noti > a {
 -----------------------------------------------------------*/
 .logo-mobile {
   display: block;
+  font-size:20px;
 }
 
 .logo-mobile img {
@@ -1048,8 +1049,6 @@ li.sale-noti > a {
   -o-transform: scale(0.8);
   transform: scale(0.8);
   margin-top: 5px;
-  padding-right:5px;
-  padding-left:5px;
 }
 
 
@@ -2560,7 +2559,6 @@ img {
 input[type='number'] {
     -moz-appearance:textfield;
 }
-
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
