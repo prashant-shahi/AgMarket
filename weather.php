@@ -141,8 +141,21 @@ else {
 				<h2 class = "text-center">Weather Forecast</h2><br/>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-2 col-xl-2"></div>
-			<div class="col-xs-12 col-sm-12 col-md-8 col-xl-8" id="openweathermap-widget-21" style="overflow: scroll;">
-			</div>
+			<div class="col-xs-12 col-sm-12 col-md-8 col-xl-8" id="openweathermap-widget-21" style="overflow: scroll;"></div>
+			<!--===============================================================================================-->
+			<script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
+			<script type="text/javascript" src="vendor/animsition/js/animsition.min.js"></script>
+			<script type="text/javascript">
+				$.ajax({
+					url: "https://api.openweathermap.org/data/2.5/weather?lat=<?php echo $lat; ?>&lon=<?php echo $lon; ?>&appid=3b3f916823675274f2fb80b7f4dd3d59",
+					dataType: 'json',
+					success: function(result){
+						var cityid = result["id"];
+						window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 21,cityid: cityid,appid: '3b3f916823675274f2fb80b7f4dd3d59',units: 'metric',containerid: 'openweathermap-widget-21',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();
+					}
+				});
+			</script>
+			<!--===============================================================================================-->
 			<div class="col-xs-12 col-sm-12 col-md-2 col-xl-2"></div>
 		</div>
 	</div>
@@ -199,23 +212,13 @@ else {
 		<i class="fa fa-angle-double-up" aria-hidden="true"></i>
 	</span>
 </div>
-<script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-<script type="text/javascript" src="vendor/animsition/js/animsition.min.js"></script>
 <!--===============================================================================================-->
 <script type="text/javascript" src="js/main.min.js"></script>
 <!--===============================================================================================-->
 <script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
+
 <script type="text/javascript">
 	$(document).ready(function(){
-		$.ajax({
-			url: "https://api.openweathermap.org/data/2.5/weather?lat=<?php echo $lat; ?>&lon=<?php echo $lon; ?>&appid=3b3f916823675274f2fb80b7f4dd3d59",
-			dataType: 'json',
-			success: function(result){
-				var cityid = result["id"];
-				window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 21,cityid: cityid,appid: '3b3f916823675274f2fb80b7f4dd3d59',units: 'metric',containerid: 'openweathermap-widget-21',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();
-			}
-		});
 		$('#openweathermap-widget-21').bind('DOMNodeInserted', function(event) {
 			$(".weather-left-card__number").addClass("notranslate");
 			$(".widget-left-menu__links").remove();
