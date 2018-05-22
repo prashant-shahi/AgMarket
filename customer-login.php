@@ -22,10 +22,10 @@ include('errors.php');
 						Login
 					</button>
 				</div>
-				<p>
+				<p class="p-t-10 p-b-5">
 					Not yet a member? <a href="customer-register.php"><strong>Sign up</strong></a>
 				</p>
-				<p>
+				<p class="p-t-5 p-b-10">
 					Forgot Password? <a href="iforgot.php"><strong>Forgot password</strong></a>
 				</p>
 			</form>

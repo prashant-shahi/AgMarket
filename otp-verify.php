@@ -176,7 +176,8 @@ else {
 						Didn't receive even after a minute?<br/>
 						<a href="otp-verify.php?u=<?php echo "$u&p=$phone"; ?>&resend=1&rt=text"><strong>Resend SMS</strong></a>
 						<!--
-							&nbsp;&nbsp;&nbsp;&nbsp;<a href="otp-verify.php?u=<?php //echo "$u&p=$phone"; ?>&resend=1&rt=voice"><strong>Voice Call</strong></a>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<a href="otp-verify.php?u=<?php //echo "$u&p=$phone"; ?>&resend=1&rt=voice"><strong>Voice Call</strong></a>
 						-->
 					</p>
 				</form>

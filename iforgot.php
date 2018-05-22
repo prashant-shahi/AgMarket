@@ -39,15 +39,12 @@ if(isset($_POST['changepassword'])) {
 	}
 }
 else if(isset($_GET['otp']) || isset($_POST['otp-entered'])) {
-	array_push($success,"get otp / post otp-entered");
 	if(isset($_POST['otp'])) {
-		array_push($success,"post otp-entered");
 		$profile = $_POST['profile'];
 		$phone = $_POST['phone'];
 		$otp = $_POST['otp'];
 	}
 	else if(isset($_GET['u']) && isset($_GET['p']) && isset($_GET['otp'])) {
-		array_push($success,"get otp");
 		$u=$_GET['u'];
 		if($u=='c')
 			$profile = "customer";
@@ -59,26 +56,24 @@ else if(isset($_GET['otp']) || isset($_POST['otp-entered'])) {
 	else
 		array_push($errors,"Not sufficient datas for verification");
 
+	$changepermission = "approved";
 	if(count($errors)==0) {
-		array_push($success,"verification");
 		$response = verifyOtp($phone, $otp);
 		$response = json_decode($response,true);
 
 		if($response['type']=="error") {
+			array_push($errors,"Error Occuered while verifying otp.");
 			if(isset($response['message'])) {
 				if($response['message']=="otp_not_verified" || $response['message']=="invalid_otp") {
 					array_push($errors,"Incorrect OTP. <a href='iforgot.php?u=$u&p=$phone'>Try Again</a>");
 				}
 				else if($response['message']=="already_verified") {
-					array_push($success,"OTP has been successfully approved. You can change password now.");
-					$changepermission = "approved";
+					array_push($errors,"OTP has been already used and expired. Go Back and request for new one again.");
 				}
 				else {
 					array_push($errors,$response['message']);
 				}
 			}
-			else
-				array_push($errors,"Error occured while verifying otp.");
 		}
 		else {
 			array_push($success,"OTP has been successfully approved. You can change password now.");
@@ -87,9 +82,7 @@ else if(isset($_GET['otp']) || isset($_POST['otp-entered'])) {
 	}
 }
 else if(isset($_POST['otp-verify'])) {
-	array_push($success,"otp-verify :  post and get");
 	if(isset($_POST['otp-verify'])) {
-		array_push($success,"otp-verify :  post");
 		$phone = mysqli_real_escape_string($db, $_POST['phone']);
 		$profile = mysqli_real_escape_string($db, $_POST['profile']);
 		if($profile == "vendor")
@@ -100,17 +93,16 @@ else if(isset($_POST['otp-verify'])) {
 	else
 		array_push($errors,"Not sufficient datas for sending otp.");
 
+
 	if(count($errors)==0) {
-		array_push($success,"forgot: send otp");
 		$response = sendOtp($phone, $u, "forgot");
 		$response = json_decode($response, true);
 
 		if($response['type']=="error") {
+			array_push($errors,"Error occured while sending otp.");
 			if(isset($response['message'])){
 				array_push($errors,$response['message']);
 			}
-			else
-				array_push($errors,"Error occured while verifying otp.");
 		}
 		else{
 			array_push($success,"OTP has been successfully processed to your number.");
@@ -118,7 +110,6 @@ else if(isset($_POST['otp-verify'])) {
 	}
 }
 else if(isset($_GET['u']) && isset($_GET['p'])) {
-	array_push($success,"otp-verify :  get");
 	$u = $_GET['u'];
 	$phone = $_GET['p'];
 	if($u=='c')
@@ -134,8 +125,8 @@ require_once('errors.php');
 
 if($counterrors!=0) {
 	?>
-	<h3 class="text-center">Error</h3>
-	<p class="bg6 text-center p-t-35 p-b-15">Error occurred while processing your request.</p>
+	<h2 class="text-center p-t-45 p-b-15">Error</h2>
+	<p class="bg6 text-center p-t-35 p-b-15">Some error occurred while processing your request. Please try again.</p>
 	<?php
 }
 else if(isset($changepermission) && $changepermission=="approved") {
@@ -154,6 +145,7 @@ else if(isset($changepermission) && $changepermission=="approved") {
 			<div class="form-group">
 				Confirm Password:
 				<input class="bo9 p-t-10 p-l-10 p-r-10 p-b-10" type="password" name="password_2" minlength="5" maxlength="35" required="required" placeholder="Confirm Password" autocomplete="off" />
+				<span class="text-danger" id="passworderror"></span>
 			</div>
 			<div class="form-group">
 				<button type="submit" name="changepassword" class="t-center w-size2 flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4">
